@@ -15099,13 +15099,13 @@ border-top:4px solid #97b8d3;
    color:#110101 !important;
 }
 .vcard132 .pull-left{
-   float:left; !important;
+   float:left;
 }
 .vcard132 .pull-right{
-   float:right;68
+   float:right;
 }
 .vcard132-1 .pull-left{
-   float: right;68
+   float: right;
 }
 .vcard132-1 .pull-right {
     float: left !important;
@@ -15118,7 +15118,7 @@ border-top:4px solid #97b8d3;
      float: center; 
     width: auto;
     margin: 0 auto;
-    margin-top: 22px;
+    margin-top: 0;
 }
 
 .vcard132 .card-contact-details {
