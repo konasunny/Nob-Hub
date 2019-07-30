@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>NOB HUB</title>
+    <!-- Font Awesome -->
+  
+    <!-- Bootstrap core CSS -->
+    <!--link href="css/bootstrap.min.css" rel="stylesheet"-->
+    <!-- Material Design Bootstrap -->
+    <!--link href="css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+     <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://mdbootstrap.com/previews/docs/latest/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Material Design Bootstrap -->
+    <link href="https://mdbootstrap.com/previews/docs/latest/css/mdb.min.css" rel="stylesheet">
+    <link href="css/mdb.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="https://nobhub.com/services/cardstyles.css" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDEc6y2PP50c3529HoVRWY5wru5wLE_6hY"></script>
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="cordova.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		function onLoad() {
+			document.addEventListener("deviceready", onDeviceReady, false);
+			document.addEventListener("deviceready", geoLocation, false);
+		}
+		function geoLocation() {
+			function onSuccess(position) {
+				var lat = position.coords.latitude;
+				var lng = position.coords.longitude;
+				localStorage.setItem("clati",lat);
+				localStorage.setItem("clongi",lng);
+			}
+			function onError(error) {
+				alert('code: '    + error.code    + '\n' +
+					  'message: ' + error.message + '\n');
+			}
+			navigator.geolocation.getCurrentPosition(onSuccess, onError);
+		}
+		function onDeviceReady() {
+			document.addEventListener("backbutton", onBackKeyDown, false);
+		}
+		function onBackKeyDown() {
+			if(document.getElementById('confirmertoggle').value==1) {
+				$("#confirmer").slideUp();
+				document.getElementById('confirmertoggle').value=0;
+			}
+			else {
+			location.href="home.html";
+			}
+		}
+	</script>
+	<script>
+		function getalerts() {
+			//document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			var timezone = localStorage.getItem("timezone");
+
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					//alert(result);
+					//console.log(result);
+					document.getElementById('alerts').innerHTML=result;
+					if(document.getElementById('alerts').innerHTML=="") {
+						document.getElementById('alerts').innerHTML="<div style='text-align: center; font-weight: bold; font-size: 15px; padding-top: 20px'>No New Notifications.</div>";
+					}
+					//document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/getalerts.php?user_id="+user_id+"&timezone="+timezone, true);
+			xmlhttp.send();
+		}
+	</script>
+	<script>
+		$(document).ready(function(){
+			$("#okbtn").click(function(){
+				$("#confirmer").slideUp();
+				document.getElementById('confirmertoggle').value=0;
+				getalerts();
+				alertcount();
+			});
+		});
+	</script>
+	
+	<script>
+		function alertcount() {
+				//document.getElementById('loader').style.display="block";
+				var user_id = localStorage.getItem("user_id");
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						var result = this.responseText;
+						var splitter = result.split("&");
+
+					if(splitter[0] > 0){
+						document.getElementById('alertcount').innerHTML=splitter[0];
+						}
+						if(splitter[1] > 0){
+						document.getElementById('chatcount').innerHTML='<span class="mdl-badge" data-badge="'+splitter[1]+'"></span><i class="fas fa-comments"></i><span><br>Chats</span>';
+						}else{
+						
+						document.getElementById('chatcount').innerHTML='<span class="mdl-badge"></span><i class="fas fa-comments"></i><span><br>Chats</span>';
+						}
+						if(splitter[2] > 0){
+						document.getElementById('meetingscount').innerHTML='<span class="mdl-badge" data-badge="'+splitter[2]+'"></span><i class="fas fa-users"></i><span><br>Meetings</span>';
+						}else{
+						document.getElementById('meetingscount').innerHTML='<span class="mdl-badge" ></span><i class="fas fa-users"></i><span><br>Meetings</span>';
+						
+						}
+					}
+				};
+				xmlhttp.open("GET", "https://nobhub.com/services/alertcount.php?user_id="+user_id, true);
+				xmlhttp.send();
+			}
+	</script>
+	
+	<script>
+		function acceptclick(clickid) {
+				document.getElementById('loader').style.display="block";
+				var guid = clickid;
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						var result = this.responseText;
+						document.getElementById('confirmtext').innerHTML=result;
+						getalerts();
+						//$("#confirmer").slideDown();
+						//document.getElementById('confirmertoggle').value=1;
+						document.getElementById('loader').style.display="none";
+					}
+				};
+				xmlhttp.open("GET", "https://nobhub.com/services/accept.php?guid="+guid, true);
+				xmlhttp.send();
+			}
+	</script>
+	
+	<script>
+		function rejectclick(clickid) {
+				document.getElementById('loader').style.display="block";
+				var guid = clickid;
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						var result = this.responseText;
+						document.getElementById('confirmtext').innerHTML=result;
+						getalerts();
+						//$("#confirmer").slideDown();
+						//document.getElementById('confirmertoggle').value=1;
+						document.getElementById('loader').style.display="none";
+					}
+				};
+				xmlhttp.open("GET", "https://nobhub.com/services/reject.php?guid="+guid, true);
+				xmlhttp.send();
+			}
+	</script>
+	
+	<script>
+		function blockclick(clickid) {
+				document.getElementById('loader').style.display="block";
+				var guid = clickid;
+				var user_id = localStorage.getItem("user_id");
+
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						var result = this.responseText;
+						//console.log(result);
+						document.getElementById('confirmtext').innerHTML=result;
+						getalerts();
+						//$("#confirmer").slideDown();
+						//document.getElementById('confirmertoggle').value=1;
+						document.getElementById('loader').style.display="none";
+					}
+				};
+				xmlhttp.open("GET", "https://nobhub.com/services/block.php?guid="+guid+"&user_id="+user_id, true);
+				xmlhttp.send();
+			}
+	</script>
+	
+	<script>
+		function deleteclick(clickid) {
+				//if(confirm("Are you sure you want to delete?")==true) {
+					document.getElementById('loader').style.display="block";
+					var guid = clickid;
+					var xmlhttp = new XMLHttpRequest();
+					xmlhttp.onreadystatechange = function() {
+						if (this.readyState == 4 && this.status == 200) {
+							var result = this.responseText;
+							document.getElementById('confirmtext').innerHTML=result;
+							//$("#confirmer").slideDown();
+							//document.getElementById('confirmertoggle').value=1;
+							document.getElementById('loader').style.display="none";
+							getalerts();
+						}
+					};
+					xmlhttp.open("GET", "https://nobhub.com/services/deletealert.php?guid="+guid, true);
+					xmlhttp.send();
+				}
+				//else {
+				//	return false;
+				//}
+				
+				function deletemeeting(clickid) {
+				//alert("ok");
+					document.getElementById('loader').style.display="block";
+					var guid = clickid;
+					var xmlhttp = new XMLHttpRequest();
+					xmlhttp.onreadystatechange = function() {
+						if (this.readyState == 4 && this.status == 200) {
+							var result = this.responseText;
+							//console.log(result);
+							getalerts();
+							document.getElementById('confirmtext').innerHTML=result;
+							//$("#confirmer").slideDown();
+							//document.getElementById('confirmertoggle').value=1;
+							document.getElementById('loader').style.display="none";
+						}
+					};
+					xmlhttp.open("GET", "https://nobhub.com/services/deletemeetingalerts.php?guid="+guid, true);
+					xmlhttp.send();
+				}
+				
+			function deleteall() {
+			
+			if(confirm("Are you sure you want to delete all ?")==true) {
+							
+				var user_id = localStorage.getItem("user_id");
+
+				//if(confirm("Are you sure you want to delete?")==true) {
+					document.getElementById('loader').style.display="block";
+					
+					var xmlhttp = new XMLHttpRequest();
+					xmlhttp.onreadystatechange = function() {
+						if (this.readyState == 4 && this.status == 200) {
+							var result = this.responseText;
+							getalerts();
+							document.getElementById('confirmtext').innerHTML=result;
+							//$("#confirmer").slideDown();
+							//document.getElementById('confirmertoggle').value=1;
+							document.getElementById('loader').style.display="none";
+						}
+					};
+					xmlhttp.open("GET", "https://nobhub.com/services/deleteallalerts.php?user_id="+user_id, true);
+					xmlhttp.send();
+					
+					} else {
+					return false;
+				    }
+				}
+				
+			
+	</script>
+<script>
+		function del(clickid) {
+		//alert(clickid);
+			if(document.getElementById(clickid).style.background=="rgb(255, 255, 255)") {
+				document.getElementById('idholder').value=document.getElementById('idholder').value+clickid+",";
+				document.getElementById(clickid).style.background="#e9e9e9";
+			}
+			else if(document.getElementById(clickid).style.background=="rgb(233, 233, 233)") {
+				var a = document.getElementById('idholder').value;
+				var b = a.replace(clickid+",","");
+				document.getElementById('idholder').value=b;
+				document.getElementById(clickid).style.background="#FFFFFF";
+			}
+		}
+</script>
+
+		<script>
+	window.setInterval(function(){
+	getalerts();
+	}, 10000);
+	</script>
+	<script>
+	
+	window.setInterval(function(){
+	alertcount();
+	}, 10000);
+	</script>
+
+<script src="https://nobhub.com/services/custom-scripts.js"></script></head>
+
+<body class="fixed-sn light-blue-skin" onload="onLoad(); getalerts(); ">
+<div style="display: none; border: 1px solid #c0c0c0; background: #e9e9e9; width: 90%; position: fixed; z-index: 9999; top: 250px; left: 20px; padding: 10px; text-align: center" id="confirmer">
+<i style="color: #0d994f" class="fa fa-check-square fa-4x"></i></br>
+<span id="confirmtext"></span></br>
+<button type="button" class="btn blue-gradient btn-primary z-depth-1a" id="okbtn">OK</button>
+</div>
+<input type="hidden" id="confirmertoggle" value="0">
+<input type="hidden" id="idholder">
+
+<div style="width: 100%; text-align: center; position: fixed; z-index: 9998889; top: 250px; display:none" id="loader"><img src="loading.gif" style="margin-left: auto; margin-right: auto; width: 64px; height: auto"></div>
+    <header>
+	</header>
+
+<main>
+
+<section>
+<!--div class="list-group btn-group" style="margin-top:0;" data-toggle="buttons">
+			<span class="list-group-item active gradient-bg" style="position: fixed; width:100%;">
+				<a href="javascript:history.go(-1)"  class="pull-left text-white" style="margin-top:1px;"><i class="fas fa-long-arrow-alt-left text-white" style="font-size:20px;"></i></a> 
+				&nbsp; <span style="font-size:14px; text-transform:uppercase;">Notifications</span>
+				<a href="#" class="pull-right text-white z-depth-1a" onclick="deleteall();" style="margin-top:2px; color:white !important;"><i class="fas fa-ban"></i> CLEAR ALL</a>
+			</span>				
+			
+			
+		</div-->
+
+		
+		<div class="list-group btn-group" id="select-contact-div" style="position: fixed; z-index: 9999; top: 0; width: 100%; margin-top:0;">
+			<span class="list-group-item active">
+           <a href="javascript:history.go(-1)"  class="pull-left text-white" style="margin-top:1px;"><i class="fas fa-long-arrow-alt-left text-white" style="font-size:20px;"></i></a> 
+			&nbsp; <span style="font-size:14px; text-transform:uppercase;">Notifications</span>
+
+			</span>
+	        <a href="#" class="new-chat-search-btn" onclick="deleteall();" style="margin-top:2px; color:white !important;font-size:14px;"><i class="fas fa-ban"></i> CLEAR ALL</a>
+	  </div> 	
+	  
+		
+		<!-- <h3 class="text-center" style="margin-top:60px;">Notifications</h3>	 -->
+<div id="alerts" style="margin-top:60px;">
+</div>
+<div class="clearfix"></div>
+		<!-- <button type="button" class="btn blue-gradient btn-primary z-depth-1a" onclick="deleteall();">Clear All</button> -->
+
+
+<div class="clearfix"><br><br><br></div>
+</section>
+<section>
+	<div class="footer-menu">
+				<div ><a href="home.html"><i class="far fa-address-book"></i><span><br>Contacts</span></a></div>
+				
+				<div><a href="nearby.html"><img src="img/nearby2.png" class="nearby2"><span><br>Nearby</span></a></div>
+				<div><a href="meetings.html"><i class="fas fa-users"></i><span><br>Meetings</span></a></div>
+			<div><a href="chat-list.html" id="chatcount"><i class="fas fa-comments"></i><span><br>Chats</span></a></div>
+				<div><a href="generalcards.html" id="meetingscount"><i class="far fa-address-card"></i><span><br>Cards</span></a></div>
+			</div>
+</section>
+
+	<div class="corner-icon1"> <img src="logo.png"></div>
+
+</main>
+<!-- Card -->
+                      
+    <!--/Form with header-->
+
+            
+    
+    <!--Main Layout-->
+
+    <!-- /Start your project here-->
+
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/mdb.min.js"></script>
+	<script>
+        $(".button-collapse").sideNav();
+    </script>
+</body>
+
+</html>

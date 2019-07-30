@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>NOB HUB</title>
+    <link href="css/style.css" rel="stylesheet"><link href="https://nobhub.com/services/cardstyles.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link href="https://mdbootstrap.com/previews/docs/latest/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://mdbootstrap.com/previews/docs/latest/css/mdb.min.css" rel="stylesheet">
+    <link href="css/mdb.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://jqueryvalidation.org/files/demo/site-demos.css">
+ 
+
+
+
+    <style type="text/css">
+		.form-elegant .font-small {
+		  font-size: 0.8rem; }
+		.form-elegant .z-depth-1a {
+		  -webkit-box-shadow: 0 2px 5px 0 rgba(55, 161, 255, 0.26), 0 4px 12px 0 rgba(121, 155, 254, 0.25);
+		  box-shadow: 0 2px 5px 0 rgba(55, 161, 255, 0.26), 0 4px 12px 0 rgba(121, 155, 254, 0.25); }
+		.form-elegant .z-depth-1-half,
+		.form-elegant .btn:hover {
+		  -webkit-box-shadow: 0 5px 11px 0 rgba(85, 182, 255, 0.28), 0 4px 15px 0 rgba(36, 133, 255, 0.15);
+		  box-shadow: 0 5px 11px 0 rgba(85, 182, 255, 0.28), 0 4px 15px 0 rgba(36, 133, 255, 0.15); }
+
+
+		
+
+    </style>
+
+    <style>                
+        .light-blue-skin .dropdown-content li:not(.disabled) span, .light-blue-skin .md-form .prefix.active, .light-blue-skin input[type=email]:focus:not([readonly])+label, .light-blue-skin input[type=text]:focus:not([readonly])+label, .light-blue-skin input[type=password]:focus:not([readonly])+label, .light-blue-skin textarea.md-textarea:focus:not([readonly])+label {
+		color: #212121;
+		}
+		.row{
+		margin-right: -0px;
+		margin-left: -0px;
+		}
+    </style>
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="cordova.js"></script>
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		var pictureSource;
+		var destinationType;
+		function onLoad() {
+		//	alert("hi");
+			document.addEventListener("deviceready", onDeviceReady, false);
+		}
+		function onDeviceReady() {
+			pictureSource=navigator.camera.PictureSourceType;
+			destinationType=navigator.camera.DestinationType;
+			document.getElementById('userid').value=localStorage.getItem("user_id");
+			document.addEventListener("backbutton", onBackKeyDown, false);
+		}
+		function onBackKeyDown() {
+			if(document.getElementById('camoptionstoggle').value==1) {
+				$("#camoption1").slideUp();
+				$("#camoption2").slideUp();
+				document.getElementById('camoptionstoggle').value=0;
+			}
+			else if(document.getElementById('confirmertoggle').value==1) {
+				$("#confirmer").slideUp();
+				document.getElementById('confirmertoggle').value=0;
+				location.reload();
+			}
+			else {
+				window.history.back();
+			}
+		}
+		
+
+
+		
+	</script>
+	<script>
+		$(document).ready(function(){
+			$("#myimage").click(function(){
+				//alert(document.getElementById('ibdata').innerHTML);
+				if(document.getElementById('camoptionstoggle').value==0) {
+					$("#camoption1").slideDown();
+					$("#camoption2").slideDown();
+					document.getElementById('camoptionstoggle').value=1;
+				}
+				else if(document.getElementById('camoptionstoggle').value==1) {
+					$("#camoption1").slideUp();
+					$("#camoption2").slideUp();
+					document.getElementById('camoptionstoggle').value=0;
+				}
+			});
+		});
+	</script>
+	
+	<script>
+		$(document).ready(function(){
+			$("#okbtn").click(function(){
+				$("#confirmer").slideUp();
+				document.getElementById('confirmertoggle').value=0;
+				getprofile();
+				var a = localStorage.getItem("toshow");
+				if(a=="personal") {
+					document.getElementById('home').style.display="block";
+					document.getElementById('menu1').style.display="none";
+					document.getElementById('t1').style.background="#c0c0c0";
+					document.getElementById('t2').style.background="#FFFFFF";
+				}
+				else if(a=="company") {
+					document.getElementById('home').style.display="none";
+					document.getElementById('menu1').style.display="block";
+					document.getElementById('t1').style.background="#FFFFFF";
+					document.getElementById('t2').style.background="#c0c0c0";
+				}
+				else {
+					location.reload();
+				}
+				
+			});
+		});
+	</script>
+	
+	
+	
+	<script>
+
+		
+		
+		function myname() {
+			document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			//alert(user_id);
+			var timezone = localStorage.getItem("timezone");
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					//alert(result);
+						var splitter = result.split("deli");
+
+					
+					localStorage.setItem("myname",splitter[0]);
+				if(splitter[1]!=""){
+					document.getElementById('myimagemain').src = "https://nobhub.com/services/members/"+splitter[1];
+					document.getElementById('himage').src = "https://nobhub.com/services/members/"+splitter[1];
+					
+					}else {
+					document.getElementById('myimagemain').src = "https://nobhub.com/services/pp1.jpg";
+					document.getElementById('himage').src = "https://nobhub.com/services/pp1.jpg";
+					}
+					document.getElementById('myname').innerHTML=splitter[0];
+					document.getElementById('hname').innerHTML="Welcome&nbsp;"+splitter[0];
+			document.getElementById('loader').style.display="none";
+
+
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/mydetails.php?user_id="+user_id+"&timezone="+timezone, true);
+			xmlhttp.send();
+			}
+	</script>
+
+	<style>
+		.switch label input[type=checkbox]:checked+.lever {
+				background-color: #fd7e14;
+			}
+	</style>
+	
+
+	<script>
+		function getcategories() {
+			document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					document.getElementById('categories').innerHTML=result;
+					document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/categories.php", true);
+			xmlhttp.send();
+		}
+	</script>
+	
+	<script>
+		function themeclick(clickid) {
+			document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			var a = clickid.split("color-");
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					document.getElementById('confirmtext').innerHTML=result;
+						$("#confirmer").slideDown();
+						document.getElementById('confirmertoggle').value=1;
+						document.getElementById('loader').style.display="none";
+						viewcard();
+
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/changetheme.php?user_id="+user_id+"&themeid="+a[1], true);
+			xmlhttp.send();
+		}
+	</script>
+	<script>
+		function alertcount() {
+				document.getElementById('loader').style.display="block";
+				var user_id = localStorage.getItem("user_id");
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						var result = this.responseText;
+						if(result>0) {
+						document.getElementById('alertcount').style.display="block";
+						document.getElementById('alertcount').innerHTML=result;
+						document.getElementById('loader').style.display="none";
+						}
+					}
+				};
+				xmlhttp.open("GET", "https://nobhub.com/services/alertcount.php?user_id="+user_id, true);
+				xmlhttp.send();
+			}
+	</script>
+	<style>
+		#mcode {
+			display: block;
+		}
+	</style>
+	<script>
+		function getcards(clickid) {
+		
+			localStorage.setItem("category",clickid);
+			location.href="cards-category.html";
+		}
+	</script>
+	<script>
+		function getmainprofile() {
+			document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					document.getElementById('mycard').innerHTML=result;
+					document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/getmainprofile.php?user_id="+user_id, true);
+			xmlhttp.send();
+		}
+	</script>
+	<script>
+		function tabshow() {
+			document.getElementById('home').style.display="block";
+			document.getElementById('menu1').style.display="none";
+			document.getElementById('t1').style.background="#fb8a00";
+			document.getElementById('t2').style.background="#FFFFFF";
+		}
+	</script>
+	<script>
+		function tabshow1() {
+			document.getElementById('home').style.display="none";
+			document.getElementById('menu1').style.display="block";
+			document.getElementById('t1').style.background="#FFFFFF";
+			document.getElementById('t2').style.background="#fb8a00";
+		}
+	</script>
+	
+	
+	<script>
+		function viewcard() {
+			document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					document.getElementById('card-1').innerHTML=result;
+					document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/viewcard1.php?user_id="+user_id, true);
+			xmlhttp.send();
+			}
+	</script>
+	
+	<script>
+$(function() {
+	$('input[name=chooseOption]').on('input',function() {
+		var selectedOption = $('option[value="'+$(this).val()+'"]');
+		
+	});
+});
+
+function clearinput() {
+
+			document.getElementById('searchkey').value= '';
+			document.getElementById('clearinput').style.display="none";
+			getcategories();
+		}
+</script>
+
+<script>
+	function ct1() {
+		localStorage.setItem("toshow","personal");
+	}
+</script>
+
+<script>
+	function ct2() {
+		localStorage.setItem("toshow","company");
+	}
+</script>
+
+
+<script>
+		function searchfn() {
+			if(document.getElementById('searchkey').value=="") {
+			getcategories();
+			}
+			else {
+			document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			var key = document.getElementById('searchkey').value;
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					//console.log(result);
+					document.getElementById('categories').innerHTML=result;
+					document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/getcardssearch.php?user_id="+user_id+"&key="+key, true);
+			xmlhttp.send();
+			}
+		}
+</script>
+
+
+
+<script>
+	//window.setInterval(function(){
+	//alertcount();
+	// }, 10000);
+	</script>
+
+
+<script src="https://nobhub.com/services/custom-scripts.js"></script>
+<style type="text/css">
+	
+ .nav-tabs .nav-itema {
+  margin-bottom: -1px;
+      width: 50%;
+      text-align:center;
+ }
+.nav-tabs .nav-link.active,
+  .nav-tabs .nav-itema.show .nav-link {
+     color: #495057;
+     background-color: #fff;
+   }
+  .nav-fill .nav-itema {
+     -webkit-box-flex: 1;
+     -ms-flex: 1 1 auto;
+   }
+
+   .nav-tabs .nav-itema.show .nav-link, .nav-tabs .nav-link.active {
+        color: #495057;
+        background-color: #f80;
+</style>
+</head>
+<body id="sett" class="fixed-sn light-blue-skin" onload="onLoad();myname();getcategories();">
+
+<div style="display: none; border: 1px solid #c0c0c0; background: #e9e9e9; width: 90%; position: fixed; z-index: 9999; top: 250px; left: 20px; padding: 10px; text-align: center" id="confirmer">
+<i style="color: #99d31f" class="fa fa-check-circle fa-4x"></i></br>
+<span id="confirmtext"></span></br>
+<button type="button" class="btn blue-gradient btn-primary z-depth-1a" id="okbtn">OK</button>
+</div>
+<input type="hidden" id="camoptionstoggle" value="0">
+<input type="hidden" id="confirmertoggle" value="0">
+<div style="width: 100%; text-align: center; position: fixed; z-index: 9998889; top: 250px; display:none" id="loader"><img src="loading.gif" style="margin-left: auto; margin-right: auto; width: 64px; height: auto"></div>
+   <main>
+		<!--section id="mycard" style="margin-top: 5px">
+			
+		</section-->
+		
+			
+		<div class="list-group btn-group" id="select-contact-div" style="position: fixed; z-index: 9999; top: 0; width: 100%; margin-top:0;">
+			<span class="list-group-item active">
+				<a href="chat-list.html" class="pull-left chat-back-btn"><i class="fas fa-long-arrow-alt-left"></i></a>
+				<span class="pull-left" style="margin-top:8px; font-size:16px; line-height: .8;"><b>Choose Cards Category</b><br><small style="font-size:10px; opacity:.6;" id="contactscount" style="display:none;"></small></span>
+			</span>
+			<a href="javascript:void(0);" class="new-chat-search-btn"><i class="fa fa-search"></i></a>	
+		</div>  
+			
+		<div class="list-group btn-group" id="search-contact-div" style="position: fixed; z-index: 9999; top: 0; width: 100%; margin-top:0; display:none;">
+			<span class="list-group-item active">
+				<a href="javascript:void(0);" class="pull-left chat-back-btn back-select-contact"><i class="fas fa-long-arrow-alt-right"></i></a>
+				<input type="text" id="searchkey" onkeyup="searchfn()" autofocus class="search-contact" placeholder="Search Cards by Category">
+			<!--<a href="#" onclick="clearinput();" class="search-clear"><i class="fa fa-close"></i></a>-->
+<a href="#" id="clearinput" onclick="clearinput();" class="search-clear" style="display:none;"><i class="fa fa-close"></i></a>
+			</span>	
+		</div> 
+		
+		<!--div class="list-group btn-group" style="position: fixed; z-index: 9999; top: 0; width: 100%; margin-top:0;">
+			<span class="list-group-item active gradient-bg">
+				<span class="pull-left" style="margin-top:4px;"><b id="hname">Welcome </b></span>
+			</span>				
+			
+			<div class="user-menu dropdow">
+				<a href="#" id="user-menu-btn">
+					<img src="https://nobhub.com/services/pp1.jpg" id="himage" class="img-fluid mt-1" alt="Post" style="height: 40px; width: 40px;">
+				</a>
+			</div>	
+		</div-->  
+		<div id="user-menu-div" style="display:none;">
+			<img src="img/settings-bg.png" class="img-responsive">
+			<div class="user-menu-header">
+				<a href="javascript:void(0);" id="user-menu-btn-close"><i class="fa fa-close" style="font-size:20px;"></i></a>
+				<br><br>
+			<div class="col-xs-12 text-center" style="position: absolute; width: 100%; bottom: -169px;">
+				<a href="javascript:void(0);" id="myname" style="text-transform:uppercase;"><i class="fa fa-angle-down"></i></a>
+				<br>
+				<a href="javascript:void(0);"><img src="https://nobhub.com/services/pp1.jpg" class="img-fluid mt-1 pp" alt="Post" id="myimagemain" style="height: 80px; width: 80px; margin-top:25px; border-radius:100px; margin-bottom:6px; margin-left: -8px;"></a></div>
+			</div>
+			<br><br><br>
+			<a class="dropdown-item" href="settings.html"><i class="fa fa-user"></i> Profile</a>
+			<a class="dropdown-item" href="chat-list.html"><i class="fa fa-comments"></i> Chat</a>
+			<a class="dropdown-item" href="alerts.html"><i class="fa fa-bell"></i> Notifications</a>
+			<!--a class="dropdown-item" href="#"><i class="fab fa-youtube"></i> Live Stream</a-->				<a class="dropdown-item" href="share.html"><i class="fa fa-users"></i> Refer a Friend</a>
+			<a class="dropdown-item" href="cnumber.html"><i class="fa fa-phone"></i> Change Number </a>
+			<a class="dropdown-item" href="upgrade.html"><i class="fas fa-crown"></i> Premium Membership </a><a class="dropdown-item" href="blockedlist.html"><i class="fas fa-ban"></i> Block List </a>
+			<a class="dropdown-item" href="about.html"><i class="fas fa-info"></i> About NobHub </a>
+			<a class="dropdown-item" href="https://play.google.com/store/apps/details?id=com.nobhub.app"><i class="fas fa-star"></i> Rate App </a>
+			<!--a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Change Password </a-->
+			<a class="dropdown-item" href="#" onclick="logoutfn()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+		</div>
+		<section style="margin-top: 40px">
+			<div class="">
+				<div class="mx-2">
+					
+					<div class="col-12 no-padd" style="margin-top: 70px; text-align: center">
+						<div class="row" id="categories">
+						<div style="width: 100%; text-align: center; position: fixed; z-index: 9998889; top: 250px; display:none" id="loader"><img src="loading.gif" style="margin-left: auto; margin-right: auto; width: 64px; height: auto"></div>
+							<!--div class="col-6"><div class="cat-item"><a href="cards-category.html"><img src="img/health-care.png" width="100"><br>Health Care</a></div></div>
+							<div class="col-6"><div class="cat-item"><a href="cards-category.html"><img src="img/business.png" width="100"><br>IT Business</a></div></div>
+							<div class="col-6"><div class="cat-item"><a href="cards-category.html"><img src="img/realestate.png" width="100"><br>RealEstate</a></div></div>
+							<div class="col-6"><div class="cat-item"><a href="cards-category.html"><img src="img/factory.png" width="100"><br>Industrial</a></div></div-->
+						</div>
+					</div>
+
+	
+</form>
+<!-- Material form register -->
+                      
+
+        </div>
+
+    </div>
+    <!--/Form without header-->
+
+</section>
+<div class="clearfix"><br><br><br></div>
+
+
+
+
+            </main>
+
+	<div class="footer-menu">
+				<div ><a href="home.html"><i class="far fa-address-book"></i><span><br>Contacts</span></a></div>
+				
+				<div><a href="nearby.html"><img src="img/nearby2.png" class="nearby2"><span><br>Nearby</span></a></div>
+				<div><a href="meetings.html"><i class="fas fa-users"></i><span><br>Meetings</span></a></div>
+			<div><a href="chat-list.html"><i class="fas fa-comments"></i><span><br>Chats</span></a></div>
+				<div class="active"><a href="generalcards.html"><i class="far fa-address-card"></i><span><br>Cards</span></a></div>
+			</div>
+		
+
+<!-- Card -->
+                      
+    <!--/Form with header-->
+
+            
+    
+    <!--Main Layout-->
+
+    <!-- /Start your project here-->
+
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/mdb.min.js"></script>
+  <script>
+        
+        // SideNav Initialization
+        $(".button-collapse").sideNav();
+
+    </script>
+	
+	<script>
+		$(document).ready(function(){
+		  $("#user-menu-btn-close").click(function(){
+			$("#user-menu-div").hide();
+		  });
+		  $("#user-menu-btn").click(function(){
+			$("#user-menu-div").show();
+		  });
+		});
+	</script>
+
+    <script> // Material Select Initialization
+ $(document).ready(function() {
+    $('.mdb-select').material_select();
+  });</script>
+
+
+	
+	
+	<script>
+		$(document).ready(function(){
+		  $('.new-chat-search-btn').click(function(){
+			$('#select-contact-div').fadeOut('slow');
+			$('#search-contact-div').fadeIn(1000);
+		  });
+		  $('.back-select-contact').click(function(){
+			$('#search-contact-div').fadeOut('slow');
+			$('#select-contact-div').fadeIn(1000);
+			clearinput();		  
+			});
+		});
+	</script>
+	
+
+</body>
+
+
+</html>

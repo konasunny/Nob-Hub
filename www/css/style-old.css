@@ -1,0 +1,833 @@
+/* Your custom styles */
+.bg1{
+    background: url('../img/bg1.jpg') no-repeat;
+}
+.icon-circle {
+    background: #fff9;
+    width: 80px;
+    height: 80px;
+    border: 8px solid #ffffffb8;
+    margin: 0 auto;
+    border-radius: 100px;
+    box-shadow: 0px 0px 5px #3333333d;
+}
+.icon-circle i {
+    font-size: 40px;
+    margin-top: -12px;
+    color: #ff4731;
+}
+.md-form .prefix~label {
+    margin-left: 2.5rem;
+    font-size: 12px !important;
+}
+.select-wrapper input.select-dropdown{
+    margin-left: 2.5rem;
+    font-size: 12px !important;
+}
+.md-form .prefix~input, .md-form .prefix~textarea {
+    margin-left: 2.5rem;
+    font-size: 12px !important;
+}
+.md-form .prefix {
+    top: 6px !important;
+    font-size: 14px !important;
+    color:white !important;
+}
+.blue-gradient {
+    background: -webkit-linear-gradient(50deg,#FFC107,#FF9800)!important;
+    background: -o-linear-gradient(50deg,#45cafc,#303f9f)!important;
+    background: linear-gradient(40deg,#FF9800,#FFEB3B)!important;
+}
+.btn {
+    padding: 6px 15px !important;
+    font-size: 12px !important;
+}
+.md-form .prefix~input, .md-form .prefix~textarea {
+    margin-left: 0 !important;
+    width: -webkit-calc(100% - 2.5rem) !important;
+    width: calc(100%) !important;
+    padding-left: 17px !important;
+}
+.blue-gradient {
+    background: -webkit-linear-gradient(50deg,#FF5722,#FF9800)!important;
+    background: -o-linear-gradient(50deg,#FF9800,#FF5722)!important;
+    background: linear-gradient(40deg,#FF9800,#FF5722)!important;
+}
+.md-form label {
+    position: absolute !important;
+    top: .4rem !important;
+    left: 0 !important;
+    -webkit-transition: .2s ease-out;
+    -o-transition: .2s ease-out;
+    transition: .2s ease-out;
+    cursor: text;
+    color: #999 !important;
+    font-size: 12px !important;
+}
+.md-form .prefix~label {
+    margin-left: 0px !important;
+}
+.btn {
+    padding: 6px 6px;
+    font-size: 11px !important;
+}
+.br-b{
+	border-bottom:1px dashed #eee;
+	padding-bottom:5px;
+}
+.pp {
+    border-radius: 100px;
+    padding: 5px;
+    border: 1px solid #64646445;
+}
+.p-social-icons {
+    float: right;
+    margin-top: -10px;
+}
+.form-elegant .font-small {
+  font-size: 0.8rem; }
+
+.form-elegant .z-depth-1a {
+  -webkit-box-shadow: 0 2px 5px 0 rgba(55, 161, 255, 0.26), 0 4px 12px 0 rgba(121, 155, 254, 0.25);
+  box-shadow: 0 2px 5px 0 rgba(55, 161, 255, 0.26), 0 4px 12px 0 rgba(121, 155, 254, 0.25); }
+
+.form-elegant .z-depth-1-half,
+.form-elegant .btn:hover {
+  -webkit-box-shadow: 0 5px 11px 0 rgba(85, 182, 255, 0.28), 0 4px 15px 0 rgba(36, 133, 255, 0.15);
+  box-shadow: 0 5px 11px 0 rgba(85, 182, 255, 0.28), 0 4px 15px 0 rgba(36, 133, 255, 0.15); 
+}
+.chip.chip-md img {
+    height: 42px;
+    width: 42px;
+}
+.search{
+	border-radius:50px;
+	border:#eee 1px solid;
+	padding:2px 10px;
+	margin-left:15px;
+	width:180px;
+}
+.search-btn {
+    float: right;
+    position: absolute;
+    right: 26px;
+    z-index: 99;
+    top: 13px;
+}
+.footer-menu {
+    background: #333;
+    height: 50px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    z-index: 999999;
+	width: 100%;
+	border-top:2px solid #666;
+}
+.footer-menu div {
+    float: left;
+    width: 20%;
+	border-right:1px solid #666;
+    padding: 8px 0px;
+}
+.footer-menu div:last-child {
+	border-right:0px solid #666;
+}
+.footer-menu div a img{
+    width:22px;
+}
+.footer-menu div a span{
+    color:#fff;
+	text-transform:uppercase;
+	font-size:9px;
+}
+.vcard1{
+	background:white;
+	border-bottom:4px solid #d6023a;
+	margin-top:-16px;
+}
+.vcard1 .sec1{
+	background:#D6023A;
+	text-align:center;
+	color:white;
+	padding:15px 10px;
+	font-size:10px;
+	font-weight:bold;
+}
+.vcard1 .sec1 i{
+	font-size:30px;
+}
+.vcard1 .sec1 .email{
+	width:33.33%;
+	float:left;
+}
+.vcard1 .sec1 .mobile{
+	width:33.33%;
+	float:left;
+}
+.vcard1 .sec1 .address{
+	width:33.33%;
+	float:left;
+}
+
+.vcard1 .sec2{
+	background:url('../img/vcard1-bg.jpg');
+	text-align:center;
+	padding:15px 10px;
+}
+.vcard1 .sec2 .pic{
+	width:40%;
+	float:left;
+}
+.vcard1 .sec2 .pic img {
+    border-radius: 100px;
+    width: 60px;
+    height: 60px;
+    border: 2px solid #212529;
+    padding: 4px;
+}
+.vcard1 .sec2 .name-dec {
+    font-size: 30px;
+    width: 60%;
+    float: left;
+    line-height: 20px;
+    padding-top: 10px;
+}
+.vcard1 .sec2 .name-dec span{
+	font-size:30px;
+	font-weight:bold;
+}
+.vcard1 .sec2 .name-dec small{
+	font-size:12px !important;
+	font-weight:bold;
+}
+
+
+
+
+
+
+.vcard2{
+	background:white;
+	border-bottom:4px solid #00BCD4;
+	margin-top:-16px;
+}
+.vcard2 .sec1{
+	background:#00BCD4;
+	text-align:center;
+	color:white;
+	padding:15px 10px;
+	font-size:10px;
+	font-weight:bold;
+}
+.vcard2 .sec1 i{
+	font-size:30px;
+}
+.vcard2 .sec1 .email{
+	width:33.33%;
+	float:left;
+}
+.vcard2 .sec1 .mobile{
+	width:33.33%;
+	float:left;
+}
+.vcard2 .sec1 .address{
+	width:33.33%;
+	float:left;
+}
+
+.vcard2 .sec2{
+	background:url('../img/vcard2-bg.jpg');
+	text-align:center;
+	padding:15px 10px;
+}
+.vcard2 .sec2 .pic{
+	width:40%;
+	float:left;
+}
+.vcard2 .sec2 .pic img {
+    border-radius: 100px;
+    width: 60px;
+    height: 60px;
+    border: 2px solid #00bcd4;
+    padding: 4px;
+}
+.vcard2 .sec2 .name-dec {
+    font-size: 30px;
+    width: 60%;
+    float: left;
+    line-height: 20px;
+    padding-top: 10px;
+}
+.vcard2 .sec2 .name-dec span{
+	font-size:30px;
+	font-weight:bold;
+}
+.vcard2 .sec2 .name-dec small{
+	font-size:12px !important;
+	font-weight:bold;
+}
+
+
+
+.fixed-sn main, .hidden-sn main {
+    padding-top: 0rem !important;
+}
+
+
+
+/* New CSS */
+
+.card-body {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 6px !important;
+    background: #333;
+	color:white !important;
+}
+
+.vcard6{
+    background: url(../img/card3.jpg);
+	background-size:100%;
+	border-bottom:4px solid #97b8d3;
+	margin-top:-16px;
+	padding-bottom:6px;
+}
+.vcard6 .sec2 {
+    text-align: left;
+    padding: 6px 10px;
+	margin-bottom:20px;
+}
+.vcard6 .sec1{
+	background:#fff;
+	text-align:left;
+	color:white;
+	padding:15px 10px;
+	font-size:10px;
+	font-weight:bold;
+}
+.vcard6 .sec1 i{
+	font-size:30px;
+}
+.vcard6 .sec1 .email{
+	width:33.33%;
+	float:left;
+}
+.vcard6 .sec1 .mobile{
+	width:33.33%;
+	float:left;
+}
+.vcard6 .sec1 .address{
+	width:33.33%;
+	float:left;
+}
+
+
+
+
+
+.vcard7{
+    background: url(../img/card4-1.jpg);
+	background-size:100%;
+	border-bottom:4px solid #97b8d3;
+	margin-top:-16px;
+	padding-bottom:6px;
+	font-size: 14px;
+}
+.vcard7-2{
+    background: url(../img/card4-2.jpg);
+	background-size:100%;
+	border-bottom:4px solid #97b8d3;
+	margin-top:-16px;
+	padding-bottom:6px;
+	padding:10px;
+}
+.vcard7-logo {
+    background: white;
+    padding: 10px 2px;
+    position: absolute;
+    left: 10px;
+    margin-top: 30px;
+    border: 5px solid #bdf7fb;
+}
+.vcard7-content {
+    background: white;
+    margin: 0px 6px 10px 6px;
+    padding: 6px 10px;
+}
+.vcard7-content-2 {
+    background: white;
+    padding: 6px 20px;
+    text-align: left;
+    font-size: 14px;
+	border: 5px solid #607D8B;
+}
+.vcard7 .sec1 i{
+	font-size:30px;
+}
+.vcard7 .sec1 .email{
+	width:33.33%;
+	float:left;
+}
+.vcard7 .sec1 .mobile{
+	width:33.33%;
+	float:left;
+}
+.vcard7 .sec1 .address{
+	width:33.33%;
+	float:left;
+}
+
+
+
+
+
+.vcard8{
+    background: url(../img/card5-1.jpg);
+	background-size:100%;
+	border-bottom:4px solid #97b8d3;
+	margin-top:-16px;
+	padding-bottom:6px;
+	font-size: 14px;
+}
+.vcard8-2{
+    background: url(../img/vcard5-2.jpg);
+	background-size:100%;
+	border-bottom:4px solid #97b8d3;
+	margin-top:-16px;
+	padding-bottom:6px;
+	padding:10px;
+}
+.vcard8-logo {
+    background: white;
+    padding: 10px 2px;
+    position: absolute;
+    left: 10px;
+    margin-top: 30px;
+    border: 5px solid #bdf7fb;
+}
+.vcard8-content {
+    background: white;
+    margin: 0px 6px 10px 6px;
+    padding: 6px 10px;
+}
+.vcard8-content-2 {
+    background: url(../img/card5-2.jpg);
+	background-size: cover;
+    padding: 20px 20px;
+    text-align: left;
+    font-size: 14px;
+}
+.vcard8 .sec1 i{
+	font-size:30px;
+}
+.vcard8 .sec1 .email{
+	width:33.33%;
+	float:left;
+}
+.vcard8 .sec1 .mobile{
+	width:33.33%;
+	float:left;
+}
+.vcard8 .sec1 .address{
+	width:33.33%;
+	float:left;
+}
+
+
+
+
+
+.vcard9{
+    background: url(../img/card6-1.jpg);
+	background-size:100%;
+	border-bottom:4px solid #97b8d3;
+	margin-top:-16px;
+	padding-bottom:6px;
+	font-size: 13px;
+}
+.vcard9-2{
+    background: url(../img/vcard6-2.jpg);
+	background-size:100%;
+	border-bottom:4px solid #97b8d3;
+	margin-top:-16px;
+	padding-bottom:6px;
+	padding:10px;
+}
+.vcard9-logo {
+    background: white;
+    padding: 10px 2px;
+    position: absolute;
+    left: 10px;
+    margin-top: 30px;
+    border: 5px solid #bdf7fb;
+}
+.vcard9-content {
+    background: white;
+    margin: 0px 6px 10px 6px;
+    padding: 6px 10px;
+}
+.vcard9-content-2 {
+    background: url(../img/card6-2.jpg);
+	background-size: cover;
+    padding: 20px 20px;
+    text-align: left;
+    font-size: 14px;
+}
+.vcard9 .sec1 i{
+	font-size:30px;
+}
+.vcard9 .sec1 .email{
+	width:33.33%;
+	float:left;
+}
+.vcard9 .sec1 .mobile{
+	width:33.33%;
+	float:left;
+}
+.vcard9 .sec1 .address{
+	width:33.33%;
+	float:left;
+}
+
+
+
+
+
+.vcard10{
+    background: url(../img/card7-1.jpg);
+	background-size:100%;
+	border-bottom:4px solid #97b8d3;
+	margin-top:-16px;
+	padding-bottom:6px;
+	font-size: 14px;
+}
+.vcard10-2{
+    background: url(../img/vcard7-2.jpg);
+	background-size:100%;
+	border-bottom:4px solid #97b8d3;
+	margin-top:-16px;
+	padding-bottom:6px;
+	padding:10px;
+}
+.vcard10-logo {
+    background: white;
+    padding: 10px 2px;
+    position: absolute;
+    left: 10px;
+    margin-top: 30px;
+    border: 5px solid #bdf7fb;
+}
+.vcard10-content {
+    background: white;
+    margin: 0px 6px 10px 6px;
+    padding: 6px 10px;
+}
+.vcard10-content-2 {
+    background: url(../img/card7-2.jpg);
+	background-size: cover;
+    padding: 20px 20px;
+    text-align: left;
+    font-size: 14px;
+}
+.vcard10 .sec1 i{
+	font-size:30px;
+}
+.vcard10 .sec1 .email{
+	width:33.33%;
+	float:left;
+}
+.vcard10 .sec1 .mobile{
+	width:33.33%;
+	float:left;
+}
+.vcard10 .sec1 .address{
+	width:33.33%;
+	float:left;
+}
+
+
+
+
+
+
+
+
+
+
+
+.vcard11{
+    background: url(../img/card8-2.jpg);
+	background-size:100%;
+	border-bottom:4px solid #97b8d3;
+	margin-top:-16px;
+	padding-bottom:6px;
+    font-size: 12px !important;
+	color:white;
+}
+.vcard11-2{
+    background: url(../img/vcard8-1.jpg);
+	background-size:100%;
+	border-bottom:4px solid #97b8d3;
+	margin-top:-16px;
+	padding-bottom:6px;
+	padding:10px;
+	color:white;
+    font-size: 12px !important;
+}
+.vcard11-logo {
+    background: white;
+    padding: 10px 2px;
+    position: absolute;
+    left: 10px;
+    margin-top: 30px;
+    border: 5px solid #bdf7fb;
+}
+.vcard11-content {
+    background: white;
+    margin: 0px 6px 10px 6px;
+    padding: 6px 10px;
+	color:white;
+}
+.vcard11-content-2 {
+    background: url(../img/card8-1.jpg);
+	background-size: cover;
+    padding: 20px 20px;
+    text-align: left;
+    font-size: 12px !important;
+	color:white;
+	font-weight: 200;
+	padding-left: 40px !important;
+	padding-right: 40px !important;
+}
+.vcard11 .sec1 i{
+	font-size:30px;
+}
+.vcard11 .sec1 .email{
+	width:33.33%;
+	float:left;
+}
+.vcard11 .sec1 .mobile{
+	width:33.33%;
+	float:left;
+}
+.vcard11 .sec1 .address{
+	width:33.33%;
+	float:left;
+}
+.vcard11 .fa-envelope{
+	background:#E94D3E; padding:3px; width:18px; margin-bottom:1px;
+}
+.vcard11 .fa-facebook{
+	background:#3C5A98; width:18px; padding:3px; margin-bottom:1px;
+}
+.vcard11 .fa-twitter{
+	background:#20C5FF; padding:3px; width:18px; margin-bottom:1px;
+}
+.vcard11 .fa-globe{
+	background:#02B3E9; padding:3px; width:18px; margin-bottom:1px;
+}
+.vcard11 .fa-phone{
+	background:#464D67; padding:3px; width:18px; margin-bottom:1px;
+}
+.vcard11 .fa-mobile{
+	background:#F97800; padding:3px; width:18px; margin-bottom:1px;
+}
+.vcard11 .fa-skype{
+	background:#02B3E9; padding:3px; width:18px; margin-bottom:1px;
+}
+
+
+.vcard11-1 .fa-envelope{
+	background:#E94D3E; padding:3px; width:18px; margin-bottom:1px;
+}
+.vcard11-1 .fa-facebook{
+	background:#3C5A98; width:18px; padding:3px; margin-bottom:1px;
+}
+.vcard11-1 .fa-twitter{
+	background:#20C5FF; padding:3px; width:18px; margin-bottom:1px;
+}
+.vcard11-1 .fa-globe{
+	background:#02B3E9; padding:3px; width:18px; margin-bottom:1px;
+}
+.vcard11-1 .fa-phone{
+	background:#464D67; padding:3px; width:18px; margin-bottom:1px;
+}
+.vcard11-1 .fa-mobile{
+	background:#F97800; padding:3px; width:18px; margin-bottom:1px;
+}
+.vcard11-1 .fa-skype{
+	background:#02B3E9; padding:3px; width:18px; margin-bottom:1px;
+}
+
+.vcard11-1 .name-dec{
+	border-left: 1px solid #999; padding-left: 5px;
+}
+.vcard11-1 .p-name{
+	font-size:16px !important; margin-top:6px; color:#fff;
+}
+.vcard11-1 .p-des{
+	color:#fff;
+}
+.vcard11-content-2 .clearfix{
+	margin-bottom:11px;
+}
+.vcard11 .clearfix{
+	margin-bottom:12px;
+}
+.vcard11-content-2 img{
+	margin-top:-10px; margin-right:10px; width:100px; margin-top:30px;
+}
+.vcard11 img{
+	margin-top:60px; margin-right:-8px; width:80px;
+}
+
+
+
+
+
+
+
+
+
+
+
+.vcard12{
+    background: url(../img/card9-2.jpg);
+	background-size:100%;
+	border-bottom:4px solid #97b8d3;
+	margin-top:-16px;
+	padding-bottom:6px;
+    font-size: 12px !important;
+	color:white;
+}
+.vcard12-2{
+    background: url(../img/vcard9-1.jpg);
+	background-size:100%;
+	border-bottom:4px solid #97b8d3;
+	margin-top:-16px;
+	padding-bottom:6px;
+	padding:10px;
+	color:white;
+    font-size: 12px !important;
+}
+.vcard12-logo {
+    background: white;
+    padding: 10px 2px;
+    position: absolute;
+    left: 10px;
+    margin-top: 30px;
+    border: 5px solid #bdf7fb;
+}
+.vcard12-content {
+    background: white;
+    margin: 0px 6px 10px 6px;
+    padding: 6px 10px;
+	color:white;
+}
+.vcard12-content-2 {
+    background: url(../img/card9-1.jpg);
+	background-size: cover;
+    padding: 20px 20px;
+    text-align: left;
+    font-size: 12px !important;
+	color:white;
+	font-weight: 200;
+	padding-left: 40px !important;
+	padding-right: 40px !important;
+}
+.vcard12 .sec1 i{
+	font-size:30px;
+}
+.vcard12 .sec1 .email{
+	width:33.33%;
+	float:left;
+}
+.vcard12 .sec1 .mobile{
+	width:33.33%;
+	float:left;
+}
+.vcard12 .sec1 .address{
+	width:33.33%;
+	float:left;
+}
+.vcard12 .fa-envelope{
+	background:#E94D3E; padding:3px; width:18px; margin-bottom:1px;
+}
+.vcard12 .fa-facebook{
+	background:#3C5A98; width:18px; padding:3px; margin-bottom:1px;
+}
+.vcard12 .fa-twitter{
+	background:#20C5FF; padding:3px; width:18px; margin-bottom:1px;
+}
+.vcard12 .fa-globe{
+	background:#02B3E9; padding:3px; width:18px; margin-bottom:1px;
+}
+.vcard12 .fa-phone{
+	background:#464D67; padding:3px; width:18px; margin-bottom:1px;
+}
+.vcard12 .fa-mobile{
+	background:#F97800; padding:3px; width:18px; margin-bottom:1px;
+}
+.vcard12 .fa-skype{
+	background:#02B3E9; padding:3px; width:18px; margin-bottom:1px;
+}
+
+
+.vcard12-1 .fa-envelope{
+	background:#E94D3E; padding:3px; width:18px; margin-bottom:1px;
+}
+.vcard12-1 .fa-facebook{
+	background:#3C5A98; width:18px; padding:3px; margin-bottom:1px;
+}
+.vcard12-1 .fa-twitter{
+	background:#20C5FF; padding:3px; width:18px; margin-bottom:1px;
+}
+.vcard12-1 .fa-globe{
+	background:#02B3E9; padding:3px; width:18px; margin-bottom:1px;
+}
+.vcard12-1 .fa-phone{
+	background:#464D67; padding:3px; width:18px; margin-bottom:1px;
+}
+.vcard12-1 .fa-mobile{
+	background:#F97800; padding:3px; width:18px; margin-bottom:1px;
+}
+.vcard12-1 .fa-skype{
+	background:#02B3E9; padding:3px; width:18px; margin-bottom:1px;
+}
+
+.vcard12-1 .name-dec{
+	border-left: 1px solid #999; padding-left: 5px;
+}
+.vcard12-1 .p-name{
+	font-size:16px !important; margin-top:6px; color:#fff;
+}
+.vcard12-1 .p-des{
+	color:#fff;
+}
+.vcard12-content-2 .clearfix{
+	margin-bottom:11px;
+}
+.vcard12 .clearfix{
+	margin-bottom:12px;
+}
+.vcard12-content-2 img{
+	margin-top:-10px; margin-right:10px; width:100px; margin-top:30px;
+}
+.vcard12 img{
+	margin-top:60px; margin-right:-8px; width:80px;
+}
+
+
+
+
+
+
+
+
+
+.text-black{
+	color:black !important;
+}
+
+/* New CSS */

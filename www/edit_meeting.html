@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>NOB HUB</title>
+    <link href="css/style.css" rel="stylesheet"><link href="https://nobhub.com/services/cardstyles.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link href="https://mdbootstrap.com/previews/docs/latest/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://mdbootstrap.com/previews/docs/latest/css/mdb.min.css" rel="stylesheet">
+    <link href="css/mdb.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/mobiscroll.javascript.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <script src="js/mobiscroll.javascript.min.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="cordova.js"></script>
+		    <link href="css/bootstrap-select.css" rel="stylesheet" />
+
+		  <link rel="stylesheet" href="css/select2.min.css">
+
+    <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+
+	
+	<!--script type="text/javascript" charset="utf-8">
+		function onLoad() {
+			document.addEventListener("deviceready", onDeviceReady, false);
+			document.addEventListener("deviceready", geoLocation, false);
+		}
+	</script-->
+	
+	
+	<script>
+		$(document).ready(function(){
+			$("#cnbtn").click(function(){
+				$("#confirmer").slideUp();
+				document.getElementById('confirmertoggle').value=0;
+			});
+		});
+	</script>
+	<script>
+		$(document).ready(function(){
+			$("#okbtn").click(function(){
+				navigator.app.exitApp();
+			});
+		});
+	</script>
+	<script>
+		function myname() {    document.getElementById('loader').style.display="block";var user_id = localStorage.getItem("user_id");			var timezone = localStorage.getItem("timezone");
+			//alert(user_id);
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+						var splitter = result.split("deli");
+
+					
+					localStorage.setItem("myname",splitter[0]);
+				if(splitter[1]!=""){
+					document.getElementById('myimagemain').src = "https://nobhub.com/services/members/"+splitter[1];
+					document.getElementById('himage').src = "https://nobhub.com/services/members/"+splitter[1];
+					
+					}else {
+					document.getElementById('myimagemain').src = "https://nobhub.com/services/pp1.jpg";
+					document.getElementById('himage').src = "https://nobhub.com/services/pp1.jpg";
+					}
+					document.getElementById('myname').innerHTML=splitter[0];
+					document.getElementById('hname').innerHTML="Welcome&nbsp;"+splitter[0];
+
+			document.getElementById('loader').style.display="none";
+
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/mydetails.php?user_id="+user_id+"&timezone="+timezone, true);
+			xmlhttp.send();
+			}
+	</script>
+	<script>
+		function meeting_details() {
+				document.getElementById('loader').style.display="block";
+				var user_id = localStorage.getItem("user_id");
+				var meetingid = localStorage.getItem("meetingid");
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						var result = this.responseText;
+						var splitter = result.split("deli");
+
+						document.getElementById('title').value=splitter[0];
+						document.getElementById('notes').innerHTML=splitter[1];
+						document.getElementById('event_date').value=splitter[2];
+						document.getElementById('loader').style.display="none";
+						
+					}
+				};
+				xmlhttp.open("GET", "https://nobhub.com/services/meeting_details.php?user_id="+user_id+"&meetingid="+meetingid, true);
+				xmlhttp.send();
+			}
+			
+			
+			
+			function getduration() {
+           document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			var meetingid = localStorage.getItem("meetingid");
+
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					
+					document.getElementById('duration').innerHTML=result;
+					
+					document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/editduration.php?user_id="+user_id+"&meetingid="+meetingid, true);
+			xmlhttp.send();
+}
+	</script>
+	
+
+<style>
+	label {
+		font-weight: bold;
+	}
+	.md-form label {
+        position: absolute;
+        top: .65rem;
+        left: 0;
+        -webkit-transition: .2s ease-out;
+        transition: .2s ease-out;
+        cursor: text;
+        color: #757575;
+        transform: translateY(-140%);
+    }
+</style>
+
+<script>
+function editparticipants() {
+document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			var meetingid = localStorage.getItem("meetingid");
+           
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					//alert(result);
+					//console.log(result);
+					document.getElementById('participant').innerHTML=result;
+					
+					document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/editparticipants.php?user_id="+user_id+"&meetingid="+meetingid, true);
+			xmlhttp.send();
+}
+
+function showparticipants() {
+document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			var meetingid = localStorage.getItem("meetingid");
+           
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					//alert(result);
+					//console.log(result);
+					document.getElementById('meet').innerHTML=result;
+					
+					document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/showparticipants.php?user_id="+user_id+"&meetingid="+meetingid, true);
+			xmlhttp.send();
+}
+</script>
+
+
+<script src="https://nobhub.com/services/custom-scripts.js"></script></head>
+<body class="fixed-sn light-blue-skin" style="background:#eee;" onload="myname();meeting_details();getduration();editparticipants();showparticipants();">
+<input type="hidden" id="getter">
+<div style="display: none; border: 1px solid #c0c0c0; background: #e9e9e9; width: 90%; position: fixed; z-index: 9999; top: 250px; left: 20px; padding: 10px; text-align: center" id="confirmer">
+<i style="color: #FF0000" class="fa fa-sign-out fa-4x"></i></br>
+<span id="confirmtext">Do you really want to exit?</span></br>
+<button type="button" class="btn btn-warning z-depth-1a" id="cnbtn" style="float: left">Cancel</button>
+<button type="button" class="btn btn-danger z-depth-1a" id="okbtn" style="float: right">OK</button>
+</div>
+<input type="hidden" id="confirmertoggle" value="0">
+
+<div style="width: 100%; text-align: center; position: fixed; z-index: 9998889; top: 250px; display:none" id="loader"><img src="loading.gif" style="margin-left: auto; margin-right: auto; width: 64px; height: auto"></div>
+
+	<main>
+		<section>
+			
+		<div class="list-group btn-group" style="position: fixed; z-index: 9999; top: 0; width: 100%; margin-top:0;">
+			<span class="list-group-item active gradient-bg">
+				<a href="javascript:history.go(-1)" class="pull-left chat-back-btn"><i class="fas fa-long-arrow-alt-left" style="color:white;"></i></a>
+				<span class="pull-left" style="margin-top:4px;"><b id="hname">Welcome</b></span>
+			</span>				
+			
+			<div class="user-menu dropdow">
+				<a href="#" id="user-menu-btn">
+					<img src="https://nobhub.com/services/pp1.jpg" class="img-fluid mt-1" alt="Post" style="height: 40px; width: 40px;" id="himage">
+				</a>
+			</div>	
+		</div>  
+		<div id="user-menu-div" style="display:none;">
+			<img src="img/settings-bg.png" class="img-responsive">
+			<div class="user-menu-header">
+				<a href="javascript:void(0);" id="user-menu-btn-close"><i class="fa fa-close" style="font-size:20px;"></i></a>
+				<br><br>
+			<div class="col-xs-12 text-center" style="position: absolute; width: 100%; bottom: -169px;">
+				<a href="javascript:void(0);" id="myname" style="text-transform:uppercase;"><i class="fa fa-angle-down"></i></a>
+				<br>
+				<a href="javascript:void(0);"><img src="https://nobhub.com/services/pp1.jpg" class="img-fluid mt-1 pp" alt="Post" id="myimagemain" style="height: 80px; width: 80px; margin-top:25px; border-radius:100px; margin-bottom:6px; margin-left: -8px;"></a></div>
+			</div>
+			<br><br><br>
+			<a class="dropdown-item" href="settings.html"><i class="fa fa-user"></i> Profile</a>
+			<a class="dropdown-item" href="chat-list.html"><i class="fa fa-comments"></i> Chat</a>
+			<a class="dropdown-item" href="alerts.html"><i class="fa fa-bell"></i> Notifications</a>
+			<!--a class="dropdown-item" href="#"><i class="fab fa-youtube"></i> Live Stream</a-->				<a class="dropdown-item" href="share.html"><i class="fa fa-users"></i> Refer a Friend</a>
+			<a class="dropdown-item" href="cnumber.html"><i class="fa fa-phone"></i> Change Number </a>
+			<a class="dropdown-item" href="upgrade.html"><i class="fas fa-crown"></i> Premium Membership </a><a class="dropdown-item" href="blockedlist.html"><i class="fas fa-ban"></i> Block List </a>
+			<a class="dropdown-item" href="about.html"><i class="fas fa-info"></i> About NobHub </a>
+			<a class="dropdown-item" href="https://play.google.com/store/apps/details?id=com.nobhub.app"><i class="fas fa-star"></i> Rate App </a>
+			<!--a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Change Password </a-->
+			<a class="dropdown-item" href="#" onclick="logoutfn()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+		</div>
+		<form  method="post" id="form1" enctype="multipart/form-data">
+
+			<div style="padding: 5px 15px; margin-top: 60px">
+				<div class="card" style="padding:15px;">
+					<h5 align="center">Update Meeting</h5>
+					<div class="row">
+					<div class="col-10">
+					<div class="md-form" >
+						<label for="Form-email1" class="label-icon"><i class="fa fa-font"></i> <span class="placeholder">Title <span style='color: #FF0000'>(*)</span></span></label>
+						<input type="text" name="title" id="title" maxlength="30" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" class="form-control form-input">
+					</div>
+					</div>
+					</div>
+					<br><br>
+					<div class="row">
+					<div class="col-10">
+					<div class="md-form" >
+						<label for="Form-email1" class="label-icon"><i class="fa fa-align-left"></i> <span class="placeholder">Description </span></label>
+						<textarea type="text" name="notes" rows="5" id="notes" maxlength="300" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" class="form-control form-input" style="width: 275px !important;"></textarea>
+					</div>
+					</div>
+					</div>
+					
+					<br><br><br><br><br>
+					
+					<div class="row">
+					<div class="col-10">
+					<div class="md-form" >
+						<label for="Form-email1" class="label-icon"><i class="fa fa-calendar"></i> <span class="placeholder">Date & Time</span></label>
+						<input type="text" name="event_date" id="event_date" readonly class="form-control form_datetime form-input">
+					</div>
+					</div>
+					</div>
+					<br><br>
+					<!--div class="md-form" style="margin-top:10px; margin-bottom:0px;">
+						<input type="text" id="mobile" maxlength="15" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" class="form-control">
+						<label for="Form-email1">Date</label>
+					</div-->
+					<div class="row">
+					<div class="col-10">
+					<div class="md-form" >
+					<label class="label-icon"><i class="fa fa-clock-o"></i> <span class="placeholder">Duration <span style='color: #FF0000'>(*)</span></span></label>
+					<select class="form-control form-input" style="width: 108% !important; height: 38px;" id="duration" name="duration">
+						<option value="">Select</option>
+						<option value="30 Min">30 Min</option>
+						<option value="1 Hour">1 Hour</option>
+						<option value="2 Hours">2 Hours</option>
+						<option value="3 Hours">3 Hours</option>
+						<option value="4 Hours">4 Hours</option>
+						<option value="5 Hours">5 Hours</option>
+					</select>
+					</div>
+					</div>
+					</div>
+					<br><br>
+					
+					
+
+					<div class="row">
+					<div class="col-10">
+					<div class="md-form" >
+					<label class="label-icon"><i class="fa fa-user"></i> <span class="placeholder">Select participant <span style='color: #FF0000'>(*)</span></span></label>
+					<select class="form-control select2  form-input" style="width: 108% !important; height: 38px;" id="participant" name="participant[]" multiple style="
+    visibility: hidden;">
+						
+					</select>
+					</div>
+					</div>
+					</div>
+					<!--div class="p-row">
+						
+					</div>
+					<a href="javascript: void(0)" id="add-row" style="padding:15px 0px; color:#333;"><i class="fa fa-users"></i> Add Invitees <i class="fa fa-angle-double-down"></i></a-->
+
+					<div class="row">
+					<div class="col-12">
+					<div class="text-center mb-3">
+						<button type="submit" class="btn blue-gradient btn-primary z-depth-1a" >Save Meeting</button>
+					</div>
+					</div>
+					</div>
+					
+					<div id="meet"></div>
+					
+			
+					
+					
+				</div>
+				<br><br><br><br>
+				
+				
+			</div>	
+			</form>
+		</section>
+		
+		<!-- <a href="" class="add-btn">+</a> -->
+		
+		<section>
+			<div class="footer-menu">
+				<div><a href="home.html"><img src="img/add-user.svg"><span><br>Contacts</span></a></div>
+				<div><a href="nearby.html"><img src="img/nearby2.png" class="nearby2"><span><br>Nearby</span></a></div>
+				<div style='background: #e9781c'><a href="meetings.html"><img src="img/meetings.svg"><span><br>Meetings</span></a></div>
+				<div><a href="chat-list.html"><i class="fas fa-comments"></i><span><br>Chats</span></a></div>
+				<div><a href="generalcards.html"><i class="far fa-address-card"></i><span><br>Cards</span></a></div>
+			</div>
+		</section>
+		<div class="corner-icon1"> <img src="logo.png"></div>
+	</main>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/popper.min.js"></script>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/mdb.min.js"></script>
+	
+		  <!--script src="js/bootstrap-select.js"></script-->
+
+	<script type="text/javascript" src="js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<script type="text/javascript" src="js/locales/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
+			<script src="js/select2.full.min.js"></script>
+
+<script>
+ $(document).ready(function() {
+ 
+ var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth()+1; //January is 0!
+var yyyy = today.getFullYear();
+
+if(dd<10) {
+    dd = '0'+dd
+} 
+
+if(mm<10) {
+    mm = '0'+mm
+} 
+
+today = yyyy + '-' + mm + '-' + dd;
+
+    $('.form_datetime').datetimepicker({
+        //language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		forceParse: 0,
+		mindate :1,
+        showMeridian: 1,
+		 startDate : today,
+    });
+	 });
+</script>	
+
+<script>
+
+    mobiscroll.settings = {
+        lang: 'en',                       // Specify language like: lang: 'pl' or omit setting to use default
+        theme: 'ios',                     // Specify theme like: theme: 'ios' or omit setting to use default
+        display: 'bubble'                 // Specify display mode like: display: 'bottom' or omit setting to use default
+    };
+    
+    var now = new Date();
+    
+    mobiscroll.form('#demo-datetime-form', {
+        inputStyle: 'box',
+        labelStyle: 'stacked'
+    });
+    
+    mobiscroll.datetime('#demo-datetime', {
+        dateWheels: '|D M d|',            // More info about dateWheels: https://docs.mobiscroll.com/4-5-2/javascript/datetime#localization-dateWheels
+        onInit: function (event, inst) {  // More info about onInit: https://docs.mobiscroll.com/4-5-2/javascript/datetime#event-onInit
+            inst.setVal(now, true);
+        }
+    });
+    
+    mobiscroll.datetime('#demo-datetime-expanded', {
+        onInit: function (event, inst) {  // More info about onInit: https://docs.mobiscroll.com/4-5-2/javascript/datetime#event-onInit
+            inst.setVal(now, true);
+        }
+    });
+    
+    mobiscroll.date('#demo-datetime-date', {
+        onInit: function (event, inst) {  // More info about onInit: https://docs.mobiscroll.com/4-5-2/javascript/datetime#event-onInit
+            inst.setVal(now, true);
+        }
+    });
+    
+    mobiscroll.time('#demo-datetime-time', {
+        onInit: function (event, inst) {  // More info about onInit: https://docs.mobiscroll.com/4-5-2/javascript/datetime#event-onInit
+            inst.setVal(now, true);
+        }
+    });
+    
+    mobiscroll.datetime('#demo-datetime-non-form', {
+        onInit: function (event, inst) {  // More info about onInit: https://docs.mobiscroll.com/4-5-2/javascript/datetime#event-onInit
+            inst.setVal(now, true);
+        }
+    });
+    
+    var instance = mobiscroll.datetime('#demo-datetime-external', {
+        showOnTap: false,                 // More info about showOnTap: https://docs.mobiscroll.com/4-5-2/javascript/datetime#opt-showOnTap
+        showOnFocus: false,               // More info about showOnFocus: https://docs.mobiscroll.com/4-5-2/javascript/datetime#opt-showOnFocus
+        onInit: function (event, inst) {  // More info about onInit: https://docs.mobiscroll.com/4-5-2/javascript/datetime#event-onInit
+            inst.setVal(new Date(), true);
+        }
+    });
+    
+ $(function () {
+	   $('.select2').select2()
+   
+  })
+  
+</script>
+	<script>
+		$(document).ready(function(){
+		
+		j=2;
+			$("#add-row").click(function(){
+				$(".p-row").append("<br><br><h6><b>Invite "+j+"</b></h6><div class='md-form' style='margin-top:10px; margin-bottom:0px;'><select class='form-control' id='participant"+j+"' name='participant[]'></select></div>");
+				
+				
+				
+				
+			var user_id = localStorage.getItem("user_id");
+				
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					//alert(j-1);
+					var k =j-1;
+					document.getElementById('participant'+k).innerHTML=result;
+					
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/getparticipants.php?user_id="+user_id, true);
+			xmlhttp.send();		
+				
+			
+			
+			
+			j++;
+			});
+			
+		
+			
+			
+		});
+		
+		
+		/*$(document).ready(function(){
+		j=1;
+			$("#add-row").click(function(){
+				$(".p-row").append("<br><br><h6><b>Invite "+j+"</b></h6><div class='md-form' style='margin-top:10px; margin-bottom:0px;'><input type='text' id='name' name='name[]' maxlength='30' oninput='javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' class='form-control'><label for='Form-email1'>Name</label></div><div class='md-form' style='margin-top:10px; margin-bottom:0px;'><input type='email' id='email' name='email[]' maxlength='30' oninput='javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' class='form-control'><label for='Form-email1'>Email</label></div>");
+				j++;
+			});
+			
+		}); */
+	</script>
+	
+	
+	<script>
+        $(".button-collapse").sideNav();
+    </script>
+    <script>
+		$(document).ready(function() {
+			$('.mdb-select').material_select();
+		});
+    </script>
+	
+	
+	<script>
+		$(document).ready(function(){
+		  $("#user-menu-btn-close").click(function(){
+			$("#user-menu-div").hide();
+		  });
+		  $("#user-menu-btn").click(function(){
+			$("#user-menu-div").show();
+		  });
+		});
+	</script>
+	<script type="text/javascript">
+$("#form1").submit(function(e){
+			//alert('hii');
+				e.preventDefault();
+	
+		
+     var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        var numbers = /^[0-9]+$/;
+     	var user_id = localStorage.getItem("user_id");
+	   	var deviceid = localStorage.getItem("deviceid");
+	   	var meetingid = localStorage.getItem("meetingid");
+				var timezone = localStorage.getItem("timezone");
+
+		 var title = document.getElementById('title').value;
+        // var notes = document.getElementById('notes').value;
+ 	     //var demo-datetime = document.getElementById('demo-datetime').value;
+		 
+	//var a = document.getElementById('participant').value;
+	//alert(a);
+	//var ps = a.split("deli");
+	
+	//var refid = ps[1];
+	
+		 if(title == ''){
+			alert("Please Enter Title");
+			
+            document.getElementById('title').focus();
+            return false;
+        }
+	      
+		
+		else{ 
+			//document.getElementById('loader').style.display="block";
+
+		$.ajax({
+				url: "https://nobhub.com/services/updatenewmeeting.php?meetingid="+meetingid+"&user_id="+user_id+"&timezone="+timezone,
+					type: "POST",
+					data:  new FormData(this),
+					contentType: false,
+					cache: false,
+					processData:false,
+					success: function(result)
+					{
+					//console.log(result);
+					//alert(result);
+					var response =result.replace(/\s+/g, '');
+
+					console.log(response);
+                            
+						if(response == "Error"){
+						
+						alert("Please try again");
+						location.href="add-meeting.html";
+						
+					}else {
+					
+					
+					    alert("Meeting Updated");
+						location.href="meetings.html";
+					} 
+					 
+			  document.getElementById('loader').style.display="none";
+					 
+			   }
+
+			});
+			return false;
+             } 
+		});
+		
+</script>
+
+</body>
+</html>

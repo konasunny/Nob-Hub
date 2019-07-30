@@ -1,0 +1,87 @@
+<?php 
+require "config.php";
+if($_GET['refid'] !=''){
+ 
+$a = rtrim($_GET['refid'],',');
+$b = explode(",",$a);
+foreach($b as $val) {
+  
+//$data1 = @mysql_query("SELECT * FROM invites WHERE refid='".$_GET['user_id']."' AND fromstatus='accepted' OR cid='".$_GET['user_id']."' AND fromstatus='accepted' ORDER BY fromdes ASC ") or die(mysql_error());
+// OR cid='".$_GET['user_id']."'
+$data1 = @mysql_query("SELECT * FROM invites WHERE guid='".$val."' ORDER BY fromdes ASC ") or die(mysql_error());
+while($info1 = mysql_fetch_array($data1)) {
+    
+
+  
+//echo "SELECT * FROM register WHERE guid='".$info1['refid']."' ";
+$data = @mysql_query("SELECT * FROM register WHERE guid='".$info1['refid']."' ") or die(mysql_error());
+
+if($info = mysql_fetch_array($data)) {
+    echo "<div tabindex='0' class='col-12 mt-2'>
+					<div class='br-b'>
+						<a href='#'>
+							<div class='row' id='".$info1['guid']."' onclick='cons(this.id);' style='background: #FFFFFF;'>
+								<div class='col-3'>
+									<div>";
+
+
+      if($info['image']=="") {
+        echo "<img src='https://nobhub.com/services/pp1.jpg' class='img-fluid pp mt-1'  alt='Post' style='
+    height: 64px;
+    width: 64px;
+'>"; 
+      }
+      else {
+
+        echo "<img src=https://nobhub.com/services/members/".$info['image']." class='img-fluid pp mt-1'  alt='Post' style='
+    height: 64px;
+    width: 64px;
+'>"; 
+
+      }
+  
+
+
+									echo "</div>
+								</div>
+								<div class='col-8 no-padd-l'  >
+									<div class=''>
+										<p class='mb-1 mt-2'>
+										<span class='black-text font-weight-bold text-capital'>";
+									
+									if($info1['refid_nickname']!=''){ echo $info1['refid_nickname'];}else{
+									echo substr($info['name']." ".$info['lastname'],0,40);}
+									echo "</span><br>
+										<span class='orange-text font-weight-bold text-capital'>".$info['companyname']."<br> ".$info['title']."</span></br>
+										<!--button type='button' class='btn btn-warning' id='".$info['guid']."' onclick='viewclick(this.id)'>View</button>
+										<button type='button' class='btn btn-danger' id='".$info1['guid']."' onclick='removeclick(this.id)'>Remove</button-->
+										
+										</p>
+									</div>
+
+
+								</div>
+								
+							</div>
+							
+                                    <div class='contact-icons'>
+									    <a href='javascript:void(0);'><span class='card-main-icon' id='".$info['guid']."' onclick='opentoogle(this.id);'><i class='fa fa-envelope'></i></span></a>
+									    <div class='card-icons'  style='display:none;' id='toogle".$info['guid']."'>
+									        <a href='#' id='".$info['guid']."' onclick='openchat(this.id)' class='card-icon' style='top: 3px; right: -26px;'><i class='fa fa-comments'></i></a>
+									        <a href='#' id='".$info['guid']."' onclick='openmeeting(this.id)' class='card-icon' style='top: 25px; right: 10px;'><i class='fa fa-users'></i></a>
+									        <a href='#' id='".$info['guid']."' onclick='viewclick(this.id)' class='card-icon' style='top: 67px; right: 16px;'><i class='far fa-id-card'></i></a>
+									    </div>
+								    </div>
+						</a>
+					</div>
+				</div>";
+}
+
+}
+}
+}?>
+
+
+
+    
+    

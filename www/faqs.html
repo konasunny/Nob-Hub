@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>NOB HUB</title>
+    <!-- Font Awesome -->
+  
+    <!-- Bootstrap core CSS -->
+    <!--link href="css/bootstrap.min.css" rel="stylesheet"-->
+    <!-- Material Design Bootstrap -->
+    <!--link href="css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="css/style.css" rel="stylesheet"-->
+     <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://mdbootstrap.com/previews/docs/latest/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <!-- Material Design Bootstrap -->
+    <link href="https://mdbootstrap.com/previews/docs/latest/css/mdb.min.css" rel="stylesheet">
+    <link href="css/mdb.min.css" rel="stylesheet">
+     <link href="https://nobhub.com/services/css/pages.css" rel="stylesheet">
+<script>
+        function terms() {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var result = this.responseText;
+                    document.getElementById('terms').innerHTML=result;
+                }
+            };
+            xmlhttp.open("GET", "https://nobhub.com/services/help.php", true);
+            xmlhttp.send();
+        }
+		function myname() {
+		
+			document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			//alert(user_id);
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+						var splitter = result.split("deli");
+
+					
+					localStorage.setItem("myname",splitter[0]);
+				if(splitter[1]!=""){
+					document.getElementById('myimagemain').src = "https://nobhub.com/services/members/"+splitter[1];
+					document.getElementById('himage').src = "https://nobhub.com/services/members/"+splitter[1];
+					
+					}else {
+					document.getElementById('myimagemain').src = "https://nobhub.com/services/pp1.jpg";
+					document.getElementById('himage').src = "https://nobhub.com/services/pp1.jpg";
+					}
+					document.getElementById('myname').innerHTML=splitter[0];
+					//document.getElementById('hname').innerHTML="Welcome&nbsp;"+splitter[0];
+					
+
+
+			document.getElementById('loader').style.display="none";
+
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/mydetails.php?user_id="+user_id, true);
+			xmlhttp.send();
+			}
+    </script>
+
+<script src="https://nobhub.com/services/custom-scripts.js"></script></head>
+
+<body class="fixed-sn light-blue-skin" onload="myname();terms();">
+<div style="width: 100%; text-align: center; position: fixed; z-index: 9998889; top: 250px; display:none" id="loader"><img src="loading.gif" style="margin-left: auto; margin-right: auto; width: 64px; height: auto"></div>
+    <header>
+    </header>
+<div class="list-group btn-group" style="position: fixed; z-index: 9999; top: 0; width: 100%; margin-top:0;">
+		<span class="list-group-item active gradient-bg">	
+		<a href="#" id="back-menu-btn" class="pull-left chat-back-btn"><i class="fas fa-long-arrow-alt-left" style="color:white;"></i></a>
+				<span class="pull-left" style="margin-top:4px;"><b id="">FAQ's </b></span>
+			</span>				
+			
+			<div class="user-menu dropdow">
+				<a href="#" id="user-menu-btn">
+					<img src="https://nobhub.com/services/pp1.jpg" class="img-fluid mt-1" alt="Post" style="height: 40px; width: 40px;" id="himage">
+				</a>
+			</div>	
+		</div>  
+	
+	<div id="user-menu-div" style="display:none;">
+			<img src="img/settings-bg.png" class="img-responsive">
+			<div class="user-menu-header">
+				<a href="javascript:void(0);" id="user-menu-btn-close"><i class="fa fa-close" style="font-size:20px;"></i></a>
+				<br><br>
+			<div class="col-xs-12 text-center" style="position: absolute; width: 100%; bottom: -169px;">
+				<a href="javascript:void(0);" id="myname" style="text-transform:uppercase;"><i class="fa fa-angle-down"></i></a>
+				<br>
+				<a href="javascript:void(0);"><img src="https://nobhub.com/services/pp1.jpg" class="img-fluid mt-1 pp" alt="Post" id="myimagemain" style="height: 80px; width: 80px; margin-top:25px; border-radius:100px; margin-bottom:6px; margin-left: -8px;"></a></div>
+			</div>
+			<br><br><br>
+			<a class="dropdown-item" href="settings.html"><i class="fa fa-user"></i> Profile</a>
+			<a class="dropdown-item" href="chat-list.html"><i class="fa fa-comments"></i> Chat</a>
+			<a class="dropdown-item" href="alerts.html"><i class="fa fa-bell"></i> Notifications</a>
+			<!--a class="dropdown-item" href="#"><i class="fab fa-youtube"></i> Live Stream</a-->				<a class="dropdown-item" href="share.html"><i class="fa fa-users"></i> Refer a Friend</a>
+			<a class="dropdown-item" href="cnumber.html"><i class="fa fa-phone"></i> Change Number </a>
+			<a class="dropdown-item" href="upgrade.html"><i class="fas fa-crown"></i> Premium Membership </a><a class="dropdown-item" href="blockedlist.html"><i class="fas fa-ban"></i> Block List </a>
+			<a class="dropdown-item" href="about.html"><i class="fas fa-info"></i> About NobHub </a>
+			<!--a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Change Password </a-->
+			<a class="dropdown-item" href="#" onclick="logoutfn()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+		</div>
+<main>
+
+
+    <!--a href="#" class="list-group-item active gradient-bg">
+        <div class="col-12" align="center"><b>FAQ's</b></div>
+    </a-->
+<section style="margin-top:75px;">
+<div class="col-12" align="center">
+	<a href="about.html" class="text-orange"> About Us</a> | <a href="terms.html" class="text-orange"> Terms of service</a>  | <a href="privacy.html" class="text-orange"> Privacy Policy</a>  | <a href="help.html" class="text-orange"> Help</a> | <a href="faqs.html" class="text-orange"> FAQ's</a> </br></br>
+</div>
+<div class="col-12"> 
+
+	<div id="terms" align="justify">
+		<div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+
+		  <!-- Accordion card -->
+		  <div class="card">
+
+			<!-- Card header -->
+			<div class="card-header" role="tab" id="headingOne1">
+			  <a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne1" aria-expanded="true"
+				aria-controls="collapseOne1">
+				<h5 class="mb-0">
+				  Q: What Is NobHub And Its Benefits? What Do I Do Here? <i class="fa fa-angle-down rotate-icon"></i>
+				</h5>
+			  </a>
+			</div>
+
+			<!-- Card body -->
+			<div id="collapseOne1" class="collapse show" role="tabpanel" aria-labelledby="headingOne1" data-parent="#accordionEx">
+			  <div class="card-body">
+				NobHub is a revolutionary mobile app that allows professionals all across the walks of life to share Phone contacts & Professional information quickly and seamlessly across the Globe and enhance professionals save all their business contacts in one easy click and Eliminates the use of traditional paper business cards, no need to pile up your wallet with business cards.
+			  </div>
+			</div>
+
+		  </div>
+		  <!-- Accordion card -->
+
+		  <!-- Accordion card -->
+		  <div class="card">
+
+			<!-- Card header -->
+			<div class="card-header" role="tab" id="headingTwo2">
+			  <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwo2"
+				aria-expanded="false" aria-controls="collapseTwo2">
+				<h5 class="mb-0">
+				  Q: Who Is The Audience For NobHub? <i class="fa fa-angle-down rotate-icon"></i>
+				</h5>
+			  </a>
+			</div>
+
+			<!-- Card body -->
+			<div id="collapseTwo2" class="collapse" role="tabpanel" aria-labelledby="headingTwo2" data-parent="#accordionEx">
+			  <div class="card-body">
+				NobHub is for everyone over the age of 18 years who wants share their phone numbers and business cards with a click of button. Meet nearby people at events, seminars and connect.<br><br>
+				Since NobHub shows people nearby, it's easy to meet in person at any events, seminars, friends & family get-togethers and exchange contacts with ease.<br><br>
+				You can share your Facebook, Twitter, Instagram & Skype links on the business cards and the app will take you to the respective applications.<br><br>
+				You can make calls by simply clicking on the phone number on the business card. The app will make the call using your mobile carrier or any other installed calling applications such as Skype, WhatsApp etc.<br><br>
+			  </div>
+			</div>
+
+		  </div>
+		  <!-- Accordion card -->
+
+		  <!-- Accordion card -->
+		  <div class="card">
+
+			<!-- Card header -->
+			<div class="card-header" role="tab" id="headingThree3">
+			  <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseThree3"
+				aria-expanded="false" aria-controls="collapseThree3">
+				<h5 class="mb-0">
+				  Q: Which Devices Can I Use? <i class="fa fa-angle-down rotate-icon"></i>
+				</h5>
+			  </a>
+			</div>
+
+			<!-- Card body -->
+			<div id="collapseThree3" class="collapse" role="tabpanel" aria-labelledby="headingThree3" data-parent="#accordionEx">
+			  <div class="card-body">
+				You can use NobHub on smartphones. We have the app available for iOS (Version 6 and above) and Android (Version 4.1 and up).
+			  </div>
+			</div>
+
+		  </div>
+		  <!-- Accordion card -->
+
+		  <!-- Accordion card -->
+		  <div class="card">
+
+			<!-- Card header -->
+			<div class="card-header" role="tab" id="heading4">
+			  <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapse4"
+				aria-expanded="false" aria-controls="collapse4">
+				<h5 class="mb-0">
+				  Q: Where Is NobHub Located? <i class="fa fa-angle-down rotate-icon"></i>
+				</h5>
+			  </a>
+			</div>
+
+			<!-- Card body -->
+			<div id="collapse4" class="collapse" role="tabpanel" aria-labelledby="heading4" data-parent="#accordionEx">
+			  <div class="card-body">
+				The NobHub located in USA and have development teams in India & Dubai.
+			  </div>
+			</div>
+
+		  </div>
+		  <!-- Accordion card -->
+
+		  <!-- Accordion card -->
+		  <div class="card">
+
+			<!-- Card header -->
+			<div class="card-header" role="tab" id="heading4">
+			  <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapse4"
+				aria-expanded="false" aria-controls="collapse4">
+				<h5 class="mb-0">
+				  Q: How Can I Share My Business Card With My Prospects And Partners? <i class="fa fa-angle-down rotate-icon"></i>
+				</h5>
+			  </a>
+			</div>
+
+			<!-- Card body -->
+			<div id="collapse4" class="collapse" role="tabpanel" aria-labelledby="heading4" data-parent="#accordionEx">
+			  <div class="card-body">
+				Selects the name you want to share your business card with on your contact list and click on share
+			  </div>
+			</div>
+
+		  </div>
+		  <!-- Accordion card -->
+
+		  <!-- Accordion card -->
+		  <div class="card">
+
+			<!-- Card header -->
+			<div class="card-header" role="tab" id="heading5">
+			  <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapse5"
+				aria-expanded="false" aria-controls="collapse5">
+				<h5 class="mb-0">
+				  Q: Will You Have Ads? Or Sell My Data?<i class="fa fa-angle-down rotate-icon"></i>
+				</h5>
+			  </a>
+			</div>
+
+			<!-- Card body -->
+			<div id="collapse5" class="collapse" role="tabpanel" aria-labelledby="heading5" data-parent="#accordionEx">
+			  <div class="card-body">
+				Yes, there will be ads for non-premium members. There are no ads for premium members. We don’t sell your data to anyone.
+			  </div>
+			</div>
+
+		  </div>
+		  <!-- Accordion card -->
+
+		  <!-- Accordion card -->
+		  <div class="card">
+
+			<!-- Card header -->
+			<div class="card-header" role="tab" id="heading6">
+			  <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapse6"
+				aria-expanded="false" aria-controls="collapse6">
+				<h5 class="mb-0">
+				  Q: Is The App Free Of Charge?<i class="fa fa-angle-down rotate-icon"></i>
+				</h5>
+			  </a>
+			</div>
+
+			<!-- Card body -->
+			<div id="collapse6" class="collapse" role="tabpanel" aria-labelledby="heading6" data-parent="#accordionEx">
+			  <div class="card-body">
+				We strive to provide the app 100% free, it is free for everyone to download and use. We charge a very minimal fee for premium membership for those who want to choose from the unlimited Premium cards collection.
+			  </div>
+			</div>
+
+		  </div>
+		  <!-- Accordion card -->
+
+		  <!-- Accordion card -->
+		  <div class="card">
+
+			<!-- Card header -->
+			<div class="card-header" role="tab" id="heading7">
+			  <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapse7"
+				aria-expanded="false" aria-controls="collapse7">
+				<h5 class="mb-0">
+				  Q: What Is NobHub’s Internet Privacy Policies?<i class="fa fa-angle-down rotate-icon"></i>
+				</h5>
+			  </a>
+			</div>
+
+			<!-- Card body -->
+			<div id="collapse7" class="collapse" role="tabpanel" aria-labelledby="heading7" data-parent="#accordionEx">
+			  <div class="card-body">
+				At NobHub, Internet privacy is important and we strive to protect your personal data from third parties such as marketers, advertisers, etc. We use a complex algorithm to encrypt your data.
+			  </div>
+			</div>
+
+		  </div>
+		  <!-- Accordion card -->
+
+		  <!-- Accordion card -->
+		  <div class="card">
+
+			<!-- Card header -->
+			<div class="card-header" role="tab" id="heading8">
+			  <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapse8"
+				aria-expanded="false" aria-controls="collapse8">
+				<h5 class="mb-0">
+				  Q: Who Can I Invite To Connect With Me?<i class="fa fa-angle-down rotate-icon"></i>
+				</h5>
+			  </a>
+			</div>
+
+			<!-- Card body -->
+			<div id="collapse8" class="collapse" role="tabpanel" aria-labelledby="heading8" data-parent="#accordionEx">
+			  <div class="card-body">
+				You can send invites to people who are in your phone contacts, email contacts, LinkedIn contacts, google contacts. Those who do not have NobHub will receive an invitation to download the app. Your business card can only be exchanged through NobHub.
+			  </div>
+			</div>
+
+		  </div>
+		  <!-- Accordion card -->
+
+		  <!-- Accordion card -->
+		  <div class="card">
+
+			<!-- Card header -->
+			<div class="card-header" role="tab" id="heading9">
+			  <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapse9"
+				aria-expanded="false" aria-controls="collapse9">
+				<h5 class="mb-0">
+				  Q: How Do I Invite My Friends To NobHub?<i class="fa fa-angle-down rotate-icon"></i>
+				</h5>
+			  </a>
+			</div>
+
+			<!-- Card body -->
+			<div id="collapse9" class="collapse" role="tabpanel" aria-labelledby="heading9" data-parent="#accordionEx">
+			  <div class="card-body">
+				Open the Contacts Tab, open the menu (to the right of the search box) and click on “Invite Friends”. Then choose the application you would like use to send out the invitation. The basic invitations are simple SMS messages. They will be charged as standard outgoing SMS by your carrier. Naturally, you have other options to bring your friends here. Try sending them a download link through any other messaging service such as email, Facebook, WhatsApp etc.
+			  </div>
+			</div>
+
+		  </div>
+		  <!-- Accordion card -->
+
+		  <!-- Accordion card -->
+		  <div class="card">
+
+			<!-- Card header -->
+			<div class="card-header" role="tab" id="heading10">
+			  <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapse10"
+				aria-expanded="false" aria-controls="collapse10">
+				<h5 class="mb-0">
+				  Q: How Do I Know My Invitation Status?<i class="fa fa-angle-down rotate-icon"></i>
+				</h5>
+			  </a>
+			</div>
+
+			<!-- Card body -->
+			<div id="collapse10" class="collapse" role="tabpanel" aria-labelledby="heading10" data-parent="#accordionEx">
+			  <div class="card-body">
+				You can see your invitation status in the Nearby tab next to the contact’s name. When your invite is accepted or rejected, you will receive an alert message in the Alerts tab.
+			  </div>
+			</div>
+
+		  </div>
+		  <!-- Accordion card -->
+
+		  <!-- Accordion card -->
+		  <div class="card">
+
+			<!-- Card header -->
+			<div class="card-header" role="tab" id="heading11">
+			  <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapse11"
+				aria-expanded="false" aria-controls="collapse11">
+				<h5 class="mb-0">
+				  Q: Who Can See Me Once I Create An Account?<i class="fa fa-angle-down rotate-icon"></i>
+				</h5>
+			  </a>
+			</div>
+
+			<!-- Card body -->
+			<div id="collapse11" class="collapse" role="tabpanel" aria-labelledby="heading11" data-parent="#accordionEx">
+			  <div class="card-body">
+				People can see you online once you register with NobHub.
+			  </div>
+			</div>
+
+		  </div>
+		  <!-- Accordion card -->
+
+		  <!-- Accordion card -->
+		  <div class="card">
+
+			<!-- Card header -->
+			<div class="card-header" role="tab" id="heading12">
+			  <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapse12"
+				aria-expanded="false" aria-controls="collapse12">
+				<h5 class="mb-0">
+				  Q: How Do I Delete My Account?<i class="fa fa-angle-down rotate-icon"></i>
+				</h5>
+			  </a>
+			</div>
+
+			<!-- Card body -->
+			<div id="collapse12" class="collapse" role="tabpanel" aria-labelledby="heading12" data-parent="#accordionEx">
+			  <div class="card-body">
+				Go to Settings and click on “Delete my account”. This will remove your account; you will lose all your contacts & people will no longer be able to find you in the nearby search.
+			  </div>
+			</div>
+
+		  </div>
+		  <!-- Accordion card -->
+
+		  <!-- Accordion card -->
+		  <div class="card">
+
+			<!-- Card header -->
+			<div class="card-header" role="tab" id="heading13">
+			  <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapse13"
+				aria-expanded="false" aria-controls="collapse13">
+				<h5 class="mb-0">
+				  Q: What Do I Do If I Receive Annoying Invites Multiple Times?<i class="fa fa-angle-down rotate-icon"></i>
+				</h5>
+			  </a>
+			</div>
+
+			<!-- Card body -->
+			<div id="collapse13" class="collapse" role="tabpanel" aria-labelledby="heading13" data-parent="#accordionEx">
+			  <div class="card-body">
+				Go to the Alerts tab and click on Block invite. You will no longer receive invites from that contact until you unblock them.
+			  </div>
+			</div>
+
+		  </div>
+		  <!-- Accordion card -->
+
+		  <!-- Accordion card -->
+		  <div class="card">
+
+			<!-- Card header -->
+			<div class="card-header" role="tab" id="heading14">
+			  <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapse14"
+				aria-expanded="false" aria-controls="collapse14">
+				<h5 class="mb-0">
+				  Q: What Do I Do If I Accidentally Reject An Invite?<i class="fa fa-angle-down rotate-icon"></i>
+				</h5>
+			  </a>
+			</div>
+
+			<!-- Card body -->
+			<div id="collapse14" class="collapse" role="tabpanel" aria-labelledby="heading14" data-parent="#accordionEx">
+			  <div class="card-body">
+				You don’t need to worry; the other person can resend the invite or you can send one to them.
+			  </div>
+			</div>
+
+		  </div>
+		  <!-- Accordion card -->
+
+		  <!-- Accordion card -->
+		  <div class="card">
+
+			<!-- Card header -->
+			<div class="card-header" role="tab" id="heading15">
+			  <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapse15"
+				aria-expanded="false" aria-controls="collapse15">
+				<h5 class="mb-0">
+				  Q: What Do I Do If I Accidentally Block An Invite?<i class="fa fa-angle-down rotate-icon"></i>
+				</h5>
+			  </a>
+			</div>
+
+			<!-- Card body -->
+			<div id="collapse15" class="collapse" role="tabpanel" aria-labelledby="heading15" data-parent="#accordionEx">
+			  <div class="card-body">
+				Go to Contacts tab, click on the menu (right to the search box) – Blocked List, unblock the person. Now you or your contact can resend the invite.
+			  </div>
+			</div>
+
+		  </div>
+		  <!-- Accordion card -->
+
+		  <!-- Accordion card -->
+		  <div class="card">
+
+			<!-- Card header -->
+			<div class="card-header" role="tab" id="heading16">
+			  <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapse16"
+				aria-expanded="false" aria-controls="collapse16">
+				<h5 class="mb-0">
+				  Q: How Can I Hide My Mobile Number?<i class="fa fa-angle-down rotate-icon"></i>
+				</h5>
+			  </a>
+			</div>
+
+			<!-- Card body -->
+			<div id="collapse16" class="collapse" role="tabpanel" aria-labelledby="heading16" data-parent="#accordionEx">
+			  <div class="card-body">
+				No, you cannot hide your mobile number, this app is designed to share the phone contacts.
+			  </div>
+			</div>
+
+		  </div>
+		  <!-- Accordion card -->
+
+		  <!-- Accordion card -->
+		  <div class="card">
+
+			<!-- Card header -->
+			<div class="card-header" role="tab" id="heading17">
+			  <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapse17"
+				aria-expanded="false" aria-controls="collapse17">
+				<h5 class="mb-0">
+				  Q: How Can I Change My Business Card Template?<i class="fa fa-angle-down rotate-icon"></i>
+				</h5>
+			  </a>
+			</div>
+
+			<!-- Card body -->
+			<div id="collapse17" class="collapse" role="tabpanel" aria-labelledby="heading17" data-parent="#accordionEx">
+			  <div class="card-body">
+				Go to settings, click on Cards and choose your desired card template from the list.
+			  </div>
+			</div>
+
+		  </div>
+		  <!-- Accordion card -->
+
+		  <!-- Accordion card -->
+		  <div class="card">
+
+			<!-- Card header -->
+			<div class="card-header" role="tab" id="heading18">
+			  <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapse18"
+				aria-expanded="false" aria-controls="collapse18">
+				<h5 class="mb-0">
+				  Q: How Can I Hide My Personal Details?<i class="fa fa-angle-down rotate-icon"></i>
+				</h5>
+			  </a>
+			</div>
+
+			<!-- Card body -->
+			<div id="collapse18" class="collapse" role="tabpanel" aria-labelledby="heading18" data-parent="#accordionEx">
+			  <div class="card-body">
+				Go to settings, click on personal profile and toggle the button to turn off and save the settings. You will no longer see the details on the business card.
+			  </div>
+			</div>
+
+		  </div>
+		  <!-- Accordion card -->
+
+		  <!-- Accordion card -->
+		  <div class="card">
+
+			<!-- Card header -->
+			<div class="card-header" role="tab" id="heading19">
+			  <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapse19"
+				aria-expanded="false" aria-controls="collapse19">
+				<h5 class="mb-0">
+				  Q: How Can I Send Multiple Invites?<i class="fa fa-angle-down rotate-icon"></i>
+				</h5>
+			  </a>
+			</div>
+
+			<!-- Card body -->
+			<div id="collapse19" class="collapse" role="tabpanel" aria-labelledby="heading19" data-parent="#accordionEx">
+			  <div class="card-body">
+				In the Nearby tab, select all the people you want to send an invite to and click on “Invite” in the top right corner. This will send the same Invite to all chosen contacts at the same time.
+			  </div>
+			</div>
+
+		  </div>
+		  <!-- Accordion card -->
+
+		  <!-- Accordion card -->
+		  <div class="card">
+
+			<!-- Card header -->
+			<div class="card-header" role="tab" id="heading20">
+			  <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapse20"
+				aria-expanded="false" aria-controls="collapse20">
+				<h5 class="mb-0">
+				  Q: What Does A Premium Membership Include?<i class="fa fa-angle-down rotate-icon"></i>
+				</h5>
+			  </a>
+			</div>
+
+			<!-- Card body -->
+			<div id="collapse20" class="collapse" role="tabpanel" aria-labelledby="heading20" data-parent="#accordionEx">
+			  <div class="card-body">
+				A premium membership allows you access to a wider array of business card templates to choose from. It also removes all ads.
+			  </div>
+			</div>
+
+		  </div>
+		  <!-- Accordion card -->
+
+		  <!-- Accordion card -->
+		  <div class="card">
+
+			<!-- Card header -->
+			<div class="card-header" role="tab" id="heading21">
+			  <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapse21"
+				aria-expanded="false" aria-controls="collapse21">
+				<h5 class="mb-0">
+				  Q: How Can I Delete A Contact?<i class="fa fa-angle-down rotate-icon"></i>
+				</h5>
+			  </a>
+			</div>
+
+			<!-- Card body -->
+			<div id="collapse22" class="collapse" role="tabpanel" aria-labelledby="heading22" data-parent="#accordionEx">
+			  <div class="card-body">
+				You can delete contacts by opening their business card and clicking “Remove.” This will delete the contact from your phone and will also delete your contact in the other person’s phone.
+			  </div>
+			</div>
+
+		  </div>
+		  <!-- Accordion card -->
+
+		  <!-- Accordion card -->
+		  <div class="card">
+
+			<!-- Card header -->
+			<div class="card-header" role="tab" id="heading23">
+			  <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapse23"
+				aria-expanded="false" aria-controls="collapse23">
+				<h5 class="mb-0">
+				  Q: How Do I Change My Phone Number For My Account?<i class="fa fa-angle-down rotate-icon"></i>
+				</h5>
+			  </a>
+			</div>
+
+			<!-- Card body -->
+			<div id="collapse23" class="collapse" role="tabpanel" aria-labelledby="heading23" data-parent="#accordionEx">
+			  <div class="card-body">
+				Go to settings, click on “Change My Number” at the bottom. When you enter a new number, you will receive the OTP to the new phone number. Then, enter the OTP to authenticate and you will be logged in with all your contacts intact.
+			  </div>
+			</div>
+
+		  </div>
+		  <!-- Accordion card -->
+
+		  <!-- Accordion card -->
+		  <div class="card">
+
+			<!-- Card header -->
+			<div class="card-header" role="tab" id="heading24">
+			  <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapse24"
+				aria-expanded="false" aria-controls="collapse24">
+				<h5 class="mb-0">
+				  Q: Will The Other Person Know If I Block Them?<i class="fa fa-angle-down rotate-icon"></i>
+				</h5>
+			  </a>
+			</div>
+
+			<!-- Card body -->
+			<div id="collapse24" class="collapse" role="tabpanel" aria-labelledby="heading24" data-parent="#accordionEx">
+			  <div class="card-body">
+				No, the other person will only see that the invitation has been sent. This will disappear with they are unblocked.
+			  </div>
+			</div>
+
+		  </div>
+		  <!-- Accordion card -->
+
+		  <!-- Accordion card -->
+		  <div class="card">
+
+			<!-- Card header -->
+			<div class="card-header" role="tab" id="heading25">
+			  <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapse25"
+				aria-expanded="false" aria-controls="collapse25">
+				<h5 class="mb-0">
+				  Q: Can I Call People Directly From The App?<i class="fa fa-angle-down rotate-icon"></i>
+				</h5>
+			  </a>
+			</div>
+
+			<!-- Card body -->
+			<div id="collapse25" class="collapse" role="tabpanel" aria-labelledby="heading25" data-parent="#accordionEx">
+			  <div class="card-body">
+				The app will allow you to click on all phone numbers, emails, and links that will take you to their respective applications without the hassle of having to copy and paste them.
+			  </div>
+			</div>
+
+		  </div>
+		  <!-- Accordion card -->
+
+		</div>
+	</div>
+</div>
+
+<div class="col-12 padd-sm">
+    <!-- Rotating card -->
+    
+
+    <!-- Rotating card -->
+    
+</div>
+
+
+<!-- Rotating card -->
+    
+
+                 
+</section>
+<div class="clearfix"><br><br><br></div>
+
+<section>
+	<div class="footer-menu">
+		<div><a href="home.html"><i class="far fa-address-book"></i><span><br>Contacts</span></a></div>
+		<div><a href="nearby.html"><img src="img/nearby2.png" class="nearby2"><span><br>Nearby</span></a></div>
+		<div><a href="meetings.html"><i class="fas fa-users"></i><span><br>Meetings</span></a></div>
+		<div><a href="chat-list.html"><i class="fas fa-comments"></i><span><br>Chats</span></a></div>
+		<div><a href="cards.html"><i class="far fa-address-card"></i><span><br>Cards</span></a></div>
+	</div>
+</section>
+
+    <div class="corner-icon1"> <img src="logo.png"></div>
+
+            </main>
+<!-- Card -->
+                      
+    <!--/Form with header-->
+
+            
+    
+    <!--Main Layout-->
+
+    <!-- /Start your project here-->
+
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/mdb.min.js"></script>
+  <script>
+        
+        // SideNav Initialization
+        $(".button-collapse").sideNav();
+
+    </script>
+    <script>
+         // Material Select Initialization
+ $(document).ready(function() {
+    $('.mdb-select').material_select();
+  });
+    </script>
+	
+	<script>
+		$(document).ready(function(){
+		  $("#user-menu-btn-close").click(function(){
+			$("#user-menu-div").hide();
+			$("#terms").show();
+		  });
+		  $("#user-menu-btn").click(function(){
+			$("#user-menu-div").show();
+			//$("#terms").hide();
+			document.getElementById("terms").style.display = 'none';     
+		  });
+		   $("#back-menu-btn").click(function(){
+			$("#user-menu-div").show();
+		  });
+		});
+	</script>
+</body>
+
+</html>

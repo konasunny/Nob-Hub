@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>NOB HUB</title>
+    <!-- Font Awesome -->
+  
+    <!-- Bootstrap core CSS -->
+    <!--link href="css/bootstrap.min.css" rel="stylesheet"-->
+    <!-- Material Design Bootstrap -->
+    <!--link href="css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="css/style.css" rel="stylesheet"-->
+     <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://mdbootstrap.com/previews/docs/latest/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Material Design Bootstrap -->
+    <link href="https://mdbootstrap.com/previews/docs/latest/css/mdb.min.css" rel="stylesheet">
+    <link href="css/mdb.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link href="https://nobhub.com/services/css/pages.css" rel="stylesheet">
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script>
+        function terms() {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var result = this.responseText;
+                    document.getElementById('terms').innerHTML=result;
+                }
+            };
+            xmlhttp.open("GET", "https://nobhub.com/services/daccount.php", true);
+            xmlhttp.send();
+        }
+    </script>
+
+    <script>
+        function deleteac() {
+//alert('hi');
+            document.getElementById('loader').style.display="block";
+            var user_id = localStorage.getItem("user_id");
+            //alert(user_id);
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var result = this.responseText;
+                    document.getElementById('loader').style.display="none";
+function alertDismissed() {
+    // leave empty this function
+    navigator.app.exitApp();
+}
+
+navigator.notification.alert(
+    result,          // message
+    alertDismissed,         // callback
+    'Notification',            // title
+    'Ok'                          // buttonName
+); }
+                    else { 
+                
+                }
+            };
+            xmlhttp.open("GET", "https://nobhub.com/services/delete.php?user_id="+user_id, true);
+            xmlhttp.send();
+            }
+    </script>
+
+
+
+<script src="https://nobhub.com/services/custom-scripts.js"></script></head>
+
+<body class="fixed-sn light-blue-skin" onload="terms();">
+
+    <header>
+    </header>
+		<!--div class="list-group btn-group" style="position: fixed; z-index: 9999; top: 0; width: 100%; margin-top:0;">
+			<span class="list-group-item active gradient-bg">
+				<span class="pull-left" style="margin-top:4px;"><b>Welcome Ramakrishna</b></span>
+			</span>				
+			
+			<div class="user-menu dropdow">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<img src="https://nobhub.com/services/members/20181212560300PM1Ramakrishna.jpg" class="img-fluid mt-1" alt="Post" style="height: 40px; width: 40px;">
+				</a>
+				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+					<a class="dropdown-item" href="#">Profile</a>
+					<a class="dropdown-item" href="#">Chat</a>
+					<a class="dropdown-item" href="#">Notifications</a>
+					<a class="dropdown-item" href="#">Live Stream</a>
+					<a class="dropdown-item" href="#">Refer a Friend</a>
+					<a class="dropdown-item" href="#">Change Number </a>
+					<a class="dropdown-item" href="#">Change Password </a>
+					<a class="dropdown-item" href="#">Logout</a>
+				</div>
+			</div>	
+		</div--> 
+
+<main>
+
+	<span class="list-group-item active gradient-bg" style="position: fixed; width:100%;">
+				<a href="javascript:history.go(-1)"  class="pull-left text-white" style="margin-top:1px;"><i class="fas fa-long-arrow-alt-left text-white" style="font-size:20px;"></i></a> &nbsp; <span style="font-size:14px; ">DELETE ACCOUNT</span>
+				
+			</span>	
+    <!--a href="#" class="list-group-item active gradient-bg">
+        <div class="col-12" align="center"><b>DELETE ACCOUNT</b></div>
+    </a-->
+		<section class="form-elegant" style="margin-top: 0px;">
+<br><br><br><br>
+			<div class="col-12"> 
+<div id="terms" align="justify">
+        </div>
+      
+</div>
+
+<div class="col-12 padd-sm">
+    <!-- Rotating card -->
+    
+<center>
+
+<button class="btn blue-gradient btn-primary z-depth-1a"  onclick="deleteac()">I Understand, Please Delete My Account 
+</button><br>
+<a  href="home.html" class="btn blue-gradient btn-primary z-depth-1a"  >Cancel</a>
+</center>
+
+    <!-- Rotating card -->
+    
+</div>
+
+<!-- Rotating card -->
+    
+                 
+</section>
+<div class="clearfix"><br><br><br></div>
+
+<section>
+	<div class="footer-menu">
+		<div ><a href="home.html"><i class="far fa-address-book"></i><span><br>Contacts</span></a></div>
+			<div><a href="nearby.html"><img src="img/nearby2.png" class="nearby2"><span><br>Nearby</span></a></div>
+			<div><a href="meetings.html"><i class="fas fa-users"></i><span><br>Meetings</span></a></div>
+			<div><a href="chat-list.html"><i class="fas fa-comments"></i><span><br>Chats</span></a></div>
+			<div ><a href="cards.html"><i class="far fa-address-card"></i><span><br>Cards</span></a></div>
+	</div>
+</section>
+
+    <div class="corner-icon1"> <img src="logo.png"></div>
+
+            </main>
+<!-- Card -->
+                      
+    <!--/Form with header-->
+
+            
+    
+    <!--Main Layout-->
+
+    <!-- /Start your project here-->
+
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/mdb.min.js"></script>
+  <script>
+        
+        // SideNav Initialization
+        $(".button-collapse").sideNav();
+
+    </script>
+    <script>
+         // Material Select Initialization
+ $(document).ready(function() {
+    $('.mdb-select').material_select();
+  });
+    </script>
+    <div style="width: 100%; text-align: center; position: fixed; z-index: 9998889; top: 250px; display:none" id="loader"><img src="loading.gif" style="margin-left: auto; margin-right: auto; width: 64px; height: auto"></div>
+</body>
+
+</html>

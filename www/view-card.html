@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>NOB HUB</title>
+    <!-- Font Awesome -->
+  
+    <!-- Bootstrap core CSS -->
+    <!--link href="css/bootstrap.min.css" rel="stylesheet"-->
+    <!-- Material Design Bootstrap -->
+    <!--link href="css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="css/style.css" rel="stylesheet">
+	<link href="https://nobhub.com/services/cardstyles.css" rel="stylesheet">
+     <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://mdbootstrap.com/previews/docs/latest/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Material Design Bootstrap -->
+    <link href="https://mdbootstrap.com/previews/docs/latest/css/mdb.min.css" rel="stylesheet">
+    <link href="css/mdb.min.css" rel="stylesheet">
+	
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+	
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDEc6y2PP50c3529HoVRWY5wru5wLE_6hY"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="cordova.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		function onLoad() {
+			document.addEventListener("deviceready", onDeviceReady, false);
+			document.addEventListener("deviceready", geoLocation, false);
+		}
+		function geoLocation() {
+			function onSuccess(position) {
+				var user_id = localStorage.getItem("user_id");
+				var lati = position.coords.latitude;
+				var longi = position.coords.longitude;
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						var result = this.responseText;
+					}
+				};
+				xmlhttp.open("GET", "https://nobhub.com/services/postcoordinates.php?user_id=" + user_id + "&lati=" + lati + "&longi=" + longi, true);
+				xmlhttp.send();
+			}
+			function onError(error) {
+				alert('code: '    + error.code    + '\n' +
+					  'message: ' + error.message + '\n');
+			}
+			navigator.geolocation.getCurrentPosition(onSuccess, onError);
+		}
+		function onDeviceReady() {
+			document.addEventListener("backbutton", onBackKeyDown, false);
+		}
+		function onBackKeyDown() {
+			location.href="home.html";
+		}
+	</script>
+	
+	<script>
+		function viewcard() {
+			document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("viewid");
+			var user_ida = localStorage.getItem("user_id");
+//alert(user_id);
+//alert(user_ida);
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+				//	alert(result);
+					document.getElementById('card-1').innerHTML=result;
+					document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/viewcard.php?user_id="+user_id+ "&c_userid=" + user_ida, true);
+			xmlhttp.send();
+			}
+			
+			function pname() {
+			var viewid = localStorage.getItem("viewid");
+			var user_id = localStorage.getItem("user_id");
+
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					console.log(result);
+					//alert(result);
+					document.getElementById('pname').innerHTML=result;
+					document.getElementById('nickname').value=result;
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/viewnickname.php?viewid="+viewid+ "&user_id=" + user_id, true);
+			xmlhttp.send();
+			}
+			function updatenickname() {
+			var viewid = localStorage.getItem("viewid");
+			var user_id = localStorage.getItem("user_id");
+            var nickname = document.getElementById('nickname').value;
+			//alert(nickname);
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+				//alert(result);
+				location.reload();	
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/updatenickname.php?viewid="+viewid+ "&user_id=" + user_id+"&nickname="+nickname, true);
+			xmlhttp.send();
+			}
+	</script>
+	<script>
+		function removeclick(clickid) {
+
+			//if(confirm("Are you sure you want to Remove this contact?")==true) {
+					document.getElementById('loader').style.display="block";
+					var guid = clickid;
+					//alert(guid);
+					var xmlhttp = new XMLHttpRequest();
+					xmlhttp.onreadystatechange = function() {
+						if (this.readyState == 4 && this.status == 200) {
+							var result = this.responseText;
+							//alert(result);
+					 		location.href="home.html";
+						}
+					};
+					xmlhttp.open("GET", "https://nobhub.com/services/removecontact.php?guid="+guid, true);
+					xmlhttp.send();
+				}
+				//else {
+				//	return false;
+				//}
+		
+	</script>
+
+	<script>
+		function facebook(clickid) {
+		//alert(clickid);
+			var lh="https://www.facebook.com/"+clickid;
+			var ref = cordova.InAppBrowser.open(lh, '_system', 'location=yes,toolbar=yes,clearsessioncache=yes,clearcache=yes');		
+			
+		}
+	</script>
+
+	<script>
+		function twitter(clickid) {
+		//alert(clickid);
+			var lh="https://www.twitter.com/"+clickid;
+			var ref = cordova.InAppBrowser.open(lh, '_system', 'location=yes,toolbar=yes,clearsessioncache=yes,clearcache=yes');		
+			
+		}
+	</script>
+
+	<script>
+		function linkedin(clickid) {
+		//alert(clickid);
+			var lh="https://www.linkedin.com/in/"+clickid;
+			var ref = cordova.InAppBrowser.open(lh, '_system', 'location=yes,toolbar=yes,clearsessioncache=yes,clearcache=yes');		
+			
+		}
+	</script>
+
+	<script>
+		function skype(clickid) {
+
+		//	https://play.google.com/store/apps/details?id=com.nobhub.app
+		//alert(clickid);
+			var lh="skype:"+clickid+"?chat";
+			var ref = cordova.InAppBrowser.open(lh, '_system', 'location=yes,toolbar=yes,clearsessioncache=yes,clearcache=yes');		
+			
+		}
+	</script>
+	<script>
+		function web(clickid) {
+		//alert(clickid);
+			var lh="http://"+clickid;
+			var ref = cordova.InAppBrowser.open(lh, '_system', 'location=yes,toolbar=yes,clearsessioncache=yes,clearcache=yes');		
+			
+		}
+		
+		
+	</script>
+<script>
+		function openchat() {
+		var user_id = localStorage.getItem("viewid");
+			//alert(user_id);
+			localStorage.setItem("chatid",user_id);
+			location.href="chat.html";
+		}
+	</script>
+<script src="https://nobhub.com/services/custom-scripts.js"></script>
+</head>
+
+<body class="fixed-sn light-blue-skin" onload="onLoad(); viewcard();pname();">
+<div style="width: 100%; text-align: center; position: fixed; z-index: 9998889; top: 250px; display:none" id="loader"><img src="loading.gif" style="margin-left: auto; margin-right: auto; width: 64px; height: auto"></div>
+    <header style="border: 0px">
+		 <nav class="navbar fixed-top navbar-toggleable-md navbar-expand-lg scrolling-navbar double-nav">
+			
+		 </nav>
+		<!--div class="text-center" style="border: 0px; margin-top: 60px; margin-bottom: -16px;">
+			<center> <img src="logo.png"></br><h2>NobHub</h2></center>
+		</div-->
+		
+	</header>
+
+<main>
+
+
+<section style="margin-top:38px;">
+ <br>
+<div class="list-group btn-group" style="position: fixed; z-index: 9999; top: 0; width: 100%; margin-top:0;">
+			<span class="list-group-item active gradient-bg">
+				<a href="javascript:history.go(-1)" class="pull-left chat-back-btn"><i class="fas fa-long-arrow-alt-left" style="color:white;"></i></a>
+			</span>				
+			
+			
+		</div>    
+
+<div class="col-12 padd-sm" id="" style="margin-top: 10px">
+	<div class='card-wrapper'>
+	<div style="padding: 5px; text-align: center"><a class='rotate-btn' data-card='card-1'><i class="fa fa-repeat fa-2x" style="font-weight: bold"></i> Click Here to Rotate Card</a></div>
+	<div id='card-1' class='card-rotating effect__click text-center h-100 w-100' style="margin-top: 30px">
+	
+
+		
+	</div>
+	
+	</div>
+	
+	
+</div>
+			<br><br><br>
+			<div class="col-12" align="center">
+				<span class="nickname" style="font-size:16px;" id="pname"></span>
+				<span class="nickname" style="font-size:16px;" > <a href="javascript:void(0);" class="nickname-editbtn" style="color:#999;"><i class="fa fa-edit"></i></a></span>
+				<span class="nickname-edit" style="display:none;"><input type="text" style="width:80%; height:34px; border:1px solid #eee; border-radius:4px; padding:4px 10px; margin:0 auto;" placeholder="Nickname" id="nickname">
+				<a href="javascript:void(0);" onclick="updatenickname();" class="nickname-editbtn1" style="color:#4CAF50; margin-left: -22px;"><i class="fa fa-check"></i></a></span>
+			</div>
+			<br>
+		<div class="card" style="padding:10px 20px; width:90%; margin:0 auto; margin-bottom:15px; text-align:center; text-transform:uppercase;" >
+			<p style="margin-bottom:0px;">
+				<a href="#" onclick="openchat();" class="share-btn1"><i class="fa fa-comments"></i></a> &emsp;
+				<!--<a href="#" class="share-btn2"><i class="fa fa-video"></i></a> &emsp;-->
+				<a href="#" onclick="shareclick();" class="share-btn3"><i class="fa fa-users"></i></a> &emsp;
+			</p>
+		</div>
+
+<!-- Rotating card -->
+                 
+</section>
+<div class="clearfix"><br><br><br></div>
+
+<section>
+	<div class="footer-menu">
+		<div ><a href="home.html"><i class="far fa-address-book"></i><span><br>Contacts</span></a></div>
+			<div><a href="nearby.html"><img src="img/nearby2.png" class="nearby2"><span><br>Nearby</span></a></div>
+			<div><a href="meetings.html"><i class="fas fa-users"></i><span><br>Meetings</span></a></div>
+			<div><a href="chat-list.html"><i class="fas fa-comments"></i><span><br>Chats</span></a></div>
+			<div class="active"><a href="cards.html"><i class="far fa-address-card"></i><span><br>Cards</span></a></div>
+	</div>
+</section>
+
+	<div class="corner-icon1"> <img src="logo.png"></div>
+
+            </main>
+<!-- Card -->
+                      
+    <!--/Form with header-->
+
+            
+    
+    <!--Main Layout-->
+
+    <!-- /Start your project here-->
+
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/mdb.min.js"></script>
+  <script>
+        
+        // SideNav Initialization
+        $(".button-collapse").sideNav();
+
+    </script>
+    <script>
+         // Material Select Initialization
+ $(document).ready(function() {
+    $('.mdb-select').material_select();
+  });
+    </script>
+	
+	
+	
+	
+	
+	<script>
+		$(document).ready(function(){
+		  $(".nickname-editbtn").click(function(){
+			$(".nickname").hide();
+			$(".nickname-edit").show();
+		  });
+		  $(".nickname-editbtn1").click(function(){
+			$(".nickname-edit").hide();
+			$(".nickname").show();
+		  });
+		});
+	</script>
+</body>
+
+</html>

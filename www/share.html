@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>NOB HUB</title>
+    <link href="css/style.css" rel="stylesheet"><link href="https://nobhub.com/service-web-api/cardstyles.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link href="https://mdbootstrap.com/previews/docs/latest/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://mdbootstrap.com/previews/docs/latest/css/mdb.min.css" rel="stylesheet">
+    <link href="css/mdb.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="cordova.js"></script>
+	<script type="text/javascript" src="SocialSharing.js"></script>
+
+	
+	<script type="text/javascript" charset="utf-8">
+		function onLoad() {
+			document.addEventListener("deviceready", onDeviceReady, false);
+		}
+		function onDeviceReady() {
+			document.addEventListener("backbutton", onBackKeyDown, false);
+		}
+		function onBackKeyDown() {
+			window.history.back();
+		}
+	</script>
+	
+	
+	<script>
+		$(document).ready(function(){
+			$("#cnbtn").click(function(){
+				$("#confirmer").slideUp();
+				document.getElementById('confirmertoggle').value=0;
+			});
+		});
+	</script>
+	<script>
+		$(document).ready(function(){
+			$("#okbtn").click(function(){
+				navigator.app.exitApp();
+			});
+		});
+		
+		function myname() {
+		
+			document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+						var timezone = localStorage.getItem("timezone");
+			//alert(user_id);
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+						var splitter = result.split("deli");
+               //alert(splitter[3]);
+					
+					localStorage.setItem("myname",splitter[0]);
+				if(splitter[1]!=""){
+					document.getElementById('myimagemain').src = "https://nobhub.com/services/members/"+splitter[1];
+					document.getElementById('himage').src = "https://nobhub.com/services/members/"+splitter[1];
+					
+					}else {
+					document.getElementById('myimagemain').src = "https://nobhub.com/services/pp1.jpg";
+					document.getElementById('himage').src = "https://nobhub.com/services/pp1.jpg";
+					}
+					//document.getElementById('myname').innerHTML=splitter[0];
+					//document.getElementById('hname').innerHTML="Welcome&nbsp;"+splitter[0];
+					document.getElementById('referal').innerHTML=splitter[2];
+					document.getElementById('referalcode').value=splitter[2];
+					
+                         if(splitter[3] > 800){
+						  
+						  if(splitter[4] =='Premium'){
+						  var points = 800-splitter[3];
+						 document.getElementById('total').innerHTML="Total Points Earned :&nbsp;"+points;
+
+                          //document.getElementById('redeem').style.display="block";
+						  }else{
+						  
+						  document.getElementById('total').innerHTML="Total Points Earned :&nbsp;"+splitter[3];
+
+                          document.getElementById('redeem').style.display="block";
+						  
+						  }
+						  }else{
+						  
+						 document.getElementById('total').innerHTML="Total Points Earned :&nbsp;"+splitter[3];
+
+						  document.getElementById('redeem').style.display="none";
+                             }
+			document.getElementById('loader').style.display="none";
+
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/mydetails.php?user_id="+user_id+"&timezone="+timezone, true);
+			xmlhttp.send();
+			}
+		
+		
+	</script>
+	
+	<script>
+		function redeem() {
+				document.getElementById('loader').style.display="block";
+				var user_id = localStorage.getItem("user_id");
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						var result = this.responseText;
+						alert('Account is updated to Premium');
+						location.reload();
+						document.getElementById('loader').style.display="none";
+						
+					}
+				};
+				xmlhttp.open("GET", "https://nobhub.com/services/updatemembership.php?user_id="+user_id, true);
+				xmlhttp.send();
+			}
+	</script>
+	
+<script>
+
+</script>
+<style>
+	label {
+		font-weight: bold;
+	}
+</style>
+
+<script>
+
+function shareclick(){
+
+	//alert("clickid");
+var referal =document.getElementById('referalcode').value;
+//alert(referal);
+var options = {
+  message: "Please check out this awesome app. I highly recommend you to join NobHub mobile app,make sure to use the referral code as mentioned below. "+referal, // not supported on some apps (Facebook, Instagram)
+  subject: 'I invite you to Nobhub.', // fi. for email
+  files: ['https://nobhub.com/assets/images/logo1.png'], // an array of filenames either locally or remotely 
+  url: 'https://play.google.com/store/apps/details?id=com.nobhub.app' ,
+  chooserTitle: 'Invite a friend via....' // Android only, you can override the default share sheet title
+}
+
+var onSuccess = function(result) {
+  console.log("Share completed? " + result.completed); // On Android apps mostly return false even while it's true
+  console.log("Shared to app: " + result.app); // On Android result.app is currently empty. On iOS it's empty when sharing is cancelled (result.completed=false)
+}
+
+var onError = function(msg) {
+  console.log("Sharing failed with message: " + msg);
+}
+
+window.plugins.socialsharing.shareWithOptions(options, onSuccess, onError);
+
+}
+</script>
+<script>
+
+var xmlhttp = new XMLHttpRequest();
+var user_id = localStorage.getItem("user_id");
+
+var url = "https://nobhub.com/services/referals.php?user_id="+user_id;
+
+xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+	                
+	
+	//console.log(this.responseText);
+        referals(this.responseText);
+    }
+}
+xmlhttp.open("GET", url, true);
+xmlhttp.send();
+
+function referals(response) {
+    //alert(response);
+    var arr = JSON.parse(response);
+    var i;
+    var out ="";
+    for(i = 0; i < arr.length; i++) {
+
+ 
+    out += "<div class='card' style='padding:10px; width:80%; margin:0 auto; margin-bottom:5px; text-transform:uppercase;'><p style='margin-bottom:0px;'><a href='' class='share-btn1 pull-left' style='color:#333;'><img src='https://nobhub.com/services/"+arr[i].image+"' width='24'>"+arr[i].name+"</a><span class='pull-right' style='color:#999; padding-top:4px;'>"+arr[i].date+"</span></p></div>";
+  
+    }
+    //out += "</table>";
+   if(out!=''){
+    document.getElementById("referals").innerHTML = out;
+	}else{
+	    document.getElementById("referals").innerHTML = "<h4 style='text-align:center;color:#e83e8c;'>No Referals  Found</h4>";
+
+	}
+}
+</script>
+<script src="https://nobhub.com/service-web-api/custom-scripts.js"></script></head>
+<body class="fixed-sn light-blue-skin" style="background:#eee;" onload="onLoad();myname();">
+<input type="hidden" id="getter">
+<div style="display: none; border: 1px solid #c0c0c0; background: #e9e9e9; width: 90%; position: fixed; z-index: 9999; top: 250px; left: 20px; padding: 10px; text-align: center" id="confirmer">
+<i style="color: #FF0000" class="fa fa-sign-out fa-4x"></i></br>
+<span id="confirmtext">Do you really want to exit?</span></br>
+<button type="button" class="btn btn-warning z-depth-1a" id="cnbtn" style="float: left">Cancel</button>
+<button type="button" class="btn btn-danger z-depth-1a" id="okbtn" style="float: right">OK</button>
+</div>
+<input type="hidden" id="confirmertoggle" value="0">
+
+<div style="width: 100%; text-align: center; position: fixed; z-index: 9998889; top: 250px; display:none" id="loader"><img src="loading.gif" style="margin-left: auto; margin-right: auto; width: 64px; height: auto"></div>
+
+	<main>
+		<section>
+			
+		<div class="list-group btn-group" style="position: fixed; z-index: 9999; top: 0; width: 100%; margin-top:0;">
+			<span class="list-group-item active gradient-bg">
+				<a href="#" id="user-menu-back" class="pull-left chat-back-btn"><i class="fas fa-long-arrow-alt-left" style="color:white;"></i></a>
+				<span class="pull-left" style="margin-top:4px;"><b id="">Refer a Friend</b></span>
+				<span class="pull-right" style="margin-top:4px;margin-right: 50px;"><b id="total">Points Earned : 10</b></span>
+			</span>				
+			
+			<div class="user-menu dropdow">
+				<a href="#" id="user-menu-btn">
+					<img src="https://nobhub.com/services/pp1.jpg" class="img-fluid mt-1" alt="Post" style="height: 40px; width: 40px;" id="himage">
+				</a>
+			</div>	
+		</div>  
+<div id="user-menu-div" style="display:none;">
+			<img src="img/settings-bg.png" class="img-responsive">
+			<div class="user-menu-header">
+				<a href="javascript:void(0);" id="user-menu-btn-close"><i class="fa fa-close" style="font-size:20px;"></i></a>
+				<br><br>
+			<div class="col-xs-12 text-center" style="position: absolute; width: 100%; bottom: -169px;">
+				<a href="javascript:void(0);" id="myname" style="text-transform:uppercase;"><i class="fa fa-angle-down"></i></a>
+				<br>
+				<a href="javascript:void(0);"><img src="https://nobhub.com/services/pp1.jpg" class="img-fluid mt-1 pp" alt="Post" id="myimagemain" style="height: 80px; width: 80px; margin-top:25px; border-radius:100px; margin-bottom:6px; margin-left: -8px;"></a></div>
+			</div>
+			<br><br><br>
+			<a class="dropdown-item" href="settings.html"><i class="fa fa-user"></i> Profile</a>
+			<a class="dropdown-item" href="chat-list.html"><i class="fa fa-comments"></i> Chat</a>
+			<a class="dropdown-item" href="alerts.html"><i class="fa fa-bell"></i> Notifications</a>
+			<!--a class="dropdown-item" href="#"><i class="fab fa-youtube"></i> Live Stream</a-->				<a class="dropdown-item" href="share.html"><i class="fa fa-users"></i> Refer a Friend</a>
+			<a class="dropdown-item" href="cnumber.html"><i class="fa fa-phone"></i> Change Number </a>
+			<a class="dropdown-item" href="upgrade.html"><i class="fas fa-crown"></i> Premium Membership </a><a class="dropdown-item" href="blockedlist.html"><i class="fas fa-ban"></i> Block List </a>
+			<a class="dropdown-item" href="about.html"><i class="fas fa-info"></i> About NobHub </a>
+			<a class="dropdown-item" href="https://play.google.com/store/apps/details?id=com.nobhub.app"><i class="fas fa-star"></i> Rate App </a>
+			<!--a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Change Password </a-->
+			<a class="dropdown-item" href="#" onclick="logoutfn()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+		</div>
+			<div  style="margin-top: 50px; text-align:center;">
+				<img src="img/refer-img1.jpg" class="img-responsive"> <br><br>
+				<img src="img/refer-img2.png" class="img-responsive"> 
+				<div class="" style="padding:10px; width:100%; margin:0 auto; margin-bottom:15px; text-align:left; font-size:12px; text-transform:uppercase;">
+					<b><br>Your referral code :<br><span style="color:orange; margin-bottom:0px; font-size:20px;" id="referal"></span></b>					<a href="#" onclick="shareclick();" class="share-btn3"><i class="fa fa-share-alt"></i></a> &emsp;
+
+				<input type="hidden" id="referalcode"><br><span style="font-size:11px; color:#000;">10 Points for 1 referal </span><br>
+                    <button type="button" id="redeem" style="display:none;" class="btn btn-info" onclick="redeem();">Redeem</button>
+					<img src="img/refer-a-friend.jpg" width="150" style="margin-top:-50px;" class="pull-right"><br><br>
+				</div>
+			</div>			
+			<!--div class="card" style="padding:20px; width:80%; margin:0 auto; margin-bottom:15px; text-align:center; text-transform:uppercase;">
+				<b>Share Nobhub with friends and earn a free premium package.</b><br><b style="color:orange;">Share more to get more.</b>
+			</div>		
+			<div class="card" style="padding:20px; width:80%; margin:0 auto; margin-bottom:15px; text-align:center; text-transform:uppercase;">
+				<img src="img/refer-img1.jpg" style="border: 0px solid #eee;">
+			</div>
+			
+			<div class="card" style="padding:20px; width:80%; margin:0 auto; margin-bottom:15px; text-align:center; text-transform:uppercase;">
+				Your referral code 
+				<h4 style="color:orange; margin-bottom:0px;" id="referal"></h4>
+			</div>
+			
+			<div class="card" style="padding:20px; width:80%; margin:0 auto; margin-bottom:15px; text-align:center; text-transform:uppercase;">
+				<p style="margin-bottom:0px;">
+					<a href="#" onclick="shareclick();" class="share-btn3"><i class="fa fa-share-alt"></i></a> &emsp;
+				</p>
+				<input type="hidden" id="referalcode">
+			</div-->
+			
+						<h5 align="center"><b>REFERRAL HISTORY</b></h5>
+			<div id="referals"></div>
+			
+			<!--div class="card" style="padding:10px; width:80%; margin:0 auto; margin-bottom:5px; text-transform:uppercase;">
+				<p style="margin-bottom:0px;">
+					<a href="" class="share-btn1 pull-left" style="color:#333;"><img src="img/pp2.jpg" width="24"> John Deo</a>
+					<span class="pull-right" style="color:#999; padding-top:4px;">12-03-19</span>
+				</p>
+			</div>
+			
+			<div class="card" style="padding:10px; width:80%; margin:0 auto; margin-bottom:5px; text-transform:uppercase;">
+				<p style="margin-bottom:0px;">
+					<a href="" class="share-btn1 pull-left" style="color:#333;"><img src="img/pp3.jpg" width="24"> John Deo</a>
+					<span class="pull-right" style="color:#999; padding-top:4px;">12-03-19</span>
+				</p>
+			</div>
+			
+			<div class="card" style="padding:10px; width:80%; margin:0 auto; margin-bottom:5px; text-transform:uppercase;">
+				<p style="margin-bottom:0px;">
+					<a href="" class="share-btn1 pull-left" style="color:#333;"><img src="img/pp4.jpg" width="24"> John Deo</a>
+					<span class="pull-right" style="color:#999; padding-top:4px;">12-03-19</span>
+				</p>
+			</div>
+			
+			<div class="card" style="padding:10px; width:80%; margin:0 auto; margin-bottom:5px; text-transform:uppercase;">
+				<p style="margin-bottom:0px;">
+					<a href="" class="share-btn1 pull-left" style="color:#333;"><img src="img/pp5.jpg" width="24"> John Deo</a>
+					<span class="pull-right" style="color:#999; padding-top:4px;">12-03-19</span>
+				</p>
+			</div-->
+				<!--h5 style="text-align:center;color:#ff8f05;" id="total">Total Points Earned</h5-->
+
+			<br><br><br><br>
+			
+		</section>
+		
+		<section>
+			<div class="footer-menu">
+				<div class="active"><a href="home.html"><i class="far fa-address-book"></i><span><br>Contacts</span></a></div>
+				
+				<div><a href="nearby.html"><img src="img/nearby2.png" class="nearby2"><span><br>Nearby</span></a></div>
+				<div><a href="meetings.html"><i class="fas fa-users"></i><span><br>Meetings</span></a></div>
+			<div><a href="chat-list.html"><i class="fas fa-comments"></i><span><br>Chats</span></a></div>
+				<div><a href="cards.html"><i class="far fa-address-card"></i><span><br>Cards</span></a></div>
+			</div>
+		</section>
+		<div class="corner-icon1"> <img src="logo.png"></div>
+	</main>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/popper.min.js"></script>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/mdb.min.js"></script>
+	<script>
+        $(".button-collapse").sideNav();
+    </script>
+    <script>
+		$(document).ready(function() {
+			$('.mdb-select').material_select();
+		});
+    </script>
+	
+	
+	<script>
+		$(document).ready(function(){
+		  $("#user-menu-btn-close").click(function(){
+			$("#user-menu-div").hide();
+		  });
+		  $("#user-menu-btn").click(function(){
+			$("#user-menu-div").show();
+		  });
+		  $("#user-menu-back").click(function(){
+			$("#user-menu-div").show();
+		  });
+		});
+	</script>
+</body>
+</html>

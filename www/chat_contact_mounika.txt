@@ -1,0 +1,42 @@
+<?php
+require "config.php";
+$data = @mysql_query("SELECT * FROM invites where refid='".$_GET['user_id']."' AND fromstatus='accepted' OR cid='".$_GET['user_id']."' AND fromstatus='accepted' and cstatus!='blocked' order by guid desc") or die(mysql_error());
+
+
+
+$count =mysql_num_rows($data);
+if($count > 0){
+while($row = mysql_fetch_array($data)) { 
+    echo "select * from chat where  (inputby='".$_GET['user_id']."' and refid='".$row['refid']."') OR (inputby ='".$row['refid']."' and refid='".$_GET['user_id']."') order by guid desc";
+
+$msg=mysql_fetch_array(mysql_query("select * from chat where  (inputby='".$_GET['user_id']."' and refid='".$row['refid']."') OR (inputby ='".$row['refid']."' and refid='".$_GET['user_id']."') order by guid desc"));
+
+$info = mysql_fetch_array(mysql_query("SELECT * FROM register where (guid='".$row['cid']."' or guid='".$row['refid']."') and guid !='".$_GET['user_id']."'"));
+//$data1 = @mysql_query("SELECT * FROM invites where refid!='".$msg['refid']."' AND fromstatus='accepted' OR cid='".$msg['inputby']."' AND fromstatus='accepted' and cstatus!='blocked' order by guid desc") or die(mysql_error());
+
+
+//echo $msg['refid'].'-'.$info['guid'].'-'.$msg['inputby'];
+
+
+if($info['guid'] !=$msg['inputby'] ){
+?>
+<div class="card1">
+					<a href="#" id="<?php echo $info['guid']; ?>" onclick="openchat(this.id);">
+					    <?php 	if($info['image']!="") {?>
+						<img src="https://nobhub.com/services/members/<?php echo $info['image']; ?>" width="50" class="img-circle">
+						<?php }else{ ?>
+				<img src="https://nobhub.com/services/pp1.jpg" width="50" class="img-circle"><?php } ?>
+				
+						<span class="chat-profile-title"><?php echo ucfirst($info['name']);?></span><br>
+						<span>Hey..! I'm using Nobhub</span>
+					</a>
+</div>
+	<?php } 
+	} }else{?>
+<div class="card1">
+					
+					<br>
+						<span class="chat-profile-title" >No contacts found</span> 
+				
+				</div>
+				<?php } ?>

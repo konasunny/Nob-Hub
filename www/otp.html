@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>NOB HUB</title>
+    <link href="css/style.css" rel="stylesheet"-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link href="https://mdbootstrap.com/previews/docs/latest/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://mdbootstrap.com/previews/docs/latest/css/mdb.min.css" rel="stylesheet">
+    <link href="css/mdb.min.css" rel="stylesheet">
+    <style type="text/css">
+		.form-elegant .font-small {
+		  font-size: 11px; }
+		.form-elegant .z-depth-1a {
+		  -webkit-box-shadow: 0 2px 5px 0 rgba(55, 161, 255, 0.26), 0 4px 12px 0 rgba(121, 155, 254, 0.25);
+		  box-shadow: 0 2px 5px 0 rgba(55, 161, 255, 0.26), 0 4px 12px 0 rgba(121, 155, 254, 0.25); }
+		.form-elegant .z-depth-1-half,
+		.form-elegant .btn:hover {
+		  -webkit-box-shadow: 0 5px 11px 0 rgba(85, 182, 255, 0.28), 0 4px 15px 0 rgba(36, 133, 255, 0.15);
+		  box-shadow: 0 5px 11px 0 rgba(85, 182, 255, 0.28), 0 4px 15px 0 rgba(36, 133, 255, 0.15); }
+    </style>
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="cordova.js"></script>
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		function onLoad() {
+			document.addEventListener("deviceready", onDeviceReady, false);
+		document.addEventListener("deviceready", geoLocation, false);
+		}
+
+		function geoLocation() {
+			function onSuccess(position) {
+				var user_id = localStorage.getItem("otp_user");
+				var lati = position.coords.latitude;
+				var longi = position.coords.longitude;
+				//alert(lati);
+				//alert(longi);
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						var result = this.responseText;
+					}
+				};
+				xmlhttp.open("GET", "https://nobhub.com/services/postcoordinates.php?user_id=" + user_id + "&lati=" + lati + "&longi=" + longi, true);
+				xmlhttp.send();
+			}
+			function onError(error) {
+				alert('code: '    + error.code    + '\n' +
+					  'message: ' + error.message + '\n');
+			}
+			navigator.geolocation.getCurrentPosition(onSuccess, onError);
+		}
+
+		function onDeviceReady() {
+			document.addEventListener("backbutton", onBackKeyDown, false);
+		}
+		function onBackKeyDown() {
+			if(document.getElementById('confirmertoggle').value==1) {
+				$("#confirmer").slideUp();
+				document.getElementById('confirmertoggle').value=0;
+				location.reload();
+			}
+			else {
+				location.href="login.html";
+			}
+		}
+	</script>
+	<script>
+		function verify_otp() {
+			var otp_user = localStorage.getItem("otp_user");
+			var verify_otp = localStorage.getItem("verify_otp");
+			var deviceid = localStorage.getItem("deviceid");
+			var otp =   document.getElementById('otp').value;//alert(otp);
+			if(otp=="") {
+				document.getElementById('confirmtext').innerHTML="Please Enter OTP";
+				$("#confirmer").slideDown();
+				document.getElementById('confirmertoggle').value=1;
+			}
+			else {
+			document.getElementById('loader').style.display="block";
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					if (result == "Wrong OTP!") {
+						document.getElementById('loader').style.display="none";
+						document.getElementById('confirmtext').innerHTML="Wrong OTP!";
+						$("#confirmer").slideDown();
+						document.getElementById('confirmertoggle').value=1;
+					}  
+					else {			
+						localStorage.setItem("user_id", result);
+						location.href = "home.html";
+					};
+				}
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/verify_otp.php?verify_otp=" + verify_otp+"&otp="+otp+"&otp_user="+otp_user+"&deviceid="+deviceid, true);
+			xmlhttp.send();
+			}
+		}		
+		function resendotp() {
+			if (typeof(Storage) !== "undefined") {
+			document.getElementById('loader').style.display="block";
+			var otp_user = localStorage.getItem("otp_user");
+			var verify_otp = localStorage.getItem("verify_otp");
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					var splitter = result.split("|");
+					localStorage.setItem("otp_user", splitter[0]);//alert(splitter[0]);
+				    localStorage.setItem("verify_otp", splitter[1]);//alert(splitter[1]);
+					document.getElementById('loader').style.display="none";
+					document.getElementById('confirmtext').innerHTML="OTP Sent";
+					$("#confirmer").slideDown();
+					document.getElementById('confirmertoggle').value=1;
+				}
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/resend_otp.php?verify_otp=" + verify_otp+"&otp_user="+otp_user, true);
+			xmlhttp.send();
+			}
+		}
+	</script>
+	<script>
+		$(document).ready(function(){
+			$("#okbtn").click(function(){
+				$("#confirmer").slideUp();
+				document.getElementById('confirmertoggle').value=0;
+			});
+		});
+	</script>
+
+<script src="https://nobhub.com/services/custom-scripts.js"></script></head>
+<body class="fixed-sn light-blue-skin" onload="onLoad();">
+<div style="display: none; border: 1px solid #c0c0c0; background: #e9e9e9; width: 90%; position: fixed; z-index: 9999; top: 250px; left: 20px; padding: 10px; text-align: center" id="confirmer">
+<!--i style="color: #0d994f" class="fa fa-check-square fa-4x"></i></br-->
+<span id="confirmtext"></span></br>
+<button type="button" class="btn blue-gradient btn-primary z-depth-1a" id="okbtn">OK</button>
+</div>
+<input type="hidden" id="confirmertoggle" value="0">
+<div style="width: 100%; text-align: center; position: fixed; z-index: 9998889; top: 250px; display:none" id="loader"><img src="loading.gif" style="margin-left: auto; margin-right: auto; width: 64px; height: auto"></div>
+   <main class="ixed-sn light-blue-skin bg3">
+		<div class="corner-icon"> <img src="logo.png"></div>
+		<section class="form-elegant" style="margin-top: 0px;">
+			<div class="">
+				<div class="">
+				<br><br><br><br><br><br>
+				<!--h6 class="page-title">REGISTER</h6--><br><br>
+				<div class="text-center">
+					<img src="img/shield.png" width="80">
+				</div>
+				
+					<form>
+				<div class="card-body col-10">
+						<h6 class="page-title"></h6>
+						<!--div class="text-center icon-circle"><br>
+							<img src="img/shield.png" width="40" style="margin-top:-10px;">
+						</div-->
+						<div class="md-form pb-3">
+							<input type="number" id="otp" class="form-control form-input" style="border: 1px solid #e6e6e6; padding-top: 16px !important;" autocomplete="off" maxlength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" name="otp">
+							<label for="Form-pass1" class="label-icon"><i class="fa fa-lock"></i><span class="placeholder">Enter OTP</span></label>
+							<span class="font-small blue-text d-flex justify-content-end" style="padding-top:10px; float:right;">Didn't Receive the OTP? <a href="#" class="blue-text ml-1" onClick="resendotp();"> Resend OTP</a></span>
+						</div>
+						 
+				</div>
+						<div class="text-center"><button type="button" onclick="verify_otp()" class="btn blue-gradient btn-primary z-depth-1a">Confirm</button></div>
+					</form> 
+				<br><br>
+			</div>
+		</section>
+	</main>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/popper.min.js"></script>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/mdb.min.js"></script>
+	<script>
+        $(".button-collapse").sideNav();
+    </script>
+</body>
+</html>

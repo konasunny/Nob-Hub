@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>NOB HUB</title>
+    <link href="css/style.css" rel="stylesheet"><link href="https://nobhub.com/services/cardstyles.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link href="https://mdbootstrap.com/previews/docs/latest/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://mdbootstrap.com/previews/docs/latest/css/mdb.min.css" rel="stylesheet">
+    <link href="css/mdb.min.css" rel="stylesheet">
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="cordova.js"></script>
+	
+	
+	<script type="text/javascript" charset="utf-8">
+		function onLoad() {
+			document.addEventListener("deviceready", onDeviceReady, false);
+		}
+		function onDeviceReady() {
+			document.addEventListener("backbutton", onBackKeyDown, false);
+		}
+		function onBackKeyDown() {
+			window.history.back();
+		}
+	</script>
+	
+	
+	<script>
+		$(document).ready(function(){
+			$("#cnbtn").click(function(){
+				$("#confirmer").slideUp();
+				document.getElementById('confirmertoggle').value=0;
+			});
+		});
+	</script>
+	<script>
+		$(document).ready(function(){
+			$("#okbtn").click(function(){
+				navigator.app.exitApp();
+			});
+		});
+	</script>
+	
+	<script>
+		function alertcount() {
+				document.getElementById('loader').style.display="block";
+				var user_id = localStorage.getItem("user_id");
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						var result = this.responseText;
+						if(result>0) {
+						document.getElementById('alertcount').style.display="block";
+						document.getElementById('alertcount').innerHTML=result;
+						document.getElementById('loader').style.display="none";
+						}
+						else {
+						document.getElementById('loader').style.display="none";
+						}
+					}
+				};
+				xmlhttp.open("GET", "https://nobhub.com/services/alertcount.php?user_id="+user_id, true);
+				xmlhttp.send();
+			}
+	</script>
+	
+<script>
+function openCalendar1() {
+window.plugins.calendar.openCalendar();
+}
+function openCalendar2() {
+// today + 3 days
+//var d = new Date(new Date().getTime() + 3 * 24 * 60 * 60 * 1000);
+window.plugins.calendar.openCalendar(d, onSuccess, onError);
+}
+window.onerror = function(msg, file, line) {
+  alert(msg + '; ' + file + '; ' + line);
+};
+
+function createCalendarEvent() {
+	var a = document.getElementById('participant').value;
+	var ps = a.split("deli");
+	var title = document.getElementById('meetingtitle').value+" with "+ps[0];
+	
+	var refid = ps[1];
+	var loc = document.getElementById('meetinglocation').value;
+	var notes = document.getElementById('notes').value;
+	var sd = document.getElementById('startdate').value;
+	var splitter = sd.split("-");
+	var shh = document.getElementById('shh').value;
+	var smm = document.getElementById('smm').value;
+	var ed = document.getElementById('enddate').value;
+	var splitter1 = ed.split("-");
+	var ehh = document.getElementById('ehh').value;
+	var emm = document.getElementById('emm').value;
+	var m1 = splitter[1]-1;
+	var m2 = splitter1[1]-1;
+	
+	
+	if(document.getElementById('meetingtitle').value=="") {
+		alert("Meeting title is required");
+		document.getElementById('meetingtitle').style.border="1px solid #FF0000";
+	}
+	else {
+		if(loc=="") {
+			alert("Meeting location is required");
+			document.getElementById('meetinglocation').style.border="1px solid #FF0000";
+		}
+		else {
+			if(sd=="") {
+				alert("Meeting Start Date is required");
+				document.getElementById('startdate').style.border="1px solid #FF0000";
+			}
+			else {
+				if(shh=="") {
+					alert("Meeting Start Time(Hours) is required");
+					document.getElementById('shh').style.border="1px solid #FF0000";
+				}
+				else {
+					if(smm=="") {
+						alert("Meeting Start Time(Minutes) is required");
+						document.getElementById('smm').style.border="1px solid #FF0000";
+					}
+					else {
+						if(ed=="") {
+							alert("Meeting End Date is required");
+							document.getElementById('enddate').style.border="1px solid #FF0000";
+						}
+						else {
+							if(ehh=="") {
+								alert("Meeting End Time(Hours) is required");
+								document.getElementById('ehh').style.border="1px solid #FF0000";
+							}
+							else {
+								if(emm=="") {
+									alert("Meeting End Time(Minutes) is required");
+									document.getElementById('emm').style.border="1px solid #FF0000";
+								}
+								else {
+									if(document.getElementById('participant').value=="") {
+										alert("Participant is required");
+										document.getElementById('participant').style.border="1px solid #FF0000";
+									}
+									else {
+										var startDate = new Date(splitter[0],m1,splitter[2],shh,smm,0,0,0);
+										var endDate = new Date(splitter1[0],m2,splitter1[2],ehh,emm,0,0,0);
+										var user_id = localStorage.getItem("user_id");
+										var xmlhttp = new XMLHttpRequest();
+										xmlhttp.onreadystatechange = function() {
+											if (this.readyState == 4 && this.status == 200) {
+												var result = this.responseText;
+												alert(result);
+												window.plugins.calendar.createEvent(title, loc, notes, startDate, endDate, onSuccess, onError);
+											}
+										};
+										xmlhttp.open("GET", "https://nobhub.com/services/meeting.php?user_id="+user_id+"&refid="+refid+"&title="+title+"&loc="+loc+"&notes="+notes+"&syear="+splitter[0]+"&smonth="+m1+"&sday="+splitter[2]+"&shh="+shh+"&smm="+smm+"&eyear="+splitter1[0]+"&emonth="+m2+"&eday="+splitter[2]+"&ehh="+ehh+"&emm="+emm, true);
+										xmlhttp.send();
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+function onSuccess(msg) {
+
+  console.log('Calendar success: ' + JSON.stringify(msg));
+  location.reload();
+}
+
+function onError(msg) {
+  console.log('Calendar error: ' + JSON.stringify(msg));
+}
+</script>
+<style>
+	label {
+		font-weight: bold;
+	}
+</style>
+
+<script>
+function getparticipants() {
+document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					document.getElementById('participant').innerHTML=result;
+					
+					document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/getparticipants.php?user_id="+user_id, true);
+			xmlhttp.send();
+}
+</script>
+
+<script src="https://nobhub.com/services/custom-scripts.js"></script></head>
+<body class="fixed-sn light-blue-skin" onload="onLoad(); alertcount(); getparticipants()">
+<input type="hidden" id="getter">
+<div style="display: none; border: 1px solid #c0c0c0; background: #e9e9e9; width: 90%; position: fixed; z-index: 9999; top: 250px; left: 20px; padding: 10px; text-align: center" id="confirmer">
+<i style="color: #FF0000" class="fa fa-sign-out fa-4x"></i></br>
+<span id="confirmtext">Do you really want to exit?</span></br>
+<button type="button" class="btn btn-warning z-depth-1a" id="cnbtn" style="float: left">Cancel</button>
+<button type="button" class="btn btn-danger z-depth-1a" id="okbtn" style="float: right">OK</button>
+</div>
+<input type="hidden" id="confirmertoggle" value="0">
+
+<div style="width: 100%; text-align: center; position: fixed; z-index: 9998889; top: 250px; display:none" id="loader"><img src="loading.gif" style="margin-left: auto; margin-right: auto; width: 64px; height: auto"></div>
+
+	<main>
+		<section>
+			<div class="list-group btn-group" style="position: fixed; z-index: 9999; top: 0; width: 100%; margin-top:0;">
+				<span class="list-group-item active gradient-bg">
+					<span class="pull-left" style="margin-top:4px;"><b>Meetings/Organizer</b></span>
+				</span>				
+				<div class="dropdown dropleft pull-right invite-menu">
+					 <a href="#" type="button" onclick="openCalendar1()" style="color: #FFFFFF; font-weight: bold">View all Meetings</a>
+				</div>	
+			</div>  
+			<div id="mainid" style="padding: 5px; margin-top: 60px">
+				<h4><i class="fa fa-calendar"></i> Add New Meeting</h4>
+				<hr>
+				<div style="width: 100%; padding: 0px">
+					<label>Meeting Title <span style='color: #FF0000'>(*)</span></label>
+					<input type="text" class="form-control" id="meetingtitle" placeholder="Meeting Title"></br>
+					<label>Meeting Location <span style='color: #FF0000'>(*)</span></label>
+					<input type="text" class="form-control" id="meetinglocation" placeholder="Meeting Location"></br>
+					<label>Select participant <span style='color: #FF0000'>(*)</span></label>
+					<select class="form-control" id="participant">
+						
+					</select></br>
+					<label>Notes (Optional)</label>
+					<textarea class="form-control" id="notes" placeholder="Notes"></textarea></br>
+				</div>
+				
+				<div style="width: 100%; padding: 0px;">
+					<div style="width: 50%; float: left; padding: 0px">
+						<label>Select Start Date <span style='color: #FF0000'>(*)</span></label>
+						<input type="date" class="form-control" id="startdate">
+					</div>
+					<div style="width: 50%; float: right; padding: 0px">
+						<div style="width: 100%; padding: 0px">
+							<div style="width: 50%; float: left; padding: 0px">
+								<label>HH</label>
+								<select class="form-control" id="shh">
+									<option value="00">00</option>
+									<option value="01">01</option>
+									<option value="02">02</option>
+									<option value="03">03</option>
+									<option value="04">04</option>
+									<option value="05">05</option>
+									<option value="06">06</option>
+									<option value="07">07</option>
+									<option value="08">08</option>
+									<option value="09">09</option>
+									<option value="10">10</option>
+									<option value="11">11</option>
+									<option value="12">12</option>
+									<option value="13">13</option>
+									<option value="14">14</option>
+									<option value="15">15</option>
+									<option value="16">16</option>
+									<option value="17">17</option>
+									<option value="18">18</option>
+									<option value="19">19</option>
+									<option value="20">20</option>
+									<option value="21">21</option>
+									<option value="22">22</option>
+									<option value="23">23</option>
+								</select></br>
+							</div>
+							<div style="width: 50%; float: right; padding: 0px">
+								<label>MM</label>
+								<select class="form-control" id="smm">
+									<option value="00">00</option>
+									<option value="15">15</option>
+									<option value="30">30</option>
+									<option value="45">45</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div style="width: 100%; padding: 0px; margin-top: 70px">
+					<div style="width: 50%; float: left; padding: 0px">
+						<label>Select End Date <span style='color: #FF0000'>(*)</span></label>
+						<input type="date" class="form-control" id="enddate">
+					</div>
+					<div style="width: 50%; float: right; padding: 0px; margin-top: -10px"">
+						<div style="width: 100%; padding: 0px">
+							<div style="width: 50%; float: left; padding: 0px">
+								<label>HH</label>
+								<select class="form-control" id="ehh">
+									<option value="00">00</option>
+									<option value="01">01</option>
+									<option value="02">02</option>
+									<option value="03">03</option>
+									<option value="04">04</option>
+									<option value="05">05</option>
+									<option value="06">06</option>
+									<option value="07">07</option>
+									<option value="08">08</option>
+									<option value="09">09</option>
+									<option value="10">10</option>
+									<option value="11">11</option>
+									<option value="12">12</option>
+									<option value="13">13</option>
+									<option value="14">14</option>
+									<option value="15">15</option>
+									<option value="16">16</option>
+									<option value="17">17</option>
+									<option value="18">18</option>
+									<option value="19">19</option>
+									<option value="20">20</option>
+									<option value="21">21</option>
+									<option value="22">22</option>
+									<option value="23">23</option>
+								</select></br>
+							</div>
+							<div style="width: 50%; float: right; padding: 0px">
+								<label>MM</label>
+								<select class="form-control" id="emm">
+									<option value="00">00</option>
+									<option value="15">15</option>
+									<option value="30">30</option>
+									<option value="45">45</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div style="width: 100%; padding: 0px; margin-top: 150px">
+					<button class="btn btn-success" onclick="createCalendarEvent()" type="button">Add Meeting</button><br/><br><br/><br><br/><br><br/><br>
+				</div>
+			</div>				
+		</section>
+		<section>
+	<div class="footer-menu">
+		<div><a href="home.html"><img src="img/add-user.svg"><span><br>Contacts</span></a></div>
+		<div ><a href="nearby.html"><img src="img/agreement.svg"><span><br>Nearby</span></a></div>
+		<div><a href="#l"><img src="img/meetings.svg"><span><br>Meetings</span></a></div>
+		<div><a href="cards.html"><img src="img/card.svg"><span><br>Cards</span></a></div>
+	</div>
+		</section>
+		<div class="corner-icon1"> <img src="logo.png"></div>
+	</main>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/popper.min.js"></script>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/mdb.min.js"></script>
+	<script>
+        $(".button-collapse").sideNav();
+    </script>
+    <script>
+		$(document).ready(function() {
+			$('.mdb-select').material_select();
+		});
+    </script>
+</body>
+</html>

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>NOB HUB</title>
+    <link href="css/style.css" rel="stylesheet"><link href="https://nobhub.com/services/cardstyles.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link href="https://mdbootstrap.com/previews/docs/latest/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://mdbootstrap.com/previews/docs/latest/css/mdb.min.css" rel="stylesheet">
+    <link href="css/mdb.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDEc6y2PP50c3529HoVRWY5wru5wLE_6hY"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="cordova.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		function onLoad() {
+			document.addEventListener("deviceready", onDeviceReady, false);
+		}
+		function onDeviceReady() {
+			document.addEventListener("backbutton", onBackKeyDown, false);
+			var user_id = localStorage.getItem("user_id");
+			var options = new ContactFindOptions();
+			options.filter = "";
+			options.multiple = true;
+			options.hasPhoneNumber = true;
+			var filter = [navigator.contacts.fieldType.phoneNumbers,navigator.contacts.fieldType.displayName,navigator.contacts.fieldType.emails,navigator.contacts.fieldType.photos];
+			navigator.contacts.find(filter, onSuccess, onError, options);
+			var cSort=function(a,b){ 
+			//var an=a.name.formatted.toUpperCase();
+			//var bn=b.name.formatted.toUpperCase();
+			return (a<b)?-1:(a==b)?0:1;
+			}; 
+			function onSuccess(contacts) {
+			
+				contacts = contacts.sort(cSort);
+				
+				for (var i = 0; i < contacts.length; i++) {
+				
+				
+					for (var j = 0; j < contacts[i].phoneNumbers.length; j++) {
+					
+					// alert(contacts[i][j]);
+					 
+						var x = j+1;
+						var ctext = contacts[i].phoneNumbers[j];
+						var prereplacer = ctext.value;
+						var replacer = prereplacer.replace(/[^\w\s]/gi, "");
+						var cname = contacts[i].name.givenName;
+						if(contacts[i].photos && contacts[i].photos.length > 0) {
+							var ph = contacts[i].photos[0].value;
+						}
+						else {
+							var ph = "img/pp1.jpg";
+						}
+						
+						var xmlhttp = new XMLHttpRequest();
+						xmlhttp.onreadystatechange = function() {
+							if (this.readyState == 4 && this.status == 200) {
+								var result = this.responseText;
+								//alert(result);
+								var splitter = result.split("deli");
+								var phnr = splitter[1].replace(" ","");
+								if(splitter[0]=="yes") {
+									var c1 = document.getElementById('mainid').innerHTML;
+									var c2 = c1.includes(splitter[1]);
+									if(c2==false) {
+									if(splitter[4]=="") {
+									var mimg = "img/pp1.jpg";
+									}
+									else {
+									var mimg = "https://nobhub.com/services/members/"+splitter[4];
+									}
+									$("#maincontactlist").append("<div class='test row' style='padding: 10px; border-bottom: 1px solid #e9e9e9'><div class='col-2' style='text-align: center'><img src='"+mimg+"' style='width: 100%; height: auto; border-radius: 20px'></div><div class='col-8' style='font-weight: bold'><img src='img/logo.png' style='width: 20px; height: auto; border-radius: 20px'>"+splitter[2]+"</br><span id='div"+i+"'>"+splitter[1]+"</span></br><span style='color: #ec9c1e'>"+splitter[5]+"</span></br>"+splitter[6]+"</div><div class='col-2' style='padding: 0px; text-align: right'><button class='btn btn-info' id='"+splitter[5]+"' onclick='connectclick(this.id)'><small>CONNECT</small></button></div></div>");									
+									}
+								}
+								if(splitter[0]=="connected") {
+									var c1 = document.getElementById('connectedid').innerHTML;
+									var c2 = c1.includes(splitter[1]);
+									if(splitter[4]=="") {
+									var mimg = "img/pp1.jpg";
+									}
+									else {
+									var mimg = "https://nobhub.com/services/members/"+splitter[4];
+									}
+									if(c2==false) {
+									$("#connectedcontactlist").append("<div class='test row' style='padding: 10px; border-bottom: 1px solid #e9e9e9'><div class='col-2' style='text-align: center'><img src='"+mimg+"' style='width: 100%; height: auto; border-radius: 20px'></div><div class='col-8' style='font-weight: bold'><img src='img/logo.png' style='width: 20px; height: auto; border-radius: 20px'>"+splitter[2]+"</br><span id='div"+i+"'>"+splitter[1]+"</span></br><span style='color: #ec9c1e'>"+splitter[5]+"</span></br>"+splitter[6]+"</div><div class='col-2' style='padding: 0px; text-align: right'><button class='btn btn-success'><small>CONNECTED</small></button></div></div>");	
+									}
+								}
+								if(splitter[0]=="rejected") {
+									var c1 = document.getElementById('rejectedid').innerHTML;
+									var c2 = c1.includes(splitter[1]);
+									if(splitter[4]=="") {
+									var mimg = "img/pp1.jpg";
+									}
+									else {
+									var mimg = "https://nobhub.com/services/members/"+splitter[4];
+									}
+									if(c2==false) {
+									$("#rejectedcontactlist").append("<div class='test row' style='padding: 10px; border-bottom: 1px solid #e9e9e9'><div class='col-2' style='text-align: center'><img src='"+mimg+"' style='width: 100%; height: auto; border-radius: 20px'></div><div class='col-8' style='font-weight: bold'><img src='img/logo.png' style='width: 20px; height: auto; border-radius: 20px'>"+splitter[2]+"</br><span id='div"+i+"'>"+splitter[1]+"</span></br><span style='color: #ec9c1e'>"+splitter[6]+"</span></br>"+splitter[7]+"</div><div class='col-2' style='padding: 0px; text-align: right'><button class='btn btn-danger'><small>REJECTED</small></button></div></div>");	
+									}
+								}
+								if(splitter[0]=="alreadysent") {
+								var c1 = document.getElementById('sentid').innerHTML;
+									var c2 = c1.includes(splitter[1]);
+									if(splitter[4]=="") {
+									var mimg = "img/pp1.jpg";
+									}
+									else {
+									var mimg = "https://nobhub.com/services/members/20181208211016AM17Sri.jpg";
+									}
+									if(c2==false) {
+									$("#sentcontactlist").append("<div class='test row' style='background: #fff; box-shadow: 1px 1px 3px #333; border-radius: 6px;'><div class='col-2' style='text-align: center'><img src='"+mimg+"' style='width: 100%; height: auto; border-radius: 20px'></div><div class='col-8' style='font-weight: bold'><img src='img/logo.png' style='width: 20px; height: auto; border-radius: 20px'>"+splitter[2]+"</br><span id='div"+i+"'>"+splitter[1]+"</span></br><span style='color: #ec9c1e'>"+splitter[5]+"</span></br>"+splitter[6]+"</div><div class='col-2' style='padding: 0px; text-align: right'><button class='btn btn-warning'><small>REQUEST PENDING</small></button></div></div>");	
+									}
+								}
+								if(splitter[0]=="blocked") {
+								var c1 = document.getElementById('blockedid').innerHTML;
+									var c2 = c1.includes(splitter[1]);
+									if(splitter[4]=="") {
+									var mimg = "img/pp1.jpg";
+									}
+									else {
+									var mimg = "https://nobhub.com/services/members/"+splitter[4];
+									}
+									if(c2==false) {
+									$("#blockedcontactlist").append("<div class='test row card' style='padding: 10px; border-bottom: 1px solid #e9e9e9'><div class='col-2' style='text-align: center'><img src='"+mimg+"' style='width: 100%; height: auto; border-radius: 20px'></div><div class='col-8' style='font-weight: bold'><img src='img/logo.png' style='width: 20px; height: auto; border-radius: 20px'>"+splitter[2]+"</br><span id='div"+i+"'>"+splitter[1]+"</span></br><span style='color: #ec9c1e'>"+splitter[5]+"</span></br>"+splitter[6]+"</div><div class='col-2' style='padding: 0px; text-align: right'><button class='btn btn-warning'><small>REQUEST PENDING</small></button></div></div>");	
+									}
+								}
+								if(splitter[0]=="no") {
+									var c1 = document.getElementById('inviteid').innerHTML;
+									var c2 = c1.includes(splitter[1]);
+									if(c2==false) {
+									$("#invitelist").append("<div class='test mt-2 card' style='padding: 0px; padding-left:5px; background: #FFFFFF; border-bottom: 1px dotted #e9e9e9'><div class='row'><div class='col-2' style='text-align: center'><img src='"+ph+"' class='img-fluid pp mt-1' style='width:40px; height:26px;'></div><div class='col-7 no-padd-l' style='font-weight: bold'>"+splitter[2]+"</br><span id='div"+i+"'>"+splitter[1]+"</span></div><div class='col-2' style='text-align: right'><a href='sms://"+splitter[1]+"?body=Hey! Download this awesome app. You can install NobHub here: https://www.nobhub.com/dl'><button class='btn btn-default' type='button'><small>INVITE</small></button></a></div></div></div>");
+									}
+								}
+								var k = i+1;
+								if(document.getElementById('div'+i).innerHTML==document.getElementById('div'+k).innerHTML) {
+									document.getElementById('div'+k).style.display="none";
+								}
+							}
+						};
+						xmlhttp.open("GET", "https://nobhub.com/services/getcontactstatus.php?phn="+replacer+"&ctype="+ctext.type+"&name="+cname+"&user_id="+user_id+"&img="+ph, true);
+						xmlhttp.send();	
+						
+						
+					}
+				}
+				document.getElementById('contactcount').innerHTML=i;
+			};
+			function onError(contactError) {
+				alert('onError!');
+			};
+		}
+		function onBackKeyDown() {
+			window.history.back();
+		}
+		
+		
+		
+	</script>
+	
+	<script>
+		function getmainprofile() {
+			document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					document.getElementById('mycard').innerHTML=result;
+					document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/getmainprofile.php?user_id="+user_id, true);
+			xmlhttp.send();
+		}
+	</script>
+	<script>
+		$(document).ready(function(){
+			$("#cnbtn").click(function(){
+				$("#confirmer").slideUp();
+				document.getElementById('confirmertoggle').value=0;
+			});
+		});
+	</script>
+	<script>
+		$(document).ready(function(){
+			$("#okbtn").click(function(){
+				navigator.app.exitApp();
+			});
+		});
+	</script>
+	
+	<script>
+		function alertcount() {
+				document.getElementById('loader').style.display="block";
+				var user_id = localStorage.getItem("user_id");
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						var result = this.responseText;
+						if(result>0) {
+						document.getElementById('alertcount').style.display="block";
+						document.getElementById('alertcount').innerHTML=result;
+						document.getElementById('loader').style.display="none";
+						}
+						else {
+						document.getElementById('loader').style.display="none";
+						}
+					}
+				};
+				xmlhttp.open("GET", "https://nobhub.com/services/alertcount.php?user_id="+user_id, true);
+				xmlhttp.send();
+			}
+	</script>
+	
+	<script>
+		function getyesprofiles() {
+			document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					document.getElementById('yesprofiles').innerHTML=result;
+					document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/getyesprofiles.php?user_id="+user_id, true);
+			xmlhttp.send();
+		}
+	</script>
+	
+	<script>
+		function searchfn() {
+			document.getElementById('maincontactlist').innerHTML="";
+			document.addEventListener("backbutton", onBackKeyDown, false);
+			var user_id = localStorage.getItem("user_id");
+			var options = new ContactFindOptions();
+			options.filter = document.getElementById('searchkey').value;
+			options.multiple = true;
+			options.hasPhoneNumber = true;
+			var filter = [navigator.contacts.fieldType.phoneNumbers,navigator.contacts.fieldType.displayName,navigator.contacts.fieldType.emails,navigator.contacts.fieldType.photos];
+			navigator.contacts.find(filter, onSuccess, onError, options);
+			var cSort=function(a,b){ 
+			//var an=a.name.formatted.toUpperCase();
+			//var bn=b.name.formatted.toUpperCase();
+			return (a<b)?-1:(a==b)?0:1;
+			};
+			function onSuccess(contacts) {
+				contacts = contacts.sort(cSort);
+				for (var i = 0; i < contacts.length; i++) {
+				
+					for (var j = 0; j < contacts[i].phoneNumbers.length; j++) {
+						var x = j+1;
+						var ctext = contacts[i].phoneNumbers[j];
+						var prereplacer = ctext.value;
+						var replacer = prereplacer.replace(/[^\w\s]/gi, "");
+						var cname = contacts[i].name.givenName;
+						if(contacts[i].photos && contacts[i].photos.length > 0) {
+							var ph = contacts[i].photos[0].value;
+						}
+						else {
+							var ph = "https://nobhub.com/services/pp1.jpg";
+						}
+						var xmlhttp = new XMLHttpRequest();
+						xmlhttp.onreadystatechange = function() {
+							if (this.readyState == 4 && this.status == 200) {
+								var result = this.responseText;
+								//alert(result);
+								var splitter = result.split("deli");
+								var phnr = splitter[1].replace(" ","");
+								if(splitter[0]=="yes") {
+									var c1 = document.getElementById('mainid').innerHTML;
+									var c2 = c1.includes(splitter[1]);
+									if(c2==false) {
+									if(splitter[4]=="") {
+									var mimg = "img/pp1.jpg";
+									}
+									else {
+									var mimg = "https://nobhub.com/services/members/"+splitter[4];
+									}
+									$("#maincontactlist").append("<div class='test row' style='padding: 10px; border-bottom: 1px solid #e9e9e9'><div class='col-2' style='text-align: center'><img src='"+mimg+"' style='width: 100%; height: auto; border-radius: 20px'></div><div class='col-8' style='font-weight: bold'><img src='img/logo.png' style='width: 20px; height: auto; border-radius: 20px'>"+splitter[2]+"</br><span id='div"+i+"'>"+splitter[1]+"</span></br><span style='color: #ec9c1e'>"+splitter[5]+"</span></br>"+splitter[6]+"</div><div class='col-2' style='padding: 0px; text-align: right'><button class='btn btn-info' id='"+splitter[5]+"' onclick='connectclick(this.id)'><small>CONNECT</small></button></div></div>");									
+									}
+								}
+								if(splitter[0]=="connected") {
+									var c1 = document.getElementById('connectedid').innerHTML;
+									var c2 = c1.includes(splitter[1]);
+									if(splitter[4]=="") {
+									var mimg = "img/pp1.jpg";
+									}
+									else {
+									var mimg = "https://nobhub.com/services/members/"+splitter[4];
+									}
+									if(c2==false) {
+									$("#connectedcontactlist").append("<div class='test row' style='padding: 10px; border-bottom: 1px solid #e9e9e9'><div class='col-2' style='text-align: center'><img src='"+mimg+"' style='width: 100%; height: auto; border-radius: 20px'></div><div class='col-8' style='font-weight: bold'><img src='img/logo.png' style='width: 20px; height: auto; border-radius: 20px'>"+splitter[2]+"</br><span id='div"+i+"'>"+splitter[1]+"</span></br><span style='color: #ec9c1e'>"+splitter[5]+"</span></br>"+splitter[6]+"</div><div class='col-2' style='padding: 0px; text-align: right'><button class='btn btn-success'><small>CONNECTED</small></button></div></div>");	
+									}
+								}
+								 if(splitter[0]=="rejected") {
+									var c1 = document.getElementById('rejectedid').innerHTML;
+									var c2 = c1.includes(splitter[1]);
+									if(splitter[4]=="") {
+									var mimg = "img/pp1.jpg";
+									}
+									else {
+									var mimg = "https://nobhub.com/services/members/"+splitter[4];
+									}
+									if(c2==false) {
+									$("#rejectedcontactlist").append("<div class='test row' style='padding: 10px; border-bottom: 1px solid #e9e9e9'><div class='col-2' style='text-align: center'><img src='"+mimg+"' style='width: 100%; height: auto; border-radius: 20px'></div><div class='col-8' style='font-weight: bold'><img src='img/logo.png' style='width: 20px; height: auto; border-radius: 20px'>"+splitter[2]+"</br><span id='div"+i+"'>"+splitter[1]+"</span></br><span style='color: #ec9c1e'>"+splitter[6]+"</span></br>"+splitter[7]+"</div><div class='col-2' style='padding: 0px; text-align: right'><button class='btn btn-danger'><small>REJECTED</small></button></div></div>");	
+									}
+								}
+								if(splitter[0]=="alreadysent") {
+								var c1 = document.getElementById('sentid').innerHTML;
+									var c2 = c1.includes(splitter[1]);
+									if(splitter[4]=="") {
+									var mimg = "img/pp1.jpg";
+									}
+									else {
+									var mimg = "https://nobhub.com/services/members/"+splitter[4];
+									}
+									if(c2==false) {
+									$("#sentcontactlist").append("<div class='test row' style='padding: 10px; border-bottom: 1px solid #e9e9e9'><div class='col-2' style='text-align: center'><img src='"+mimg+"' style='width: 100%; height: auto; border-radius: 20px'></div><div class='col-8' style='font-weight: bold'><img src='img/logo.png' style='width: 20px; height: auto; border-radius: 20px'>"+splitter[2]+"</br><span id='div"+i+"'>"+splitter[1]+"</span></br><span style='color: #ec9c1e'>"+splitter[5]+"</span></br>"+splitter[6]+"</div><div class='col-2' style='padding: 0px; text-align: right'><button class='btn btn-warning'><small>REQUEST PENDING</small></button></div></div>");	
+									}
+								}
+								if(splitter[0]=="blocked") {
+								var c1 = document.getElementById('blockedid').innerHTML;
+									var c2 = c1.includes(splitter[1]);
+									if(splitter[4]=="") {
+									var mimg = "img/pp1.jpg";
+									}
+									else {
+									var mimg = "https://nobhub.com/services/members/"+splitter[4];
+									}
+									if(c2==false) {
+									$("#blockedcontactlist").append("<div class='test row' style='padding: 10px; border-bottom: 1px solid #e9e9e9'><div class='col-2' style='text-align: center'><img src='"+mimg+"' style='width: 100%; height: auto; border-radius: 20px'></div><div class='col-8' style='font-weight: bold'><img src='img/logo.png' style='width: 20px; height: auto; border-radius: 20px'>"+splitter[2]+"</br><span id='div"+i+"'>"+splitter[1]+"</span></br><span style='color: #ec9c1e'>"+splitter[5]+"</span></br>"+splitter[6]+"</div><div class='col-2' style='padding: 0px; text-align: right'><button class='btn btn-warning'><small>REQUEST PENDING</small></button></div></div>");	
+									}
+								}
+								if(splitter[0]=="no") {
+									var c1 = document.getElementById('inviteid').innerHTML;
+									var c2 = c1.includes(splitter[1]);
+									if(c2==false) {
+									$("#invitelist").append("<div class='test mt-2 card' style='padding: 0px; padding-left:5px; background: #FFFFFF; border-bottom: 1px dotted #e9e9e9'><div class='row'><div class='col-2' style='text-align: center'><img src='"+ph+"' class='img-fluid pp mt-1' style='width:40px; height:26px;'></div><div class='col-7 no-padd-l' style='font-weight: bold'>"+splitter[2]+"</br><span id='div"+i+"'>"+splitter[1]+"</span></div><div class='col-2' style='text-align: right'><a href='sms://"+splitter[1]+"?body=Hey! Download this awesome app. You can install NobHub here: https://www.nobhub.com/dl'><button class='btn btn-default' type='button'><small>INVITE</small></button></a></div></div></div>");
+									}
+								}
+								var k = i+1;
+								if(document.getElementById('div'+i).innerHTML==document.getElementById('div'+k).innerHTML) {
+									document.getElementById('div'+k).style.display="none";
+								}
+							}
+						};
+						xmlhttp.open("GET", "https://nobhub.com/services/getcontactstatus.php?phn="+replacer+"&ctype="+ctext.type+"&name="+cname+"&user_id="+user_id+"&img="+ph, true);
+						xmlhttp.send();	
+					}
+				}
+				document.getElementById('contactcount').innerHTML=i;
+			};
+			function onError(contactError) {
+				alert('onError!');
+			};
+		}
+	</script>
+	
+	<script>
+		function connectclick(clickid) {
+			document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			var cid = clickid;
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					document.getElementById('loader').style.display="none";
+					document.getElementById('confirmtext').innerHTML=result;
+					$("#confirmer").slideDown();
+					document.getElementById('confirmertoggle').value=1;
+					location.reload();
+				}
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/sendinvitecontacts.php?user_id="+user_id+"&cid="+cid, true);
+			xmlhttp.send();
+		}
+	</script>
+
+<script src="https://nobhub.com/services/custom-scripts.js"></script></head>
+<body class="fixed-sn light-blue-skin" onload="onLoad(); alertcount();">
+<input type="hidden" id="getter">
+<div style="display: none; border: 1px solid #c0c0c0; background: #e9e9e9; width: 90%; position: fixed; z-index: 9999; top: 250px; left: 20px; padding: 10px; text-align: center" id="confirmer">
+<i style="color: #FF0000" class="fa fa-sign-out fa-4x"></i></br>
+<span id="confirmtext">Do you really want to exit?</span></br>
+<button type="button" class="btn btn-warning z-depth-1a" id="cnbtn" style="float: left">Cancel</button>
+<button type="button" class="btn btn-danger z-depth-1a" id="okbtn" style="float: right">OK</button>
+</div>
+<input type="hidden" id="confirmertoggle" value="0">
+
+<div style="width: 100%; text-align: center; position: fixed; z-index: 9998889; top: 250px; display:none" id="loader"><img src="loading.gif" style="margin-left: auto; margin-right: auto; width: 64px; height: auto"></div>
+
+	<main>
+		<section>
+			<div class="list-group btn-group" style="position: fixed; z-index: 9999; top: 0; width: 100%; margin-top:0;">
+				<span class="list-group-item active gradient-bg">
+					<span class="pull-left" style="margin-top:4px; padding-left:10px;"><b>My Contacts(<span id='contactcount'></span>)</b></span>
+					<input type="text" placeholder="Search" class="search pull-right" id="searchkey">
+					<a href="#" class="search-btn" onclick="searchfn()"><img src="img/magnifier-tool.svg" width="16" ></a>
+				</span>				
+				<div class="dropdown dropleft pull-right invite-menu" style="margin-top:18px;">
+					 <a class="dropdown-toggle pull-right" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-history" style='z-index: 10000'></i></a>
+					 <div class="dropdown-menu dropdown-primary">
+						 <a class="dropdown-item" href="#" onclick='onLoad();'>Refresh</a>
+						 
+					 </div>
+				</div>	
+				
+				
+			</div>  
+			<div class='col-12' id="mainid" style="margin-top: 60px">
+			<div class='col-12' id="maincontactlist">
+				
+				</div>	
+           </div>
+<div class='col-12' id="connectedid" style="margin-top: 60px">
+			<div class='col-12' id="connectedcontactlist">
+				
+				</div>	
+           </div>	
+
+<div class='col-12' id="rejectedid" style="margin-top: 60px">
+			<div class='col-12' id="rejectedcontactlist">
+				
+				</div>	
+           </div>	
+		   <div class='col-12' id="sentid" style="margin-top: 60px">
+			<div class='col-12' id="sentcontactlist">
+				
+				</div>	
+           </div>	
+		   
+		   <div class='col-12' id="blockedid" style="margin-top: 60px">
+			<div class='col-12' id="blockedcontactlist">
+				
+				</div>	
+           </div>	
+		   
+		   <div class='col-12' id="inviteid" style="margin-top: 60px">
+			<div class='col-12' id="invitelist">
+				
+				</div>	
+           </div>	
+		   
+		</section>
+		<section>
+<div class="footer-menu">
+			<div class="active"><a href="home.html"><i class="far fa-address-book"></i><span><br>Contacts</span></a></div>
+			
+				<div><a href="nearby.html"><img src="img/nearby2.png" class="nearby2"><span><br>Nearby</span></a></div>
+			<div><a href="meetings.html"><i class="fas fa-users"></i><span><br>Meetings</span></a></div>
+			<div><a href="chat-list.html"><i class="fas fa-comments"></i><span><br>Chats</span></a></div>
+			<div><a href="generalcards.html"><i class="far fa-address-card"></i><span><br>Cards</span></a></div>
+		</div>
+		</section>
+		<div class="corner-icon1"> <img src="logo.png"></div>
+	</main>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/popper.min.js"></script>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/mdb.min.js"></script>
+	<script>
+        $(".button-collapse").sideNav();
+    </script>
+    <script>
+		$(document).ready(function() {
+			$('.mdb-select').material_select();
+		});
+    </script>
+</body>
+</html>

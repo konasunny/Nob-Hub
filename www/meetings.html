@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>NOB HUB</title>
+    <link href="css/style.css" rel="stylesheet"><link href="https://nobhub.com/services/cardstyles.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link href="https://mdbootstrap.com/previews/docs/latest/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://mdbootstrap.com/previews/docs/latest/css/mdb.min.css" rel="stylesheet">
+    <link href="css/mdb.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="cordova.js"></script>
+	 <link rel = "stylesheet" 
+         href = "https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
+	
+	<script type="text/javascript" charset="utf-8">
+		function onLoad() {
+			document.addEventListener("deviceready", onDeviceReady, false);
+		}
+		function onDeviceReady() {
+			document.addEventListener("backbutton", onBackKeyDown, false);
+		}
+		function onBackKeyDown() {
+			window.history.back();
+		}
+	</script>
+	
+	
+	<script>
+		$(document).ready(function(){
+			$("#cnbtn").click(function(){
+				$("#confirmer").slideUp();
+				document.getElementById('confirmertoggle').value=0;
+			});
+		});
+	</script>
+	<script>
+		$(document).ready(function(){
+			$("#okbtn").click(function(){
+				navigator.app.exitApp();
+			});
+		});
+	</script>
+	
+	<script>
+		function alertcount() {
+				var user_id = localStorage.getItem("user_id");
+				var timezone = localStorage.getItem("timezone");
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						var result = this.responseText;
+						//console.log(result);
+						var splitter = result.split("&");
+
+					//alert(splitter[2]);
+						/*if(splitter[0] > 0){
+						document.getElementById('bell-icon').style.display="block";
+						document.getElementById('alertcount').innerHTML=splitter[0];
+						}else{
+					   document.getElementById('bell-icon').style.display="none";
+
+						
+						}*/
+						if(splitter[1] > 0){
+						document.getElementById('chatcount').innerHTML='<span class="mdl-badge" data-badge="'+splitter[1]+'"></span><i class="fas fa-comments"></i><span><br>Chats</span>';
+						}else{
+						
+						document.getElementById('chatcount').innerHTML='<span class="mdl-badge"></span><i class="fas fa-comments"></i><span><br>Chats</span>';
+						}
+						if(splitter[2] > 0){
+						document.getElementById('meetingscount').innerHTML='<span class="mdl-badge" data-badge="'+splitter[2]+'"></span><i class="fas fa-users"></i><span><br>Meetings</span>';
+						}else{
+						document.getElementById('meetingscount').innerHTML='<span class="mdl-badge" ></span><i class="fas fa-users"></i><span><br>Meetings</span>';
+						
+						}
+					}
+				};
+				xmlhttp.open("GET", "https://nobhub.com/services/alertcount.php?user_id="+user_id+"&timezone="+timezone, true);
+				xmlhttp.send();
+			}
+	</script>
+	
+
+<style>
+	label {
+		font-weight: bold;
+	}
+</style>
+
+<script>
+function getparticipants() {
+document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					document.getElementById('participant').innerHTML=result;
+					
+					document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/getparticipants.php?user_id="+user_id, true);
+			xmlhttp.send();
+}
+</script>
+<script>
+		function myname() {
+		
+			document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+						var timezone = localStorage.getItem("timezone");
+			//alert(user_id);
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+						var splitter = result.split("deli");
+
+					
+					localStorage.setItem("myname",splitter[0]);
+				if(splitter[1]!=""){
+					document.getElementById('myimagemain').src = "https://nobhub.com/services/members/"+splitter[1];
+					document.getElementById('himage').src = "https://nobhub.com/services/members/"+splitter[1];
+					
+					}else {
+					document.getElementById('myimagemain').src = "https://nobhub.com/services/pp1.jpg";
+					document.getElementById('himage').src = "https://nobhub.com/services/pp1.jpg";
+					}
+					document.getElementById('myname').innerHTML=splitter[0];
+					document.getElementById('hname').innerHTML="Welcome&nbsp;"+splitter[0];
+
+			document.getElementById('loader').style.display="none";
+
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/mydetails.php?user_id="+user_id+"&timezone="+timezone, true);
+			xmlhttp.send();
+			}
+			
+function meetings() {
+document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			var timezone = localStorage.getItem("timezone");
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					//console.log(result);
+					//alert(result)
+					if(result!=''){
+					document.getElementById('meetings').innerHTML=result;
+					}else{
+					document.getElementById('meetings').innerHTML='<div class="card" style="padding:10px; margin-bottom:10px;"><p align="center">No Meetings Found</p></div>';
+
+					}
+					document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/getmeetings.php?user_id="+user_id+"&timezone="+timezone, true);
+			xmlhttp.send();
+}
+
+function invitations() {
+document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			var timezone = localStorage.getItem("timezone");
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					//console.log(result);
+					//alert(result)
+					document.getElementById('invitations').innerHTML=result;
+					
+					document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/getinvitations.php?user_id="+user_id+"&timezone="+timezone, true);
+			xmlhttp.send();
+}
+function decline(meetingid) {
+//alert(meetingid);
+document.getElementById('mettingid_decline').value=meetingid;
+$('#myModal_decline').modal('show');
+/*document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			var status = "Declined";
+			var xmlhttp = new XMLHttpRequest();
+			
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					//console.log(result);
+					alert("Request is Declined")
+					//document.getElementById('invitations').innerHTML=result;
+					location.reload();
+					document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/meetingstatus.php?meetingid="+meetingid+"&user_id="+user_id+"&status="+status, true);
+			xmlhttp.send();*/
+}
+
+function sendinvite_decline() {
+			if(document.getElementById('custommsg_decline').value=="") {
+				document.getElementById('confirmtext').innerHTML="Please add a message";
+				$("#confirmer").slideDown();
+				document.getElementById('confirmertoggle').value=1;
+			}
+			else {
+				document.getElementById('loader').style.display="block";
+				var user_id = localStorage.getItem("user_id");
+				
+				var custommsg_decline = document.getElementById('custommsg_decline').value;
+				
+				var mettingid_decline=document.getElementById('mettingid_decline').value;
+				
+				var status = "Declined";
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						var result = this.responseText;
+						//console.log(result);
+					alert("Request is Declined")
+					//document.getElementById('invitations').innerHTML=result;
+					location.reload();
+					document.getElementById('loader').style.display="none";
+					}
+				};
+				xmlhttp.open("GET", "https://nobhub.com/services/meetingstatus.php?meetingid="+mettingid_decline+"&user_id="+user_id+"&status="+status+"&custommsg="+custommsg_decline, true);
+				
+				xmlhttp.send();
+				
+				
+			}
+		}
+function accept(meetingid) {
+//alert(meetingid);
+document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			var status = "Accepted";
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					//alert("Request is Accepted")
+
+					//alert(result)
+					//document.getElementById('invitations').innerHTML=result;
+					location.reload();
+					document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/meetingstatus.php?meetingid="+meetingid+"&user_id="+user_id+"&status="+status, true);
+			xmlhttp.send();
+}
+
+function tentative(meetingid) {
+//alert(meetingid);
+document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			var status = "Tentatively";
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					//alert("Request is Tentative")
+					//console.log(result);
+					//alert(result)
+					//document.getElementById('invitations').innerHTML=result;
+					location.reload();
+					document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/meetingstatus.php?meetingid="+meetingid+"&user_id="+user_id+"&status="+status, true);
+			xmlhttp.send();
+}
+function cancel(meetingid) {
+//document.getElementById('loader').style.display="block";
+			//var user_id = localStorage.getItem("user_id");
+			var status = "Cancelled";
+			document.getElementById('hidden_decline').value=meetingid;
+			$('#myModal').modal('show');
+			/*var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					//alert("Meeting is Cancelled")
+
+					//alert(result)
+					//document.getElementById('invitations').innerHTML=result;
+					location.reload();
+					document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/cancelmeeting.php?meetingid="+meetingid+"&user_id="+user_id+"&status="+status, true);
+			xmlhttp.send();*/
+}
+function sendinvite1() {
+			if(document.getElementById('custommsg').value=="") {
+				document.getElementById('confirmtext').innerHTML="Please add a message";
+				$("#confirmer").slideDown();
+				document.getElementById('confirmertoggle').value=1;
+			}
+			else {
+				document.getElementById('loader').style.display="block";
+				var user_id = localStorage.getItem("user_id");
+				
+				var custommsg = document.getElementById('custommsg').value;
+				
+				var meetingid=document.getElementById('hidden_decline').value;
+				
+				var status = "Cancelled";
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						var result = this.responseText;
+						//console.log(result);
+					alert("Request is Cancelled")
+					//document.getElementById('invitations').innerHTML=result;
+					location.reload();
+					document.getElementById('loader').style.display="none";
+					}
+				};
+				xmlhttp.open("GET", "https://nobhub.com/services/cancelmeeting.php?meetingid="+meetingid+"&user_id="+user_id+"&status="+status+"&custommsg="+custommsg, true);
+				
+				xmlhttp.send();
+				
+				
+			}
+		}
+
+function deletemeeting(meetingid) {
+document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			
+
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					alert("Meeting is Deleted")
+
+					//alert(result)
+					//document.getElementById('invitations').innerHTML=result;
+					location.reload();
+					document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/deletemeeting.php?meetingid="+meetingid, true);
+			xmlhttp.send();
+}
+
+function deleteinvitations(meetingid) {
+document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			
+
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					alert("Invitation is Deleted")
+
+					//alert(result)
+					//document.getElementById('invitations').innerHTML=result;
+					location.reload();
+					document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/deletemeeting.php?meetingid="+meetingid, true);
+			xmlhttp.send();
+}
+</script>
+<script>
+		function edit(clickid) {
+			localStorage.setItem("meetingid",clickid);
+			location.href="edit_meeting.html";
+		}
+		
+		function viewmeeting(clickid) {
+			localStorage.setItem("meetingid",clickid);
+			location.href="meeting-view.html";
+		}
+</script>
+
+	<script>
+		function tabshow() {
+			document.getElementById('home').style.display="block";
+			document.getElementById('menu1').style.display="none";
+			document.getElementById('t1').style.background="rgb(255, 143, 5)";
+			document.getElementById('t2').style.background="rgb(187, 186, 186, 0)";
+		}
+	</script>
+	<script>
+		function tabshow1() {
+			document.getElementById('home').style.display="none";
+			document.getElementById('menu1').style.display="block";
+			document.getElementById('t1').style.background="rgb(187, 186, 186, 0)";
+			document.getElementById('t2').style.background="rgb(255, 143, 5)";
+		}
+	</script>
+	
+	<script>
+	window.setInterval(function(){
+	invitations();
+	}, 10000);
+	
+	window.setInterval(function(){
+	alertcount();
+	}, 10000);
+	</script>
+<script src="https://nobhub.com/services/custom-scripts.js"></script></head>
+<body class="fixed-sn light-blue-skin" style="background:#eee;" onload="onLoad();myname();meetings();invitations(); alertcount();">
+<input type="hidden" id="getter">
+<div style="display: none; border: 1px solid #c0c0c0; background: #e9e9e9; width: 90%; position: fixed; z-index: 9999; top: 250px; left: 20px; padding: 10px; text-align: center" id="confirmer">
+<i style="color: #FF0000" class="fa fa-sign-out fa-4x"></i></br>
+<span id="confirmtext">Do you really want to exit?</span></br>
+<button type="button" class="btn btn-warning z-depth-1a" id="cnbtn" style="float: left">Cancel</button>
+<button type="button" class="btn btn-danger z-depth-1a" id="okbtn" style="float: right">OK</button>
+</div>
+<input type="hidden" id="confirmertoggle" value="0">
+
+<div style="width: 100%; text-align: center; position: fixed; z-index: 9998889; top: 250px; display:none" id="loader"><img src="loading.gif" style="margin-left: auto; margin-right: auto; width: 64px; height: auto"></div>
+	
+	<main>
+		<section>
+			
+		<div class="list-group btn-group" style="position: fixed; z-index: 9999; top: 0; width: 100%; margin-top:0;">
+			<span class="list-group-item active gradient-bg">
+				<span class="pull-left" style="margin-top:4px;"><b id="hname">Welcome</b></span>
+			</span>				
+			
+			<!--<div class="user-menu dropdow">
+				<a href="#" id="user-menu-btn">
+					<img src="https://nobhub.com/services/pp1.jpg" class="img-fluid mt-1" alt="Post" style="height: 40px; width: 40px;" id="himage">
+				</a>
+			</div>	-->
+			<div class="user-menu dropdow">
+				<a href="#" id="user-menu-btn">
+				<img src="https://nobhub.com/services/pp1.jpg" class="img-fluid mt-1" alt="Post" style="height: 40px; width: 40px; margin-right: 4px;" id="himage"></a>
+				<!--<a href="alerts.html" class="bell-icon" id="bell-icon"><span class="bell-count" id="alertcount"></span></a>-->
+			</div>
+		</div>  
+		<div id="user-menu-div" style="display:none;">
+			<img src="img/settings-bg.png" class="img-responsive">
+			<div class="user-menu-header">
+				<a href="javascript:void(0);" id="user-menu-btn-close"><i class="fa fa-close" style="font-size:20px;"></i></a>
+				<br><br>
+			<div class="col-xs-12 text-center" style="position: absolute; width: 100%; bottom: -169px;">
+				<a href="javascript:void(0);" id="myname" style="text-transform:uppercase;"><i class="fa fa-angle-down"></i></a>
+				<br>
+				<a href="javascript:void(0);"><img src="https://nobhub.com/services/pp1.jpg" class="img-fluid mt-1 pp" alt="Post" id="myimagemain" style="height: 80px; width: 80px; margin-top:25px; border-radius:100px; margin-bottom:6px; margin-left: -8px;"></a></div>
+			</div>
+			<br><br><br>
+			<a class="dropdown-item" href="settings.html"><i class="fa fa-user"></i> Profile</a>
+			<a class="dropdown-item" href="chat-list.html"><i class="fa fa-comments"></i> Chat</a>
+			<a class="dropdown-item" href="alerts.html"><i class="fa fa-bell"></i> Notifications</a>
+			<!--a class="dropdown-item" href="#"><i class="fab fa-youtube"></i> Live Stream</a-->				<a class="dropdown-item" href="share.html"><i class="fa fa-users"></i> Refer a Friend</a>
+			<a class="dropdown-item" href="cnumber.html"><i class="fa fa-phone"></i> Change Number </a>
+			<a class="dropdown-item" href="upgrade.html"><i class="fas fa-crown"></i> Premium Membership </a><a class="dropdown-item" href="blockedlist.html"><i class="fas fa-ban"></i> Block List </a>
+			<a class="dropdown-item" href="about.html"><i class="fas fa-info"></i> About NobHub </a>
+			<a class="dropdown-item" href="https://play.google.com/store/apps/details?id=com.nobhub.app"><i class="fas fa-star"></i> Rate App </a>
+			<!--a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Change Password </a-->
+			<a class="dropdown-item" href="#" onclick="logoutfn()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+		</div>
+		
+		<img src="img/meetings-bg.png" class="img-responsive t1-bg meetings-head">
+			<div  style="padding: 5px 15px;">
+				
+				<div class="col-12 meeting-menu-btns">
+					<div class="row" style='border-radius: 50px; background: rgba(0, 0, 0, 0.35); border: 2px solid #313131; '>
+					  <div class="col-6" id="t1" style='padding: 10px; border-radius: 50px; text-align: center; border: 0px solid #ff8748; font-weight: normal; backbutton:#fff !important; color:white;' onclick="tabshow()">INVITATIONS</div>
+					  <div class="col-6" id="t2" style='background:rgb(251, 138, 0); padding: 10px; border-radius: 50px; text-align: center; border: 0px solid #898989; font-weight: normal; color:white;' onclick="tabshow1()">MY MEETINGS</div>
+					  <div class="clearfix"></div>
+					</div>
+				</div>
+				
+				
+				<div class="row meetings-content-div" style="margin-top:120px;">
+					<div id="home" class="col-12" style="display: none;">
+						<div id="invitations"></div>
+					</div>
+					
+					<div id="menu1" class="col-12" style="">
+						<div id="meetings"></div>
+					</div>
+				</div>
+				
+
+				
+				<!--div class="card" style="padding:10px; margin-bottom:10px;">
+					<h5>Chicago Conference</h5>
+					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+					<small><i class="fa fa-calendar"></i> 24-01-19 &emsp; <i class="fa fa-clock-o"></i> 04:30 PM</small>
+					<div class="inv-btn-div">
+						<button class="inv-btn-red">Decline</button>
+						<button class="inv-btn-green">Accept</button>
+					</div>
+				</div-->
+				<!--div class="card" style="padding:10px; margin-bottom:10px;">
+					<h5>Sales Meeting</h5>
+					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+					<small><i class="fa fa-calendar"></i> 24-01-19 &emsp; <i class="fa fa-clock-o"></i> 04:30 PM</small>
+				</div-->
+				
+				<br><br><br>
+			</div>				
+		</section>
+		
+		<a href="add-meeting.html" class="add-btn">+</a>
+		<a href="meeting-history.html" class="history-btn"><i class="fa fa-history"></i></i></a>
+		
+		<section>
+			<div class="footer-menu">
+				<div><a href="home.html"><i class="far fa-address-book"></i><span><br>Contacts</span></a></div>
+				<div><a href="nearby.html"><img src="img/nearby2.png" class="nearby2"><span><br>Nearby</span></a></div>
+				<div class="active"><a href="meetings.html" id="meetingscount"><i class="fas fa-users"></i><span><br>Meetings</span></a></div>
+				<div><a href="chat-list.html" id="chatcount"><i class="fas fa-comments"></i><span><br>Chats</span></a></div>
+				<div><a href="cards.html"><i class="far fa-address-card"></i><span><br>Cards</span></a></div>
+			</div>
+		</section>
+		<div class="corner-icon1"> <img src="logo.png"></div>
+	</main>
+	
+	
+	
+	<!-- cancel-->
+	
+	<div style='margin-top: 100px' id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add a Message</h4>
+		<input type="hidden" name="mettingid" value="" id="hidden_decline">
+		<button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+	  <!--input type="text" name="nickname" id="nickname" placeholder="Nickname" class="form-control"-->
+        <textarea id="custommsg" class="form-control"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" onclick="sendinvite1()" data-dismiss="modal">Send</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!--End cancel-->
+
+	<!-- Decline-->
+	
+	<div style='margin-top: 100px' id="myModal_decline" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add a Message</h4>
+		<input type="hidden" name="mettingid_decline" value="" id="mettingid_decline">
+		<button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+	  <!--input type="text" name="nickname" id="nickname" placeholder="Nickname" class="form-control"-->
+        <textarea id="custommsg_decline" class="form-control"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" onclick="sendinvite_decline()" data-dismiss="modal">Send</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!--End Decline-->
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/popper.min.js"></script>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/mdb.min.js"></script>
+	<script>
+        $(".button-collapse").sideNav();
+    </script>
+    <script>
+		$(document).ready(function() {
+			$('.mdb-select').material_select();
+		});
+    </script>
+	
+	
+	<script>
+		$(document).ready(function(){
+		  $("#user-menu-btn-close").click(function(){
+			$("#user-menu-div").hide();
+		  });
+		  $("#user-menu-btn").click(function(){
+			$("#user-menu-div").show();
+		  });
+		});
+	</script>
+</body>
+</html>

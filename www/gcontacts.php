@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>NOB HUB</title>
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link href="https://mdbootstrap.com/previews/docs/latest/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://mdbootstrap.com/previews/docs/latest/css/mdb.min.css" rel="stylesheet">
+    <link href="css/mdb.min.css" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDEc6y2PP50c3529HoVRWY5wru5wLE_6hY"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="cordova.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		function onLoad() {
+			document.addEventListener("deviceready", onDeviceReady, false);
+		}
+		function onDeviceReady() {
+			document.addEventListener("backbutton", onBackKeyDown, false);
+			var user_id = localStorage.getItem("user_id");
+			
+		}
+		function onBackKeyDown() {
+			window.history.back();
+		}
+		
+		
+		
+	</script>
+	
+	
+	
+	<script>
+		function alertcount() {
+				document.getElementById('loader').style.display="block";
+				var user_id = localStorage.getItem("user_id");
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						var result = this.responseText;
+						if(result>0) {
+						document.getElementById('alertcount').style.display="block";
+						document.getElementById('alertcount').innerHTML=result;
+						document.getElementById('loader').style.display="none";
+						}
+						else {
+						document.getElementById('loader').style.display="none";
+						}
+					}
+				};
+				xmlhttp.open("GET", "https://nobhub.com/services/alertcount.php?user_id="+user_id, true);
+				xmlhttp.send();
+			}
+	</script>
+	
+	<script>
+	function gcontacts() {
+		document.getElementById('loader').style.display="block";
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var result = this.responseText;
+				document.getElementById('gcontacts').innerHTML=result;
+				document.getElementById('loader').style.display="none";
+			}
+		};
+		xmlhttp.open("GET", "https://nobhub.com/services/googlecontacts/import-contacts-with-php.php", true);
+		xmlhttp.send();
+	}
+	</script>
+	
+	
+	
+	
+
+<script src="https://nobhub.com/services/custom-scripts.js"></script></head>
+<body class="fixed-sn light-blue-skin" onload="onLoad(); gcontacts(); alertcount();">
+<input type="hidden" id="getter">
+<div style="display: none; border: 1px solid #c0c0c0; background: #e9e9e9; width: 90%; position: fixed; z-index: 9999; top: 250px; left: 20px; padding: 10px; text-align: center" id="confirmer">
+<i style="color: #FF0000" class="fa fa-sign-out fa-4x"></i></br>
+<span id="confirmtext">Do you really want to exit?</span></br>
+<button type="button" class="btn btn-warning z-depth-1a" id="cnbtn" style="float: left">Cancel</button>
+<button type="button" class="btn btn-danger z-depth-1a" id="okbtn" style="float: right">OK</button>
+</div>
+<input type="hidden" id="confirmertoggle" value="0">
+
+<div style="width: 100%; text-align: center; position: fixed; z-index: 9998889; top: 250px; display:none" id="loader"><img src="loading.gif" style="margin-left: auto; margin-right: auto; width: 64px; height: auto"></div>
+
+	<main>
+		<section>
+			<div class="list-group btn-group" style="position: fixed; z-index: 9999; top: 0; width: 100%; margin-top:0;">
+				<span class="list-group-item active gradient-bg">
+					<span class="pull-left" style="margin-top:4px;"><b>My Contacts(<span id='contactcount'></span>)</b></span>
+					<input type="text" placeholder="Search" class="search pull-right" id="searchkey">
+					<a href="#" class="search-btn"><img src="img/magnifier-tool.svg" width="16" onclick="searchfn()"></a>
+				</span>				
+				<div class="dropdown dropleft pull-right invite-menu">
+					 <a class="dropdown-toggle pull-right" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-th" style='z-index: 10000'></i></a>
+					 <div class="dropdown-menu dropdown-primary">
+						 <a class="dropdown-item" href="#" onclick='location.reload();'>Refresh</a>
+						 
+					 </div>
+				</div>	
+				
+				
+			</div>  
+			<div class='col-12' id="mainid" style="margin-top: 60px">
+			<div class='col-12' id="gcontacts">
+				
+				</div>	
+</div>				
+		</section>
+		<section>
+			<div class="footer-menu">
+				<div><a href="home.html"><img src="img/add-user.svg"><span><br>Contacts</span></a></div>
+				<div><a href="nearby.html"><img src="img/agreement.svg"><span><br>Nearby</span></a></div>
+				<div><a href=""><img src="img/clock.svg"><span><br>Meeting</span></a></div>
+				<div>
+					<a href="alerts.html"><img src="img/bell.svg"><span><br>Alerts</span></a>
+					<div id="alertcount" style="display: none; background: #FF0000; font-size: 10px; line-height: 3px; width: 16px; height: 16px; text-align: center; border-radius: 0.5em; color: #FFFFFF; position: absolute; top: 5px; margin-left: 15px"></div>
+				</div>
+				<div><a href="settings.html"><img src="img/settings.svg"><span><br>Settings</span></a></div>
+			</div>
+		</section>
+		<div class="corner-icon1"> <img src="logo.png"></div>
+	</main>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/popper.min.js"></script>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/mdb.min.js"></script>
+	<script>
+        $(".button-collapse").sideNav();
+    </script>
+    <script>
+		$(document).ready(function() {
+			$('.mdb-select').material_select();
+		});
+    </script>
+</body>
+</html>

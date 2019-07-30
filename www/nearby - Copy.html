@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>NOB HUB</title>
+    <!-- Font Awesome -->
+  
+    <!-- Bootstrap core CSS -->
+    <!--link href="css/bootstrap.min.css" rel="stylesheet"-->
+    <!-- Material Design Bootstrap -->
+    <!--link href="css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+     <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://mdbootstrap.com/previews/docs/latest/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Material Design Bootstrap -->
+    <link href="https://mdbootstrap.com/previews/docs/latest/css/mdb.min.css" rel="stylesheet">
+    <link href="css/mdb.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="fonts/css/font-awesome.min.css">
+    <link href="css/style.css" rel="stylesheet"><link href="https://nobhub.com/services/cardstyles.css" rel="stylesheet">
+	<link rel='stylesheet' href='css/addSlider.css' />
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	 <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+	 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+ <link rel = "stylesheet" 
+         href = "https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
+	<script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDEc6y2PP50c3529HoVRWY5wru5wLE_6hY"></script>
+	
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="cordova.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		function onLoad() {
+			document.addEventListener("deviceready", onDeviceReady, false);
+			document.addEventListener("deviceready", geoLocation, false);
+		}
+		function geoLocation() {
+			function onSuccess(position) {
+				var lat = position.coords.latitude;
+				var lng = position.coords.longitude;
+				localStorage.setItem("clati",lat);
+				localStorage.setItem("clongi",lng);
+			}
+			function onError(error) {
+			
+				alert('code: '    + error.code    + '\n' +
+					  'message: ' + error.message + '\n');
+			}
+			navigator.geolocation.getCurrentPosition(onSuccess, onError);
+		}
+		function onDeviceReady() {
+			document.getElementById('custommsg').value=localStorage.getItem("myname")+" would like to connect with you.";
+			document.addEventListener("backbutton", onBackKeyDown, false);
+		}
+		function onBackKeyDown() {
+			if(document.getElementById('confirmertoggle').value==1) {
+				$("#confirmer").slideUp();
+				document.getElementById('confirmertoggle').value=0;
+			}
+			else {
+			location.href="home.html";
+			}
+		}
+	</script>
+	
+	<script>
+		function getprofiles() {
+			document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			var lati = localStorage.getItem("clati");
+			var longi = localStorage.getItem("clongi");
+			
+		
+			//alert(lati);
+			//alert(longi);
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					//console.log(result);
+					document.getElementById('profiles').innerHTML=result;
+					//document.getElementById('minv').value=minv;
+					//document.getElementById('maxv').value=maxv;
+					document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/getprofiles.php?lati="+lati+"&longi="+longi+"&user_id="+user_id, true); 
+			xmlhttp.send();
+		}
+	</script>
+	
+	
+	<script>
+		function searchfn() {
+			document.getElementById('loader').style.display="block";
+			var key = document.getElementById('searchkey').value;
+			var user_id = localStorage.getItem("user_id");
+			var lati = localStorage.getItem("clati");
+			var longi = localStorage.getItem("clongi");
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					//console.log(result);
+					document.getElementById('profiles').innerHTML=result;
+					document.getElementById('clearinput').style.display="block";
+
+					if(document.getElementById('searchkey').value=="") {
+					document.getElementById('clearinput').style.display="none";
+
+						getprofiles();
+					}
+					document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/getprofilessearch.php?lati="+lati+"&longi="+longi+"&user_id="+user_id+"&key="+key, true);
+			xmlhttp.send();
+		}
+		
+		
+		function searchadvprofile() {
+			document.getElementById('loader').style.display="block";
+			var key = document.getElementById('searchkey').value;
+
+			var address = document.getElementById('address').value;
+			var profession = document.getElementById('profession').value;
+			var companyname = document.getElementById('companyname').value;
+			var user_id = localStorage.getItem("user_id");
+			var lati = localStorage.getItem("clati");
+			var longi = localStorage.getItem("clongi");
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					//console.log(result);
+					document.getElementById('profiles').innerHTML=result;
+							  $('#adv-search-close-btn').click();
+
+							  document.getElementById('searchkey').value ='';
+
+      document.getElementById('address').value = '';
+      document.getElementById('profession').value = '';
+      document.getElementById('companyname').value = '';
+					if(document.getElementById('profiles').innerHTML=="") {
+						getprofiles();
+					}
+					document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/advancedprofilessearch.php?lati="+lati+"&longi="+longi+"&user_id="+user_id+"&address="+address+"&profession="+profession+"&companyname="+companyname+"&key="+key, true);
+			xmlhttp.send();
+		}
+	</script>
+	
+	<script>
+		function sendinvite() {
+			if(document.getElementById('idholder').value=="") {
+				document.getElementById('confirmtext').innerHTML="Please select atleast 1 Member";
+				$("#confirmer").slideDown();
+				document.getElementById('confirmertoggle').value=1;
+			}
+			else {
+				$('#myModal').modal('show');
+			}
+		}
+	</script>
+	
+	<script>
+		function sendinvite1() {
+			if(document.getElementById('custommsg').value=="") {
+				document.getElementById('confirmtext').innerHTML="Please add a message";
+				$("#confirmer").slideDown();
+				document.getElementById('confirmertoggle').value=1;
+			}
+			else {
+				document.getElementById('loader').style.display="block";
+				var user_id = localStorage.getItem("user_id");
+				var mids = document.getElementById('idholder').value;
+				var custommsg = document.getElementById('custommsg').value;
+				var timezone = localStorage.getItem("timezone");
+
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						var result = this.responseText;
+						document.getElementById('loader').style.display="none";
+						document.getElementById('confirmtext').innerHTML=result;
+						//$("#confirmer").slideDown();
+						document.getElementById('confirmertoggle').value=1;
+						location.reload();
+					}
+				};
+				xmlhttp.open("GET", "https://nobhub.com/services/sendinvite.php?user_id="+user_id+"&mids="+mids+"&custommsg="+custommsg+"&timezone="+timezone, true);
+				xmlhttp.send();
+			}
+		}
+	</script>
+	
+	<script>
+		function cons(clickid) {
+		
+			if(document.getElementById(clickid).style.background=="rgb(255, 255, 255)") {
+				document.getElementById('idholder').value=document.getElementById('idholder').value+clickid+",";
+				document.getElementById(clickid).style.background="#e9e9e9";
+				
+				selectedprofiles();
+				
+			}
+			else if(document.getElementById(clickid).style.background=="rgb(233, 233, 233)") {
+				var a = document.getElementById('idholder').value;
+				var b = a.replace(clickid+",","");
+				document.getElementById('idholder').value=b;
+				document.getElementById(clickid).style.background="#FFFFFF";
+				
+				selectedprofiles();
+				
+			}
+		}
+		
+		
+		function selectedprofiles() {
+			var user_id = localStorage.getItem("user_id");
+			var lati = localStorage.getItem("clati");
+			var longi = localStorage.getItem("clongi");
+			var mids = document.getElementById('idholder').value;
+		
+			//alert(lati);
+			//alert(longi);
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					//console.log(result);
+					document.getElementById('selectedprofiles').innerHTML=result;
+					//document.getElementById('minv').value=minv;
+					//document.getElementById('maxv').value=maxv;
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/selectedprofiles.php?lati="+lati+"&longi="+longi+"&user_id="+user_id+"&mids="+mids, true); 
+			xmlhttp.send();
+		}
+	</script>
+	
+	<script>
+		function thclick(clickid) {
+			document.getElementById('confirmtext').innerHTML=clickid;
+			$("#confirmer").slideDown();
+			document.getElementById('confirmertoggle').value=1;
+		}
+	</script>
+	
+	<script>
+		$(document).ready(function(){
+			$("#okbtn").click(function(){
+				$("#confirmer").slideUp();
+				document.getElementById('confirmertoggle').value=0;
+			});
+		});
+	</script>
+	
+<script>
+		function alertcount() {
+				var user_id = localStorage.getItem("user_id");
+				var timezone = localStorage.getItem("timezone");
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						var result = this.responseText;
+						var splitter = result.split("&");
+
+					
+						
+						if(splitter[1] > 0){
+						document.getElementById('chatcount').innerHTML='<span class="mdl-badge" data-badge="'+splitter[1]+'"></span><i class="fas fa-comments"></i><span><br>Chats</span>';
+						}else{
+						
+						document.getElementById('chatcount').innerHTML='<span class="mdl-badge"></span><i class="fas fa-comments"></i><span><br>Chats</span>';
+						}
+						if(splitter[2] > 0){
+						document.getElementById('meetingscount').innerHTML='<span class="mdl-badge" data-badge="'+splitter[2]+'"></span><i class="fas fa-users"></i><span><br>Meetings</span>';
+						}else{
+						document.getElementById('meetingscount').innerHTML='<span class="mdl-badge" ></span><i class="fas fa-users"></i><span><br>Meetings</span>';
+						
+						}
+						
+					}
+				};
+				xmlhttp.open("GET", "https://nobhub.com/services/alertcount.php?user_id="+user_id+"&timezone="+timezone, true);
+				xmlhttp.send();
+			}
+			
+			function clearinput() {
+
+			document.getElementById('searchkey').value= '';
+			document.getElementById('clearinput').style.display="none";
+
+			getprofiles();
+		}
+		
+		function openchat(chatid) {
+
+			localStorage.setItem("chatid",chatid);
+			location.href="chat.html";
+		}
+</script>
+<script>
+function getprofession() {
+			
+			document.getElementById('loader').style.display="block";
+			//alert(user_id);
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+						//alert(profession);
+					document.getElementById('profession').innerHTML=result;
+
+			document.getElementById('loader').style.display="none";
+
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/profession.php", true);
+			xmlhttp.send();
+			}
+			
+google.maps.event.addDomListener(window, 'load', function () {
+            var places = new google.maps.places.Autocomplete(document.getElementById('address'),{ types: ['(cities)'] });
+            google.maps.event.addListener(places, 'place_changed', function () {
+                var place = places.getPlace();
+	
+                         var address = place.formatted_address;
+         //console.log(place.address_components); // a result has multiple address components
+
+				 for(var i = 0; i < place.address_components.length; i += 1) {
+  var addressObj = place.address_components[i];
+  for(var j = 0; j < addressObj.types.length; j += 1) {
+ //console.log(addressObj.types);
+    if (addressObj.types[j] === 'country') {
+      //console.log(addressObj.types[j]); // confirm that this is 'country'
+     // console.log(addressObj.long_name); // confirm that this is the country name
+	  document.getElementById('countryname').value=addressObj.long_name;
+
+    }
+  }
+}
+				
+            });
+        });			
+</script>
+<script>
+	
+	/*window.setInterval(function(){
+	alertcount();
+	}, 10000);*/
+</script>
+	
+<script src="https://nobhub.com/services/custom-scripts.js"></script></head>
+
+<body class="fixed-sn light-blue-skin" onload="onLoad(); getprofiles(); getprofession();alertcount();">
+<div style="display: none; border: 1px solid #c0c0c0; background: #e9e9e9; width: 90%; position: fixed; z-index: 9999; top: 250px; left: 20px; padding: 10px; text-align: center" id="confirmer">
+<i style="color: #0d994f" class="fa fa-check-square fa-4x"></i></br>
+<span id="confirmtext"></span></br>
+<button type="button" class="btn blue-gradient btn-primary z-depth-1a" id="okbtn">OK</button>
+</div>
+<input type="hidden" id="confirmertoggle" value="0">
+<input type="hidden" id="idholder">
+<div style="width: 100%; text-align: center; position: fixed; z-index: 9998889; top: 250px; display:none" id="loader"><img src="loading.gif" style="margin-left: auto; margin-right: auto; width: 64px; height: auto"></div>
+    <header>
+	</header>
+
+<main>
+
+			
+		<div class="list-group btn-group" id="select-contact-div" style="position: fixed; z-index: 9999; top: 0; width: 100%; margin-top:0;">	
+			<button class="top-btn" onclick="sendinvite();" style="margin-top:4px; margin-right:15px;">
+				<i class="fa fa-user-plus"></i>
+			</button>
+			<span class="list-group-item active" style="padding-left:50px; height:54px;">
+				<a href="javascript:history.go(-1)" class="pull-left chat-back-btn"><i class="fas fa-long-arrow-alt-left"></i></a>
+				<span class="pull-left" style="margin-top:9px; font-size:16px; line-height: .8;"><b>Nearby</b><br><small style="font-size:10px; opacity:.6;" id="contactscount" style="display:none;"></small></span>
+			</span>
+			<a href="javascript:void(0);" class="new-chat-search-btn"><i class="fa fa-search"></i></a>
+		</div>  
+			
+		<div class="list-group btn-group" id="search-contact-div" style="position: fixed; z-index: 9999; top: 0; width: 100%; margin-top:0; display:none;">
+			<button class="top-btn" onclick="sendinvite();" style="margin-top:4px; margin-right:15px;">
+				<i class="fa fa-user-plus"></i>
+			</button>
+			<span class="list-group-item active" style="padding-left:50px; height:54px;">
+				<a href="javascript:void(0);" class="pull-left chat-back-btn back-select-contact"><i class="fas fa-long-arrow-alt-right"></i></a>
+				<input type="text" class="search-contact" id="searchkey" onkeyup="searchfn()" placeholder="Search by Name/Profession" autofocus>
+					<a href="#" id="clearinput" onclick="clearinput();" class="search-clear" style="display:none;"><i class="fa fa-close"></i></a>
+			</span>	
+			<div class="adv-search-btn-div"><p><a href="javascript:void(0);" class="adv-search-btn" id="adv-search-btn"><i class="fa fa-search"></i> Advanced Search</a></p></div>
+			
+			
+			<div class="adv-search-div" style="display:none;">
+				<form>
+				<div class="card1" style="padding:10px;">
+				
+					<p align="right" style="padding-top:14px;"><a href="javascript:void(0);" class="adv-search-close-btn1" style="color:#333;" id="adv-search-close-btn"><i class="fa fa-close"></i> Close</p>
+					<h5 style="margin-top:-40px; color: #ff8f05;">Advanced Search</h5>
+					<div class="md-form">
+						<input type="text" id="address" maxlength="35" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" class="form-control" placeholder="Enter Location">
+						<!--label for="Form-email1">Location</label-->
+						<input type="hidden" name="country" id="countryname">
+					</div>
+					<div class="md-form">
+						<select class="form-control select-box" id="profession">
+							<option value="">Profession</option>
+						</select>
+					</div>
+					<div class="md-form">
+						<input type="text" id="companyname" maxlength="15" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" placeholder ="Company Name" class="form-control">
+						<!--label for="Form-email1">Company Name </label-->
+					</div>
+					<!--div class="md-form">
+						<input type="text" id="name" maxlength="15" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" class="form-control">
+						<label for="Form-email1">Person Name </label>
+					</div-->
+					
+					<div class="text-center mb-3">
+						<button type="button" onclick="searchadvprofile();" class="btn blue-gradient btn-primary z-depth-1a" >Search</button>
+					</div>
+				</div></form>
+			</div>
+			<div class="clearfix"></div>
+		</div> 
+
+<!--div class="list-group btn-group" style="position: fixed; z-index: 9999; top: 0; width: 100%; margin-top:0;" data-toggle="buttons">
+	<a href="#" class="list-group-item active gradient-bg">
+		<b>Nearby</b>
+		<input type="text" placeholder="Search" class="search" id="searchkey" onkeyup="searchfn()">
+	</a>
+		
+	<button class="top-btn" onclick="sendinvite();">
+		<i class="fa fa-user-plus"></i>
+		<span>INVITE</span>
+	</button>
+	
+
+</div-->
+
+<div class="col-12 nearby-range-section">
+  <!--input data-addui='slider'
+    data-min='0'
+    data-max='6000'
+    data-range='true'
+    value=''
+   /-->
+   <div class="clearfix"></div>
+<input type="hidden" id="minv" value="1">
+<input type="hidden" id="maxv" value="6000">
+   <p id="area"></p>
+  <div id="slider-range"></div>
+</div>
+
+
+
+
+
+
+<div class="clearfix"></div>
+<div class="col-12 padd-sm nearby-profiles">
+
+<div id="selectedprofiles" style="padding: 5px">
+	
+</div>
+
+<div id="profiles" style="padding: 5px">
+	
+</div>
+</div>
+</br></br></br></br>
+
+<section>
+	<div class="footer-menu">
+		<div ><a href="home.html"><i class="far fa-address-book"></i><span><br>Contacts</span></a></div>
+			<div class="active"><a href="nearby.html"><img src="img/nearby1.png" class="nearby1"><span><br>Nearby</span></a></div>
+			<div><a href="meetings.html" id="meetingscount"><i class="fas fa-users"></i><span><br>Meetings</span></a></div>
+			<div><a href="chat-list.html" id="chatcount"><i class="fas fa-comments"></i><span><br>Chats</span></a></div>
+			<div><a href="generalcards.html"><i class="far fa-address-card"></i><span><br>Cards</span></a></div>
+	</div>
+</section>
+
+	<div class="corner-icon1"> <img src="logo.png"></div>
+
+</main>
+
+<!-- Modal -->
+<div style='margin-top: 100px' id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add a Message</h4>
+		<button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+	  <!--input type="text" name="nickname" id="nickname" placeholder="Nickname" class="form-control"-->
+        <textarea id="custommsg" class="form-control"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" onclick="sendinvite1()" data-dismiss="modal">INVITE</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- Card -->
+                      
+    <!--/Form with header-->
+
+            
+    
+    <!--Main Layout-->
+
+    <!-- /Start your project here-->
+
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/mdb.min.js"></script>
+	
+	
+	<!--script src='js/jquery.js'></script-->
+	<script src='js/Obj.min.js'></script>
+	<script src='js/addSlider.js'></script>
+
+<script type="text/javascript" src="js/jquery-ui.js"></script>
+
+	<script>
+        $(".button-collapse").sideNav();
+    </script>
+	
+	
+	<script>
+		$(document).ready(function(){
+		  $('.new-chat-search-btn').click(function(){
+			$('#select-contact-div').fadeOut('slow');
+			$('#search-contact-div').fadeIn(1000);
+		  });
+		  $('.back-select-contact').click(function(){
+			$('#search-contact-div').fadeOut('slow');
+			$('#select-contact-div').fadeIn(1000);
+			clearinput();
+		  });
+		});
+		
+		$(document).ready(function(){
+		  $('#adv-search-btn').click(function(){
+			$('.adv-search-btn-div').hide('slow');
+			$('.adv-search-div').slideDown(200);
+		  });
+		  $('#adv-search-close-btn').click(function(){
+			$('.adv-search-div').hide('slow');
+			$('.adv-search-btn-div').slideDown(200);
+		  });
+		});
+	</script>
+	
+	
+ <script>
+         // Material Select Initialization
+		$(document).ready(function() {
+			$('.mdb-select').material_select();
+		});
+		
+		$(document).ready(function() {
+			var $submit = $("#submit_prog").hide(),
+			$cbs = $('input[name="prog"]').click(function() {
+				$submit.toggle( $cbs.is(":checked") );
+			});
+		});
+		
+		
+		$(function() {
+		if(localStorage.getItem("min")!=''){ var minv = localStorage.getItem("min");}
+		else{ var minv=1;}
+		if(localStorage.getItem("max")!=''){
+            var maxv = localStorage.getItem("max");}else{
+			
+			var maxv =6000;
+			}
+		
+    $("#slider-range").slider({
+		 range: true,
+		 min: 1,
+		 max: 6000,
+	  
+	  
+	 values: [ minv, maxv ],
+	  //values: [ 250, 4000 ],
+      slide: function( event, ui ) {
+        $( "#area" ).html(ui.values[ 0 ] + " - " + ui.values[ 1 ]);
+		//alert(ui.values[ 0 ]);
+	//	$( "#amount1" ).val(ui.values[ 0 ]);
+	//	$( "#amount2" ).val(ui.values[ 1 ]);
+	
+	 		var user_id = localStorage.getItem("user_id");
+			var lati = localStorage.getItem("clati");
+			var longi = localStorage.getItem("clongi");
+			localStorage.setItem("min",ui.values[ 0 ]);
+			localStorage.setItem("max",ui.values[ 1 ]);
+//alert(lati);alert(longi);alert(ui.values[ 0 ]);alert(ui.values[ 1]);
+
+		$.ajax({
+  type:"POST",
+  dataType:"text",
+  url:"https://nobhub.com/services/filterprofiles.php",
+  data:"min="+ui.values[ 0 ]+"&max="+ui.values[ 1 ]+"&user_id="+user_id+"&lati="+lati+"&longi="+longi,
+  
+  success: function(response){
+  //alert(response);
+  //console.log(response);
+  $('#profiles').html(response);
+   }});
+		
+      }
+      
+      
+      
+      
+    });
+    $( "#area" ).html($( "#slider-range" ).slider( "values", 0 ) +
+     " - " + $( "#slider-range" ).slider( "values", 1 ) );
+  });
+ </script>
+</body>
+
+</html>

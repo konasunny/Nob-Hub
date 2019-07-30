@@ -1,0 +1,2325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>NOB HUB</title>
+    <link href="css/style.css" rel="stylesheet"><link href="https://nobhub.com/services/cardstyles.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link href="https://mdbootstrap.com/previews/docs/latest/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://mdbootstrap.com/previews/docs/latest/css/mdb.min.css" rel="stylesheet">
+    <link href="css/mdb.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://jqueryvalidation.org/files/demo/site-demos.css">
+ 
+	<script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDEc6y2PP50c3529HoVRWY5wru5wLE_6hY"></script>
+
+ <link href="css/bootstrap-select.css" rel="stylesheet" />
+
+	  <link rel="stylesheet" href="css/select2.min.css">
+      <link rel = "stylesheet" 
+         href = "https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
+     
+
+
+	  
+	  
+	  
+    <style type="text/css">
+		.form-elegant .font-small {
+		  font-size: 0.8rem; }
+		.form-elegant .z-depth-1a {
+		  -webkit-box-shadow: 0 2px 5px 0 rgba(55, 161, 255, 0.26), 0 4px 12px 0 rgba(121, 155, 254, 0.25);
+		  box-shadow: 0 2px 5px 0 rgba(55, 161, 255, 0.26), 0 4px 12px 0 rgba(121, 155, 254, 0.25); }
+		.form-elegant .z-depth-1-half,
+		.form-elegant .btn:hover {
+		  -webkit-box-shadow: 0 5px 11px 0 rgba(85, 182, 255, 0.28), 0 4px 15px 0 rgba(36, 133, 255, 0.15);
+		  box-shadow: 0 5px 11px 0 rgba(85, 182, 255, 0.28), 0 4px 15px 0 rgba(36, 133, 255, 0.15); }
+
+
+		
+
+    </style>
+
+    <style>                
+        .light-blue-skin .dropdown-content li:not(.disabled) span, .light-blue-skin .md-form .prefix.active, .light-blue-skin input[type=email]:focus:not([readonly])+label, .light-blue-skin input[type=text]:focus:not([readonly])+label, .light-blue-skin input[type=password]:focus:not([readonly])+label, .light-blue-skin textarea.md-textarea:focus:not([readonly])+label {
+		color: #212121;
+		}
+		.row{
+		margin-right: -0px;
+		margin-left: -0px;
+		}
+    </style>
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="cordova.js"></script>
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	<script src="jquery.autoSave.min.js"></script>
+
+	<script type="text/javascript" charset="utf-8">
+		var pictureSource;
+		var destinationType;
+		function onLoad() {
+		//	alert("hi");
+			document.addEventListener("deviceready", onDeviceReady, false);
+		}
+		function onDeviceReady() {
+			pictureSource=navigator.camera.PictureSourceType;
+			destinationType=navigator.camera.DestinationType;
+			document.getElementById('userid').value=localStorage.getItem("user_id");
+			document.addEventListener("backbutton", onBackKeyDown, false);
+		}
+		function onBackKeyDown() {
+			if(document.getElementById('camoptionstoggle').value==1) {
+				$("#camoption1").slideUp();
+				$("#camoption2").slideUp();
+				document.getElementById('camoptionstoggle').value=0;
+			}
+			else if(document.getElementById('confirmertoggle').value==1) {
+				$("#confirmer").slideUp();
+				document.getElementById('confirmertoggle').value=0;
+				location.reload();
+			}
+			else {
+				window.history.back();
+			}
+		}
+		function onPhotoDataSuccess(imageData) {
+			var smallImage = document.getElementById('myimage');
+			smallImage.src = "data:image/jpeg;base64," + imageData;
+			document.getElementById('ibdata').value=imageData;
+			submitform();
+			$("#camoption1").slideUp();
+			$("#camoption2").slideUp();
+			$("#removeprofilepic").slideUp();
+
+			$("#pimgdiv").slideUp();
+			$("#cimgdiv").slideUp();
+			document.getElementById('camoptionstoggle').value=0;
+		}
+		function onPhotoDataSuccessa(imageData) {
+			var smallImagea = document.getElementById('smallImagea');
+			smallImagea.src = "data:image/jpeg;base64," + imageData;
+			document.getElementById('ibdataa').value=imageData;
+			submitcform();
+			$("#ccamoption1").slideUp();
+			$("#ccamoption2").slideUp();
+			$("#removecompanypic").slideUp();
+
+			$("#pimgdiv").slideUp();
+			$("#cimgdiv").slideUp();
+			document.getElementById('camoptionstoggle').value=0;
+		}
+		function onPhotoURISuccess(imageURI) {
+			var smallImage = document.getElementById('myimage');
+			smallImage.src = "data:image/jpeg;base64," + imageURI;
+			document.getElementById('ibdata').value=imageURI;
+			submitform();
+
+			$("#camoption1").slideUp();
+			$("#camoption2").slideUp();
+			$("#removeprofilepic").slideUp();
+
+			$("#pimgdiv").slideUp();
+			$("#cimgdiv").slideUp();
+
+			document.getElementById('camoptionstoggle').value=0;
+		}
+
+		function onPhotoURISuccessa(imageURI) {
+			var smallImagea = document.getElementById('smallImagea');
+			smallImagea.src = "data:image/jpeg;base64," + imageURI;
+			document.getElementById('ibdataa').value=imageURI;
+			submitcform();
+			$("#ccamoption1").slideUp();
+			$("#ccamoption2").slideUp();
+			$("#removecompanypic").slideUp();
+
+			$("#pimgdiv").slideUp();
+			$("#cimgdiv").slideUp();
+		}
+       /*function capturePhoto() {
+			navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 20,
+			destinationType: destinationType.DATA_URL });
+		} */
+		function capturePhotoEdit() {
+			navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 20, allowEdit: true,
+			destinationType: destinationType.DATA_URL });
+		}
+		
+		function getPhoto(source) {
+			navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 20, allowEdit: true,
+			destinationType: destinationType.DATA_URL,
+			sourceType: source });
+		}
+
+		function getPhotoa(source) {
+			navigator.camera.getPicture(onPhotoURISuccessa, onFail, { quality: 20, allowEdit: true,
+			destinationType: destinationType.DATA_URL,
+			sourceType: source });
+		}
+             function ccapturePhotoEdit() {
+			navigator.camera.getPicture(onPhotoDataSuccessa, onFail, { quality: 20, allowEdit: true,
+			destinationType: destinationType.DATA_URL });
+		}
+
+
+		function onFail(message) {
+			var msgs = message;
+		}
+	</script>
+	<script>
+		$(document).ready(function(){
+		
+			$("#myimage").click(function(){
+			
+				//alert(document.getElementById('ibdata').innerHTML);
+				if(document.getElementById('camoptionstoggle').value==0) {
+					$("#camoption1").slideDown();
+					$("#camoption2").slideDown();
+					$("#removeprofilepic").slideDown();
+					$("#ccamoption1").slideUp();
+					$("#ccamoption2").slideUp();
+					$("#removecompanypic").slideUp();
+					//$("#pimgdiv").slideDown();
+			        // $("#cimgdiv").slideDown();
+
+					document.getElementById('camoptionstoggle').value=1;
+				}
+				else if(document.getElementById('camoptionstoggle').value==1) {
+					$("#camoption1").slideUp();
+					$("#camoption2").slideUp();
+					$("#removeprofilepic").slideUp();
+
+					//$("#pimgdiv").slideUp();
+			       //$("#cimgdiv").slideUp();
+
+					document.getElementById('camoptionstoggle').value=0;
+				}
+			});
+		});
+		$(document).ready(function(){
+			$("#smallImagea").click(function(){
+				//alert(document.getElementById('ibdata').innerHTML);
+				if(document.getElementById('camoptionstoggle').value==0) {
+					$("#ccamoption1").slideDown();
+					$("#ccamoption2").slideDown();
+					$("#removecompanypic").slideDown();
+					
+					$("#camoption1").slideUp();
+					$("#camoption2").slideUp();
+					$("#removeprofilepic").slideUp();
+				   //$("#cimgdiv").slideDown();
+
+					document.getElementById('camoptionstoggle').value=1;
+				}
+				else if(document.getElementById('camoptionstoggle').value==1) {
+					
+					$("#ccamoption1").slideUp();
+					$("#ccamoption2").slideUp();
+					$("#removecompanypic").slideUp();
+					//$("#cimgdiv").slideUp();
+                     
+					document.getElementById('camoptionstoggle').value=0;
+				}
+			});
+		});
+		
+	
+function submitform()
+{
+ // alert('test');
+  //document.getElementById("myForm").submit();
+ 
+ //alert("Profile Pic updated Successfully");
+          $('#pbtn').click();  
+
+
+}
+
+
+function submitcform()
+{
+  //alert('test');
+  //document.getElementById("myForm1").submit();
+  
+ //alert("Logo Uploaded Successfully");
+ $('#cbtn').click();
+}
+
+ 
+		
+		function removeprofilepic(){
+		//alert('ok');
+			var userid = localStorage.getItem("user_id"); 
+		
+		 var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					//console.log(result);
+					//getprofile();
+                  location.reload();
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/removeprofilepic.php?userid="+userid, true);
+			xmlhttp.send();
+		}
+		function removecompanypic(){
+		//alert('ok');
+			var userid = localStorage.getItem("user_id"); 
+		
+		 var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					//console.log(result);
+					getprofile();
+
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/removecompanypic.php?userid="+userid, true);
+			xmlhttp.send();
+		}
+	</script>
+	
+	<script>
+		$(document).ready(function(){
+			$("#okbtn").click(function(){
+				$("#confirmer").slideUp();
+				document.getElementById('confirmertoggle').value=0;
+				getprofile();
+				var a = localStorage.getItem("toshow");
+				if(a=="personal") {
+					document.getElementById('home').style.display="block";
+					document.getElementById('menu1').style.display="none";
+					document.getElementById('t1').style.background="#c0c0c0";
+					document.getElementById('t2').style.background="#FFFFFF";
+				}
+				else if(a=="company") {
+					document.getElementById('home').style.display="none";
+					document.getElementById('menu1').style.display="block";
+					document.getElementById('t1').style.background="#FFFFFF";
+					document.getElementById('t2').style.background="#c0c0c0";
+				}
+				else {
+					location.reload();
+				}
+				
+			});
+		});
+	</script>
+	
+	
+	
+	<script>
+		function getprofile() {
+			document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id"); 
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					
+					var splitter = result.split("deli");
+					//alert(splitter[40]);
+                  document.getElementById('userid').value = user_id;
+                  document.getElementById('useridpic').value = user_id;
+                  document.getElementById('useridcompic').value = user_id;
+                  document.getElementById('imagebox').value = splitter[41];
+					if(splitter[41]=="no" || splitter[41]=="" || splitter[41]==0) {
+						document.getElementById('imagetoggle').checked=false;
+					}
+					else {
+						document.getElementById('imagetoggle').checked=true;
+					}
+
+
+
+
+					if(splitter[0]!="") {
+					document.getElementById('myimagemain').src = "https://nobhub.com/services/members/"+splitter[0];
+					document.getElementById('myimage').src = "https://nobhub.com/services/members/"+splitter[0];
+					}
+					else {
+					document.getElementById('myimagemain').src = "https://nobhub.com/services/pp1.jpg";
+					}
+
+
+
+					
+					document.getElementById('firstname').value = splitter[1];
+					if(splitter[1]!="") {
+						document.getElementById("firstnamelabel").style.transform = "translateY(-140%)";
+					}
+					document.getElementById('firstnamebox').value = splitter[2];
+					if(splitter[2]=="no" || splitter[2]=="" || splitter[2]==0) {
+						document.getElementById('firstnametoggle').checked=false;
+					}
+					else {
+						document.getElementById('firstnametoggle').checked=true;
+					}
+					
+					document.getElementById('lastname').value = splitter[3];
+					if(splitter[3]!="") {
+						document.getElementById("lastnamelabel").style.transform = "translateY(-140%)";
+					}
+					document.getElementById('lastnamebox').value = splitter[4];
+					if(splitter[4]=="no" || splitter[4]=="" || splitter[4]==0) {
+						document.getElementById('lastnametoggle').checked=false;
+					}
+					else {
+						document.getElementById('lastnametoggle').checked=true;
+					}
+					
+					document.getElementById('pemail').value = splitter[5];
+					if(splitter[5]!="") {
+						document.getElementById("pemaillabel").style.transform = "translateY(-140%)";
+					}
+					document.getElementById('pemailbox').value = splitter[6];
+					if(splitter[6]=="no" || splitter[6]=="" || splitter[6]==0) {
+						document.getElementById('pemailtoggle').checked=false;
+					}
+					else {
+						document.getElementById('pemailtoggle').checked=true;
+					}
+					
+					
+					document.getElementById('pmobile').value = splitter[8];
+					if(splitter[8]!="") {
+						document.getElementById("pmobilelabel").style.transform = "translateY(-140%)";
+					}
+					document.getElementById('pmobilebox').value = splitter[9];
+					if(splitter[9]=="no" || splitter[9]=="" || splitter[9]==0) {
+						document.getElementById('pmobiletoggle').checked=false;
+					}
+					else {
+						document.getElementById('pmobiletoggle').checked=true;
+					}
+					
+					document.getElementById('homephone').value = splitter[10];
+					if(splitter[10]!="") {
+						document.getElementById("homephonelabel").style.transform = "translateY(-140%)";
+					}
+					document.getElementById('homephonebox').value = splitter[11];
+					if(splitter[11]=="no" || splitter[11]=="" || splitter[11]==0) {
+						document.getElementById('homephonetoggle').checked=false;
+					}
+					else {
+						document.getElementById('homephonetoggle').checked=true;
+					}
+					
+					document.getElementById('paddress').value = splitter[12];
+					if(splitter[12]!="") {
+						document.getElementById("paddresslabel").style.transform = "translateY(-140%)";
+					}
+					document.getElementById('paddressbox').value = splitter[13];
+					if(splitter[13]=="no" || splitter[13]=="" || splitter[13]==0) {
+						document.getElementById('paddresstoggle').checked=false;
+					}
+					else {
+						document.getElementById('paddresstoggle').checked=true;
+					}
+					
+					document.getElementById('facebook').value = splitter[14];
+					if(splitter[14]!="") {
+						document.getElementById("facebooklabel").style.transform = "translateY(-140%)";
+					}
+					document.getElementById('facebookbox').value = splitter[15];
+					if(splitter[15]=="no" || splitter[15]=="" || splitter[15]==0) {
+						document.getElementById('facebooktoggle').checked=false;
+					}
+					else {
+						document.getElementById('facebooktoggle').checked=true;
+					}
+					
+					document.getElementById('twitter').value = splitter[16];
+					if(splitter[16]!="") {
+						document.getElementById("twitterlabel").style.transform = "translateY(-140%)";
+					}
+					document.getElementById('twitterbox').value = splitter[17];
+					if(splitter[17]=="no" || splitter[17]=="" || splitter[17]==0) {
+						document.getElementById('twittertoggle').checked=false;
+					}
+					else {
+						document.getElementById('twittertoggle').checked=true;
+					}
+					
+					document.getElementById('skype').value = splitter[18];
+					if(splitter[18]!="") {
+						document.getElementById("skypelabel").style.transform = "translateY(-140%)";
+					}
+					document.getElementById('skypebox').value = splitter[19];
+					if(splitter[19]=="no" || splitter[19]=="" || splitter[19]==0) {
+						document.getElementById('skypetoggle').checked=false;
+					}
+					else {
+						document.getElementById('skypetoggle').checked=true;
+					}
+					
+					document.getElementById('linkedin').value = splitter[20];
+					if(splitter[20]!="") {
+						document.getElementById("linkedinlabel").style.transform = "translateY(-140%)";
+					}
+					document.getElementById('linkedinbox').value = splitter[21];
+					if(splitter[21]=="no" || splitter[21]=="" || splitter[21]==0) {
+						document.getElementById('linkedintoggle').checked=false;
+					}
+					else {
+						document.getElementById('linkedintoggle').checked=true;
+					}
+					
+					document.getElementById('companyname').value = splitter[22];
+					if(splitter[22]!="") {
+						document.getElementById("companynamelabel").style.transform = "translateY(-140%)";
+					}
+					document.getElementById('companynamebox').value = splitter[23];
+					if(splitter[23]=="no" || splitter[23]=="" || splitter[23]==0) {
+						document.getElementById('companynametoggle').checked=false;
+					}
+					else {
+						document.getElementById('companynametoggle').checked=true;
+					}
+					
+					document.getElementById('title').value = splitter[24];
+					if(splitter[24]!="") {
+						document.getElementById("titlelabel").style.transform = "translateY(-140%)";
+					}
+					document.getElementById('titlebox').value = splitter[25];
+					if(splitter[25]=="no" || splitter[25]=="" || splitter[25]==0) {
+						document.getElementById('titletoggle').checked=false;
+					}
+					else {
+						document.getElementById('titletoggle').checked=true;
+					}
+					
+					document.getElementById('department').value = splitter[26];
+					if(splitter[26]!="") {
+						document.getElementById("departmentlabel").style.transform = "translateY(-140%)";
+					}
+					document.getElementById('departmentbox').value = splitter[27];
+					if(splitter[27]=="no" || splitter[27]=="" || splitter[27]==0) {
+						document.getElementById('departmenttoggle').checked=false;
+					}
+					else {
+						document.getElementById('departmenttoggle').checked=true;
+					}
+					
+					document.getElementById('cemail').value = splitter[28];
+					if(splitter[28]!="") {
+						document.getElementById("cemaillabel").style.transform = "translateY(-140%)";
+					}
+					document.getElementById('cemailbox').value = splitter[29];
+					if(splitter[29]=="no" || splitter[29]=="" || splitter[29]==0) {
+						document.getElementById('cemailtoggle').checked=false;
+					}
+					else {
+						document.getElementById('cemailtoggle').checked=true;
+					}
+					
+					document.getElementById('website').value = splitter[30];
+					if(splitter[30]!="") {
+						document.getElementById("websitelabel").style.transform = "translateY(-140%)";
+					}
+					document.getElementById('websitebox').value = splitter[31];
+					if(splitter[31]=="no" || splitter[31]=="" || splitter[31]==0) {
+						document.getElementById('websitetoggle').checked=false;
+					}
+					else {
+						document.getElementById('websitetoggle').checked=true;
+					}
+					
+					document.getElementById('caddress').value = splitter[32];
+					if(splitter[32]!="") {
+						document.getElementById("caddresslabel").style.transform = "translateY(-140%)";
+					}
+					document.getElementById('caddressbox').value = splitter[33];
+					if(splitter[33]=="no" || splitter[33]=="" || splitter[33]==0) {
+						document.getElementById('caddresstoggle').checked=false;
+					}
+					else {
+						document.getElementById('caddresstoggle').checked=true;
+					}
+					
+					document.getElementById('cmobile').value = splitter[34];
+					if(splitter[34]!="") {
+						document.getElementById("cmobilelabel").style.transform = "translateY(-140%)";
+					}
+					
+					document.getElementById('cmobilebox').value = splitter[35];
+					if(splitter[35]=="no" || splitter[35]=="" || splitter[35]==0) {
+						document.getElementById('cmobiletoggle').checked=false;
+					}
+					else {
+						document.getElementById('cmobiletoggle').checked=true;
+					}
+					
+					document.getElementById('extn').value = splitter[36];
+					if(splitter[36]!="") {
+						document.getElementById("extenlabel").style.transform = "translateY(-140%)";
+					}
+					
+					document.getElementById('fax').value = splitter[37];
+					if(splitter[37]!="") {
+						document.getElementById("faxlabel").style.transform = "translateY(-140%)";
+					}
+					document.getElementById('faxbox').value = splitter[38];
+					if(splitter[38]=="no" || splitter[38]=="" || splitter[38]==0) {
+						document.getElementById('faxtoggle').checked=false;
+					}
+					else {
+						document.getElementById('faxtoggle').checked=true;
+					}
+					
+					document.getElementById('extbox').value = splitter[42];
+					if(splitter[42]=="no" || splitter[42]=="" || splitter[42]==0) {
+						document.getElementById('exttoggle').checked=false;
+					}
+					else {
+						document.getElementById('exttoggle').checked=true;
+					}
+
+
+					document.getElementById('logobox').value = splitter[39];
+					if(splitter[39]=="no" || splitter[39]=="" || splitter[39]==0) {
+						document.getElementById('logotoggle').checked=false;
+					}
+					else {
+						document.getElementById('logotoggle').checked=true;
+					}
+					
+					if(splitter[40]=="") {
+					document.getElementById('smallImagea').src = "https://nobhub.com/services/pp1.jpg";
+//document.getElementById('ibdataa').value = splitter[40];
+					} else {
+
+
+					document.getElementById('smallImagea').style.display="block";
+					document.getElementById('smallImagea').src="https://nobhub.com/services/logos/"+splitter[40];
+
+//document.getElementById('ibdataa').value = splitter[40];
+		
+
+
+					}
+					$('#mcode').val(splitter[7]);
+					//document.getElementById('mcode').value = splitter[7];
+					document.getElementById('loader').style.display="none";
+				}
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/getprofile.php?user_id="+user_id, true);
+			xmlhttp.send();
+		}
+		
+		
+		  
+	</script>
+	
+	<script type="text/javascript">
+
+
+		$(document).ready(function (e) {
+
+		
+
+
+			$("#uploadForm").on('submit',(function(e) {
+
+
+				document.getElementById('loader').style.display="block";
+				e.preventDefault();
+				$.ajax({
+					url: "https://nobhub.com/services/updateprofile.php",
+					type: "POST",
+					data:  new FormData(this),
+					contentType: false,
+					cache: false,
+					processData:false,
+					success: function(data)
+					{
+						//alert(data);
+						console.log(data);
+						document.getElementById('loader').style.display="none";
+						document.getElementById('confirmtext').innerHTML=data;
+						$("#confirmer").slideDown();
+						document.getElementById('confirmertoggle').value=1;
+						document.getElementById('loader').style.display="none";
+					getprofile();
+					viewcard();
+					getcards();
+
+					},
+					error: function() 
+					{
+				
+					} 	        
+			   });
+			
+			}));
+		});
+		
+		
+		function autosave() {
+		
+				var userid =	document.getElementById('userid').value;
+
+				var firstname =	document.getElementById('firstname').value;
+				var firstnamebox =	document.getElementById('firstnamebox').value
+				var lastname =	document.getElementById('lastname').value;
+				var lastnamebox =	document.getElementById('lastnamebox').value;
+				
+				var pemail =	document.getElementById('pemail').value;
+				
+				if(document.getElementById('pemail').value ==''){
+				var pemailbox =	'no';//alert(pemailbox);
+				}else{
+				
+				var pemailbox =	document.getElementById('pemailbox').value;
+				}
+				
+				
+				
+				
+				
+				
+				var mcode =	document.getElementById('mcode').value;
+				//var pmobile =	document.getElementById('pmobile').value;
+				//var pmobilebox =	document.getElementById('pmobilebox').value;
+				var homephone =	document.getElementById('homephone').value;
+				if(document.getElementById('homephone').value ==''){
+				var homephonebox =	'no';
+				}else{
+				var homephonebox =	document.getElementById('homephonebox').value;
+				}
+				var paddress =	document.getElementById('paddress').value;
+				if(document.getElementById('paddress').value==''){
+				var paddressbox =	'no';
+				}else{
+				var paddressbox =	document.getElementById('paddressbox').value;
+				}
+				var profession =	document.getElementById('profession').value;
+				var facebook =	document.getElementById('facebook').value;
+				if(facebook == ''){
+				var facebookbox = 'no';
+				}else{
+				var facebookbox = document.getElementById('facebookbox').value;
+				}
+				var twitter =	document.getElementById('twitter').value;
+				if(twitter ==''){
+				var twitterbox = 'no';
+				}else{
+				var twitterbox =	document.getElementById('twitterbox').value;
+				}
+				var skype =	document.getElementById('skype').value;
+				if(skype ==''){
+				var skypebox =	'no';
+				}else{
+				var skypebox =	document.getElementById('skypebox').value;
+				}
+				var linkedin =	document.getElementById('linkedin').value;
+				if(linkedin ==''){
+				var linkedinbox =	'no'
+				}else{
+				var linkedinbox =	document.getElementById('linkedinbox').value;
+
+				}
+				var companynamebox =	document.getElementById('companynamebox').value;
+				var companyname =	document.getElementById('companyname').value;
+				var title =	document.getElementById('title').value;
+				var department =	document.getElementById('department').value;
+				if(department ==''){
+				var departmentbox =	'no';
+				}else{
+				
+				var departmentbox =	document.getElementById('departmentbox').value;
+
+				
+				}
+				var cemail =	document.getElementById('cemail').value;
+				var website =	document.getElementById('website').value;
+				if(website ==''){
+				var websitebox = 'no';
+				}else{
+				
+				var websitebox =	document.getElementById('websitebox').value;
+
+				}
+				var caddress =	document.getElementById('caddress').value;
+				var caddressbox =	document.getElementById('caddressbox').value;
+				var cmobile =	document.getElementById('cmobile').value;
+				var extn =	document.getElementById('extn').value;
+				if(extn ==''){
+				var extbox = 'no';
+				}else{
+				var extbox =	document.getElementById('extbox').value;
+				}
+				var fax =	document.getElementById('fax').value;
+				if(fax ==''){
+				var faxbox = 'no';
+				}else{
+				var faxbox =	document.getElementById('faxbox').value;
+                  }
+				//var ibdata =	document.getElementById('ibdata').value;
+				//var ibdataa =	document.getElementById('ibdataa').value;
+				
+                var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					console.log(result);
+					//getprofile();
+
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/autosave.php?userid="+userid+"&firstname="+firstname+"&firstnamebox="+firstnamebox+"&lastname="+lastname+"&lastnamebox="+lastnamebox+"&pemail="+pemail+"&pemailbox="+pemailbox+"&mcode="+mcode+"&homephone="+homephone+"&homephonebox="+homephonebox+"&paddress="+paddress+"&paddressbox="+paddressbox+"&profession="+profession+"&facebook="+facebook+"&facebookbox="+facebookbox+"&twitter="+twitter+"&twitterbox="+twitterbox+"&skype="+skype+"&skypebox="+skypebox+"&linkedin="+linkedin+"&linkedinbox="+linkedinbox+"&companyname="+companyname+"&title="+title+"&department="+department+"&departmentbox="+departmentbox+"&cemail="+cemail+"&website="+website+"&websitebox="+websitebox+"&caddress="+caddress+"&caddressbox="+caddressbox+"&cmobile="+cmobile+"&extn="+extn+"&extbox="+extbox+"&fax="+fax+"&faxbox="+faxbox, true);
+			xmlhttp.send();
+		
+		
+			
+		
+		
+		}
+	</script>
+	
+	 <script>
+         window.setInterval(function(){
+       autosave();
+         }, 20000);
+      </script>
+	  <script>
+	
+	window.setInterval(function(){
+	alertcount();
+	}, 100000);
+	</script>
+	<style>
+		.switch label input[type=checkbox]:checked+.lever {
+				background-color: #fd7e14;
+			}
+	</style>
+	<script>
+		function firstnametogglefn() {
+			if(document.getElementById('firstnametoggle').checked==true) {
+				document.getElementById('firstnamebox').value="yes";
+			}
+			else if(document.getElementById('firstnametoggle').checked==false) {
+				document.getElementById('firstnamebox').value="no";
+			}
+		}
+	</script>
+	<script>
+		function lastnametogglefn() {
+			if(document.getElementById('lastnametoggle').checked==true) {
+				document.getElementById('lastnamebox').value="yes";
+			}
+			else if(document.getElementById('lastnametoggle').checked==false) {
+				document.getElementById('lastnamebox').value="no";
+			}
+		}
+	</script>
+	<script>
+		function pemailtogglefn() {
+			if(document.getElementById('pemailtoggle').checked==true) {
+				document.getElementById('pemailbox').value="yes";
+			}
+			else if(document.getElementById('pemailtoggle').checked==false) {
+				document.getElementById('pemailbox').value="no";
+			}
+		}
+	</script>
+	<script>
+		function pmobiletogglefn() {
+			if(document.getElementById('pmobiletoggle').checked==true) {
+				document.getElementById('pmobilebox').value="yes";
+			}
+			else if(document.getElementById('pmobiletoggle').checked==false) {
+				document.getElementById('pmobilebox').value="no";
+			}
+		}
+	</script>
+	<script>
+		function homephonetogglefn() {
+			if(document.getElementById('homephonetoggle').checked==true) {
+				document.getElementById('homephonebox').value="yes";
+			}
+			else if(document.getElementById('homephonetoggle').checked==false) {
+				document.getElementById('homephonebox').value="no";
+			}
+		}
+	</script>
+	<script>
+		function paddresstogglefn() {
+			if(document.getElementById('paddresstoggle').checked==true) {
+				document.getElementById('paddressbox').value="yes";
+			}
+			else if(document.getElementById('paddresstoggle').checked==false) {
+				document.getElementById('paddressbox').value="no";
+			}
+		}
+	</script>
+	<script>
+		function facebooktogglefn() {
+			if(document.getElementById('facebooktoggle').checked==true) {
+				document.getElementById('facebookbox').value="yes";
+			}
+			else if(document.getElementById('facebooktoggle').checked==false) {
+				document.getElementById('facebookbox').value="no";
+			}
+		}
+	</script>
+	<script>
+		function twittertogglefn() {
+			if(document.getElementById('twittertoggle').checked==true) {
+				document.getElementById('twitterbox').value="yes";
+			}
+			else if(document.getElementById('twittertoggle').checked==false) {
+				document.getElementById('twitterbox').value="no";
+			}
+		}
+	</script>
+	<script>
+		function skypetogglefn() {
+			if(document.getElementById('skypetoggle').checked==true) {
+				document.getElementById('skypebox').value="yes";
+			}
+			else if(document.getElementById('skypetoggle').checked==false) {
+				document.getElementById('skypebox').value="no";
+			}
+		}
+	</script>
+	<script>
+		function linkedintogglefn() {
+			if(document.getElementById('linkedintoggle').checked==true) {
+				document.getElementById('linkedinbox').value="yes";
+			}
+			else if(document.getElementById('linkedintoggle').checked==false) {
+				document.getElementById('linkedinbox').value="no";
+			}
+		}
+	</script>
+	<script>
+		function companynametogglefn() {
+			if(document.getElementById('companynametoggle').checked==true) {
+				document.getElementById('companynamebox').value="yes";
+			}
+			else if(document.getElementById('companynametoggle').checked==false) {
+				document.getElementById('companynamebox').value="no";
+			}
+		}
+	</script>
+	<script>
+		function titletogglefn() {
+			if(document.getElementById('titletoggle').checked==true) {
+				document.getElementById('titlebox').value="yes";
+			}
+			else if(document.getElementById('titletoggle').checked==false) {
+				document.getElementById('titlebox').value="no";
+			}
+		}
+	</script>
+	<script>
+		function departmenttogglefn() {
+			if(document.getElementById('departmenttoggle').checked==true) {
+				document.getElementById('departmentbox').value="yes";
+			}
+			else if(document.getElementById('departmenttoggle').checked==false) {
+				document.getElementById('departmentbox').value="no";
+			}
+		}
+	</script>
+	<script>
+		function cemailtogglefn() {
+			if(document.getElementById('cemailtoggle').checked==true) {
+				document.getElementById('cemailbox').value="yes";
+			}
+			else if(document.getElementById('cemailtoggle').checked==false) {
+				document.getElementById('cemailbox').value="no";
+			}
+		}
+	</script>
+	<script>
+		function websitetogglefn() {
+			if(document.getElementById('websitetoggle').checked==true) {
+				document.getElementById('websitebox').value="yes";
+			}
+			else if(document.getElementById('websitetoggle').checked==false) {
+				document.getElementById('websitebox').value="no";
+			}
+		}
+	</script>
+	<script>
+		function caddresstogglefn() {
+			if(document.getElementById('caddresstoggle').checked==true) {
+				document.getElementById('caddressbox').value="yes";
+			}
+			else if(document.getElementById('caddresstoggle').checked==false) {
+				document.getElementById('caddressbox').value="no";
+			}
+		}
+	</script>
+	<script>
+		function cmobiletogglefn() {
+			if(document.getElementById('cmobiletoggle').checked==true) {
+				document.getElementById('cmobilebox').value="yes";
+			}
+			else if(document.getElementById('cmobiletoggle').checked==false) {
+				document.getElementById('cmobilebox').value="no";
+			}
+		}
+	</script>
+	<script>
+		function faxtogglefn() {
+			if(document.getElementById('faxtoggle').checked==true) {
+				document.getElementById('faxbox').value="yes";
+			}
+			else if(document.getElementById('faxtoggle').checked==false) {
+				document.getElementById('faxbox').value="no";
+			}
+		}
+	</script>
+
+	<script>
+		function exttogglefn() {
+			if(document.getElementById('exttoggle').checked==true) {
+				document.getElementById('extbox').value="yes";
+			}
+			else if(document.getElementById('exttoggle').checked==false) {
+				document.getElementById('extbox').value="no";
+			}
+		}
+	</script>
+	<script>
+		function logotogglefn() {
+			if(document.getElementById('logotoggle').checked==true) {
+				document.getElementById('logobox').value="yes";
+			}
+			else if(document.getElementById('logotoggle').checked==false) {
+				document.getElementById('logobox').value="no";
+			}
+		}
+	</script>
+
+	<script>
+		function imagetogglefn() {
+			if(document.getElementById('imagetoggle').checked==true) {
+				document.getElementById('imagebox').value="yes";
+			}
+			else if(document.getElementById('imagetoggle').checked==false) {
+				document.getElementById('imagebox').value="no";
+			}
+		}
+	</script>
+
+
+	
+	
+	
+	<script>
+		function alertcount() {
+				document.getElementById('loader').style.display="block";
+				var user_id = localStorage.getItem("user_id");
+				var timezone = localStorage.getItem("timezone");
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						var result = this.responseText;
+						var splitter = result.split("&");
+
+					//alert(splitter[1]);
+						
+						if(splitter[1] > 0){
+						document.getElementById('chatcount').innerHTML='<span class="mdl-badge" data-badge="'+splitter[1]+'"></span><i class="fas fa-comments"></i><span><br>Chats</span>';
+						}else{
+						
+						document.getElementById('chatcount').innerHTML='<span class="mdl-badge"></span><i class="fas fa-comments"></i><span><br>Chats</span>';
+						}
+						if(splitter[2] > 0){
+						document.getElementById('meetingscount').innerHTML='<span class="mdl-badge" data-badge="'+splitter[2]+'"></span><i class="fas fa-users"></i><span><br>Meetings</span>';
+						}else{
+						document.getElementById('meetingscount').innerHTML='<span class="mdl-badge" ></span><i class="fas fa-users"></i><span><br>Meetings</span>';
+						
+						}
+					}
+				};
+				xmlhttp.open("GET", "https://nobhub.com/services/alertcount.php?user_id="+user_id+"&timezone="+timezone, true);
+				xmlhttp.send();
+			}
+	</script>
+	<style>
+		#mcode {
+			display: block;
+		}
+	</style>
+	<script>
+		function mviewclick(clickid) {
+			localStorage.setItem("viewid",clickid);
+			location.href="view-card.html";
+		}
+	</script>
+	<script>
+		function getmainprofile() {
+			document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					document.getElementById('mycard').innerHTML=result;
+					document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/getmainprofile.php?user_id="+user_id, true);
+			xmlhttp.send();
+		}
+	</script>
+	<script>
+		function tabshow() {
+			document.getElementById('home').style.display="block";
+			document.getElementById('menu1').style.display="none";
+			document.getElementById('t1').style.background="rgb(255, 143, 5)";
+			document.getElementById('t2').style.background="rgb(187, 186, 186, 0)";
+		}
+	</script>
+	<script>
+		function tabshow1() {
+			document.getElementById('home').style.display="none";
+			document.getElementById('menu1').style.display="block";
+			document.getElementById('t1').style.background="rgb(187, 186, 186, 0)";
+			document.getElementById('t2').style.background="rgb(255, 143, 5)";
+		}
+	</script>
+	
+	
+	<script>
+		function viewcard() {
+			document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					document.getElementById('card-1').innerHTML=result;
+					document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/viewcard1.php?user_id="+user_id, true);
+			xmlhttp.send();
+			}
+	</script>
+	
+	<script>
+$(function() {
+	$('input[name=chooseOption]').on('input',function() {
+		var selectedOption = $('option[value="'+$(this).val()+'"]');
+		
+	});
+});
+</script>
+
+<script>
+	function ct1() {
+		localStorage.setItem("toshow","personal");
+	}
+</script>
+
+<script>
+	function ct2() {
+		localStorage.setItem("toshow","company");
+	}
+</script>
+
+<script>
+		function facebook(clickid) {
+		//alert(clickid);
+			var lh="https://www.facebook.com/"+clickid;
+			var ref = cordova.InAppBrowser.open(lh, '_system', 'location=yes,toolbar=yes,clearsessioncache=yes,clearcache=yes');		
+			
+		}
+	</script>
+
+	<script>
+		function twitter(clickid) {
+		//alert(clickid);
+			var lh="https://www.twitter.com/"+clickid;
+			var ref = cordova.InAppBrowser.open(lh, '_system', 'location=yes,toolbar=yes,clearsessioncache=yes,clearcache=yes');		
+			
+		}
+	</script>
+
+	<script>
+		function linkedin(clickid) {
+		//alert(clickid);
+			var lh="https://www.linkedin.com/in/"+clickid;
+			var ref = cordova.InAppBrowser.open(lh, '_system', 'location=yes,toolbar=yes,clearsessioncache=yes,clearcache=yes');		
+			
+		}
+	</script>
+
+	<script>
+		function skype(clickid) {
+		//alert(clickid);
+			var lh="skype:"+clickid+"?chat";
+			var ref = cordova.InAppBrowser.open(lh, '_system', 'location=yes,toolbar=yes,clearsessioncache=yes,clearcache=yes');		
+			
+		}
+	</script>
+
+	<script>
+		function web(clickid) {
+		//alert(clickid);
+			var lh="http://"+clickid;
+			var ref = cordova.InAppBrowser.open(lh, '_system', 'location=yes,toolbar=yes,clearsessioncache=yes,clearcache=yes');		
+			
+		}
+	</script>
+
+		<script>
+		function rate() {
+
+			//https://play.google.com/store/apps/details?id=com.nobhub.app
+		//alert(clickid);
+			var lh="https://play.google.com/store/apps/details?id=com.nobhub.app";
+			var ref = cordova.InAppBrowser.open(lh, '_system', 'location=yes,toolbar=yes,clearsessioncache=yes,clearcache=yes');		
+			
+		}
+	</script>
+
+
+<script type="text/javascript">
+	
+	function mobilee() {
+//alert('ok');
+			var a = document.getElementById('homephone').value;
+			var b = a.length;
+			//alert(b);
+			if (b == 0) {
+				//alert("Please enter your mobile number");
+				//document.getElementById('homephonelabel').innerHTML = "<i class='fa fa-volume-control-phone'></i> Home Phone";
+			}
+			else if(b < 8 || b >10) {
+				alert("Mobile number should be 8 to 10 digits");
+				//document.getElementById('homephonelabel').innerHTML = "<font color='red'><i class='fa fa-volume-control-phone'></i> Home Phone should be 8 to 15 digits</font>" ;
+				//document.getElementById('mobile').value ="";
+			}
+			else {
+				//document.getElementById('homephonelabel').innerHTML = "<i class='fa fa-volume-control-phone'></i> Home Phone" ;
+			}
+
+		}
+
+		function wmobile() {
+
+			var a = document.getElementById('cmobile').value;
+			var b = a.length;
+			//alert(b);
+			if (b == 0) {
+				//alert("Please enter your mobile number");
+				//document.getElementById('cmobilelabel').innerHTML = "<i class='fa fa-volume-control-phone'></i> Work Phone";
+			}
+			else if(b < 8 || b >10) {
+				alert("company phone number should be 8-10 digits");
+				//document.getElementById('cmobilelabel').innerHTML = " <font color='red'><i class='fa fa-volume-control-phone'></i> Work Phone should be 8 to 15 digits</font>" ;
+				//document.getElementById('mobile').value ="";
+			}
+			else {
+				//document.getElementById('cmobilelabel').innerHTML = "<i class='fa fa-volume-control-phone'></i> Work Phone" ;
+			}
+
+		}
+</script>
+
+
+<script>
+		function myname() {
+			document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			//alert(user_id);
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+						var splitter = result.split("deli");
+
+					
+					localStorage.setItem("myname",splitter[0]);
+				if(splitter[1]!=""){
+					document.getElementById('myimagemain').src = "https://nobhub.com/services/members/"+splitter[1];
+					document.getElementById('himage').src = "https://nobhub.com/services/members/"+splitter[1];
+					
+					}else {
+					document.getElementById('myimagemain').src = "https://nobhub.com/services/pp1.jpg";
+					document.getElementById('himage').src = "https://nobhub.com/services/pp1.jpg";
+					}
+					document.getElementById('myname').innerHTML=splitter[0];
+					document.getElementById('hname').innerHTML="Welcome&nbsp;"+splitter[0];
+
+			document.getElementById('loader').style.display="none";
+
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/mydetails.php?user_id="+user_id, true);
+			xmlhttp.send();
+			}
+				function getprofession() {
+			
+			document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			//alert(user_id);
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+						
+					document.getElementById('profession').innerHTML=result;
+
+			document.getElementById('loader').style.display="none";
+
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/getprofession.php?user_id="+user_id, true);
+			xmlhttp.send();
+			}
+			
+			 google.maps.event.addDomListener(window, 'load', function () {
+            var places = new google.maps.places.Autocomplete(document.getElementById('caddress'));
+            google.maps.event.addListener(places, 'place_changed', function () {
+                var place = places.getPlace();
+                var address = place.formatted_address;
+         //console.log(place.address_components); // a result has multiple address components
+
+				 for(var i = 0; i < place.address_components.length; i += 1) {
+  var addressObj = place.address_components[i];
+  for(var j = 0; j < addressObj.types.length; j += 1) {
+ //console.log(addressObj.types);
+    if (addressObj.types[j] === 'country') {
+      //console.log(addressObj.types[j]); // confirm that this is 'country'
+     // console.log(addressObj.long_name); // confirm that this is the country name
+	  document.getElementById('country').value=addressObj.long_name;
+
+    }
+  }
+}
+                var latitude = place.geometry.location.lat();
+                var longitude = place.geometry.location.lng();
+                var mesg = "Address: " + address;
+                mesg += "\nLatitude: " + latitude;
+                mesg += "\nLongitude: " + longitude;
+				//alert(address);
+                document.getElementById('latitude').value=latitude;
+                 document.getElementById('longitude').value=longitude;
+                 //document.getElementById('caddress').value=address;
+				 //localStorage.setItem("clati", latitude);
+		//localStorage.setItem("clongi", longitude);
+            });
+        });
+
+
+		google.maps.event.addDomListener(window, 'load', function () {
+            var places = new google.maps.places.Autocomplete(document.getElementById('paddress'));
+            google.maps.event.addListener(places, 'place_changed', function () {
+                var place = places.getPlace();
+                var address = place.formatted_address;
+         //console.log(place.address_components); // a result has multiple address components
+
+                var latitude = place.geometry.location.lat();
+                var longitude = place.geometry.location.lng();
+                var mesg = "Address: " + address;
+                mesg += "\nLatitude: " + latitude;
+                mesg += "\nLongitude: " + longitude;
+				//alert(address);
+                document.getElementById('platitude').value=latitude;
+                document.getElementById('plongitude').value=longitude;
+                 //document.getElementById('caddress').value=address;
+				 //localStorage.setItem("clati", latitude);
+		//localStorage.setItem("clongi", longitude);
+            });
+        });			
+
+	
+
+
+
+
+	
+	</script>
+
+
+
+<script src="https://nobhub.com/services/custom-scripts.js"></script>
+<style type="text/css">
+	
+ .nav-tabs .nav-itema {
+  margin-bottom: -1px;
+      width: 50%;
+      text-align:center;
+ }
+.nav-tabs .nav-link.active,
+  .nav-tabs .nav-itema.show .nav-link {
+     color: #495057;
+     background-color: #fff;
+   }
+  .nav-fill .nav-itema {
+     -webkit-box-flex: 1;
+     -ms-flex: 1 1 auto;
+   }
+
+   .nav-tabs .nav-itema.show .nav-link, .nav-tabs .nav-link.active {
+        color: #495057;
+        background-color: #f80;
+</style>
+</head>
+<body id="sett" class="fixed-sn light-blue-skin" onload="onLoad(); getprofile();myname();getprofession(); alertcount();" style="background:#e6e6e6;">
+
+<div style="display: none; border: 1px solid #c0c0c0; background: #e9e9e9; width: 90%; position: fixed; z-index: 9999; top: 250px; left: 20px; padding: 10px; text-align: center" id="confirmer">
+<i style="color: #99d31f" class="fa fa-check-circle fa-4x"></i></br>
+<span id="confirmtext"></span></br>
+<button type="button" class="btn blue-gradient btn-primary z-depth-1a" id="okbtn">OK</button>
+</div>
+<input type="hidden" id="camoptionstoggle" value="0">
+<input type="hidden" id="confirmertoggle" value="0">
+<div style="width: 100%; text-align: center; position: fixed; z-index: 9998889; top: 250px; display:none" id="loader"><img src="loading.gif" style="margin-left: auto; margin-right: auto; width: 64px; height: auto"></div>
+		<div class="list-group btn-group" style="position: fixed; z-index: 9999; top: 0; width: 100%; margin-top:0;">
+			<span class="list-group-item active gradient-bg">
+				<span class="pull-left" style="margin-top:4px;"><b id="hname">Welcome</b></span>
+			</span>				
+			
+			<div class="user-menu dropdow">
+				<a href="#" id="user-menu-btn">
+					<img src="https://nobhub.com/services/pp1.jpg" class="img-fluid mt-1" alt="Post" style="height: 40px; width: 40px;" id="himage">
+				</a>
+			</div>	
+		</div>  
+		<div id="user-menu-div" style="display:none;">
+			<img src="img/settings-bg.png" class="img-responsive">
+			<div class="user-menu-header">
+				<a href="javascript:void(0);" id="user-menu-btn-close"><i class="fa fa-close" style="font-size:20px;"></i></a>
+				<br><br>
+			<div class="col-xs-12 text-center" style="position: absolute; width: 100%; bottom: -169px;">
+				<a href="javascript:void(0);" id="myname" style="text-transform:uppercase;"><i class="fa fa-angle-down"></i></a>
+				<br>
+				<a href="javascript:void(0);"><img src="https://nobhub.com/services/pp1.jpg" class="img-fluid mt-1 pp" alt="Post" id="myimagemain" style="height: 80px; width: 80px; margin-top:25px; border-radius:100px; margin-bottom:6px; margin-left: -8px;"></a></div>
+			</div>
+			<br><br><br>
+			<a class="dropdown-item" href="settings.html"><i class="fa fa-user"></i> Profile</a>
+			<a class="dropdown-item" href="chat-list.html"><i class="fa fa-comments"></i> Chat</a>
+			<a class="dropdown-item" href="alerts.html"><i class="fa fa-bell"></i> Notifications</a>
+			<!--a class="dropdown-item" href="#"><i class="fab fa-youtube"></i> Live Stream</a-->	
+			<a class="dropdown-item" href="share.html"><i class="fa fa-users"></i> Refer a Friend</a>
+			<a class="dropdown-item" href="cnumber.html"><i class="fa fa-phone"></i> Change Number </a>
+			<a class="dropdown-item" href="upgrade.html"><i class="fas fa-crown"></i> Premium Membership </a><a class="dropdown-item" href="blockedlist.html"><i class="fas fa-ban"></i> Block List </a>
+			<a class="dropdown-item" href="about.html"><i class="fas fa-info"></i> About NobHub </a>
+			<a class="dropdown-item" href="https://play.google.com/store/apps/details?id=com.nobhub.app"><i class="fas fa-star"></i> Rate App </a>
+			<!--a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Change Password </a-->
+			<a class="dropdown-item" href="#" onclick="logoutfn()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+		</div>
+   <main style="margin-top:47px;">
+		<!--section id="mycard" style="margin-top: 5px">
+			
+		</section-->
+		<img src="img/settings-bg.png" class="img-responsive t1-bg">
+		<img src="img/settings-bg1.png" class="img-responsive t2-bg" style="display:none;">
+		
+		<!--div class="col-12 t1-bg " align="center"><img id="myimage" src="img/pp1.jpg" width="80" height="80" style="margin-top:-38px; border-radius: 200px; border: 2px solid #fff; padding: 4px;"></div>
+		<div class="col-12 t2-bg" align="center" style="display:none;"><img id="smallImagea" src="img/pp1.jpg" width="80" height="80" style="margin-top:-38px; border-radius: 200px; border: 2px solid #fff; padding: 4px;" onclick="getPhotoa(pictureSource.PHOTOLIBRARY);"></div-->
+		
+												<!--img  src="img/nobhub-company-logo.jpg" id="smallImagea"  style="width: 80px; height: 80px; margin: 0 auto; margin-top:-63px; border-radius: 200px;" class="pp" onclick="getPhotoa(pictureSource.PHOTOLIBRARY);"-->
+		<section style="margin-top: 0px">
+			<div class="">
+				<div class="mx-2">
+					<div class="corner-icon1"> <img src="logo.png"></div>
+							<div class="text-center icon-circle" style="display: none">
+								<img id="myimagemain" src="img/pp1.jpg" width="60" style="margin-top:-16px; border-radius: 200px;">
+							</div>
+
+
+
+
+								
+								
+									<!-- <div class="" align="center" style="position: absolute; color:white; top:80px; text-transform:uppercase; font-size:14px; width: 96%;"><i class="fa fa-user"></i> Profile</div><br><br> -->
+								
+									<div class="col-12 no-padd">
+										<div class="row" style='margin-top:-120px; border-radius: 50px; background: rgba(0, 0, 0, 0.35); border: 2px solid #313131; '>
+										  <div class="col-6" id="t1" style=' background:rgb(255, 143, 5); padding: 10px; border-radius: 50px; text-align: center; border: 0px solid #898989; font-weight: normal; color:white;' onclick="tabshow()">PERSONAL PROFILE</div>
+										  <div class="col-6" id="t2" style='padding: 10px; border-radius: 50px; text-align: center; border: 0px solid #ff8748; font-weight: normal; background:rgba(58, 58, 58, 0); color:white;' onclick="tabshow1()">COMPANY PROFILE</div>
+										  <div class="clearfix"></div>
+										</div>
+									</div>
+
+									<div class="row">
+									  <div id="home" class="col-12">
+									  
+									<!--div class="mt-4" style="text-align: right; position: absolute; top: -2px; right: 0;">
+										<button class="btn blue-gradient btn-primary z-depth-1a" type="submit" onclick="ct1()">Save</button>
+									</div-->
+
+									  
+										<!--div class="row" style="margin-top: 5px">
+											<div class="col-12">
+												<b style='color: #c0c0c0'>Profile Picture</b>
+											</div>
+										</div-->
+										<div class="row" style="margin-top: 80px">
+											<div class="col-12 t1-bg " align="center"><img id="myimage" src="img/pp1.jpg" width="80" height="80" style="margin-top:-38px; border-radius: 200px; border: 0px solid #fff; padding: 4px;"></div>
+											<!--div class="col-12 profile-pic-div" style="text-align:center;">
+												<img id="" src="img/nobhub-profile-pic.jpg" width="80" height="80" style="margin-top: -66px; border-radius: 200px;" class="pp">
+												<br>
+												<span class="profile-pic-edit-btn">Edit</span>
+											</div-->
+											<div class="col-4" align="center" id="camoption1" style="margin-top:-16px; display: none; text-align: center" onclick="capturePhotoEdit();"></br>
+												<img src="img/camera.png" width="24" ></br>
+												<small> &nbsp;&nbsp;&nbsp;&nbsp;CAMERA</small>
+											</div>
+											<div class="col-4" align="center" id="camoption2" style="margin-top:-16px; display: none; text-align: center" onclick="getPhoto(pictureSource.PHOTOLIBRARY);"></br>
+												<img src="img/gallery.png" width="24" ></br>
+												<small> &nbsp;&nbsp;&nbsp;&nbsp;GALLERY</small>
+											</div>
+											<div class="col-4" align="center" id="removeprofilepic" style="margin-top:-16px; display: none; text-align: center" onclick="removeprofilepic();"></br>
+                                              <img src="img/delete.png" width="24" ></br>		
+											  <small> &nbsp;&nbsp;&nbsp;&nbsp;Remove</small>
+											</div>
+											<form id="myForm" method="post" >
+											<input type="hidden" id="ibdata" name="ibdata" >
+														<input type="hidden" name="useridpic" id="useridpic">
+                                  <input type="submit" id="pbtn" style="visibility:hidden;">
+                                            </form>
+                                        <input type="hidden" name="imagebox" id="imagebox">
+											<div class="col-2" id="pimgdiv" style="display: none;">
+												<div class="switch" style="margin-top:45px;">
+													<label>
+														<input type="checkbox" id="imagetoggle" onclick="imagetogglefn()">
+														
+														<span class="lever"></span>
+													</label>
+												</div>
+											</div>
+										</div>
+										
+										<div class="settings-form">
+											<div class="row">
+												<div class="col-10">
+													<div class="md-form">
+														<label id="firstnamelabel" class="label-icon"><i class="fa fa-user"></i><span class="placeholder">First Name</span></label>
+														<input type="text" id="firstname" maxlength="30" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" name="firstname" class="form-control form-input" placeholder="" required>
+														<input type="hidden" name="firstnamebox" id="firstnamebox">
+														<input type="hidden" name="userid" id="userid">
+													</div>
+												</div>
+												<div class="col-2">
+													<div class="switch" style="margin-top:45px; display: none">
+														<label>
+															<input type="checkbox" id="firstnametoggle" onclick="firstnametogglefn()">
+															<span class="lever"></span>
+														</label>
+													</div>
+												</div>
+											</div>
+											
+											<br>
+											<div class="row">
+												<div class="col-10">
+													<div class="md-form">
+														<label id="lastnamelabel" class="label-icon"><i class="fa fa-user"></i><span class="placeholder">Last Name</span></label>
+														<input type="text" id="lastname" placeholder="" maxlength="30" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" name="lastname" class="form-control form-input">
+														<input type="hidden" name="lastnamebox" id="lastnamebox">
+													</div>
+												</div>
+												<div class="col-2">
+													<div class="switch" style="margin-top:45px;display: none">
+														<label>
+															<input type="checkbox" id="lastnametoggle" onclick="lastnametogglefn()">
+															
+															<span class="lever"></span>
+														</label>
+													</div>
+												</div>
+											</div>
+											<br>
+											<div class="row">
+												<div class="col-10">
+													<div class="md-form">
+														<label id="pemaillabel" class="label-icon"><i class="fa fa-envelope"></i><span class="placeholder">Email ID</span></label>
+														<input type="email" id="pemail" placeholder="" maxlength="30" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+		 name="pemail" class="form-control form-input">
+														<input type="hidden" name="pemailbox" id="pemailbox">
+													</div>
+												</div>
+												<div class="col-2">
+													<div class="switch" style="margin-top:45px;">
+														<label>
+															<input type="checkbox" id="pemailtoggle" onclick="pemailtogglefn()">
+															
+															<span class="lever"></span>
+														</label>
+													</div>
+												</div>
+											</div>
+											
+											<div class="row">
+												<div class="col-10">
+													<div class="md-form">
+													<label  class="label-icon"><i class="fa fa-mobile"></i><span class="placeholder">Country Code</span></label>
+													<input type="text" id="mcode" placeholder="" list="clist" class="form-control form-input" name="chooseOption" placeholder="Country Code" style="border: 0px; border-bottom: 1px solid #e9e9e9" readonly>
+													</div>
+												</div>
+											</div>
+											<br>
+											<div class="row">
+												<div class="col-10">
+													<div class="md-form">
+														<label id="pmobilelabel" class="label-icon"><i class="fa fa-mobile"></i><span class="placeholder">Mobile</span></label>
+														<input type="number" id="pmobile" placeholder="" maxlength="15" name="pmobile" class="form-control form-input" readonly required>
+														<input type="hidden" name="pmobilebox" id="pmobilebox">
+													</div>
+												</div>
+												<div class="col-2">
+													<div class="switch" style="margin-top:45px; display: none">
+														<label>
+															<input type="checkbox" id="pmobiletoggle" onclick="pmobiletogglefn()">
+															
+															<span class="lever"></span>
+														</label>
+													</div>
+												</div>
+											</div>
+											<br>
+											<div class="row" >
+												<div class="col-10">
+													<div class="md-form">
+														
+														<label id="message" class="error" for="message"></label>
+
+														<label id="homephonelabel" class="label-icon"><i class="fa fa-volume-control-phone"></i> <span class="placeholder">Home Phone</span></label>
+														
+
+														<input type="hidden" name="homephonebox" id="homephonebox" class="form-input">
+														<input type="number" id="homephone" placeholder=""  maxlength="15" minlength="8"  oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)  ;"
+		 name="homephone" class="form-control form-input"  onblur="mobilee();return false;">
+		 </div>
+												</div>
+												<div class="col-2">
+													<div class="switch" style="margin-top:45px;">
+														<label>
+															<input type="checkbox" id="homephonetoggle" onclick="homephonetogglefn()">
+															
+															<span class="lever"></span>
+														</label>
+													</div>
+												</div>
+											</div>
+											
+											<div class="row">
+												<div class="col-10">
+													<div class="md-form">
+														<label id="paddresslabel" class="label-icon"><i class="fa fa-map-marker"></i><span class="placeholder">Address</span></label>
+														<input type="hidden" name="paddressbox" id="paddressbox" class="form-input">
+														<input type="text" id="paddress" placeholder="" maxlength="50" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" name="paddress" class="form-control form-input">
+														
+						<input id="platitude" name="platitude" type="hidden">
+						<input id="plongitude" name="plongitude" type="hidden">		
+													</div>
+												</div>
+												<div class="col-2">
+													<div class="switch" style="margin-top:45px;">
+														<label>
+															<input type="checkbox" id="paddresstoggle" onclick="paddresstogglefn()">
+															
+															<span class="lever"></span>
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-12">
+													<div class="md-form">
+														<label id="firstnamelabel" class="label-icon"><i class="fa fa-user"></i><span class="placeholder">Profession</span></label>
+														<!--style="height: 37px; width: 89% !important; padding: 18px 10px 6px 6px !important; border:0px;"-->
+														
+															
+														<!--<select id="profession" placeholder="" maxlength="15" name="profession" class="form-control select2 form-input" style="padding: 15px 10px 6px 6px !important;"  required>-->
+														
+														
+                                                        <!--<input list="profession"  class="form-control form-input"  style="height: 37px; width: 89% !important; padding: 18px 10px 6px 6px !important; border:0px;">
+														<datalist id="profession" placeholder="" maxlength="15" name="profession" required>-->
+															<select id="profession" placeholder="" maxlength="15" name="profession" class="form-control form-input " style="height: 37px; width: 89% !important; padding: 18px 10px 6px 6px !important; border:0px;" required>
+															<option>None</option>
+															<option value="0">Profession</option>
+															<option value="1">Chiropractor</option>
+														  <option value="2">Dentist</option>
+														  <option value="3">Dietitian or Nutritionist</option>
+														  <option value="4">Optometrist</option>
+														  <option value="5">Pharmacist</option>
+														  <option value="6">Physician</option>
+														  <option value="7">Physician Assistant</option>
+														  <option value="8">Podiatrist</option>
+														  <option value="9">Registered Nurse</option>
+														  <option value="10">Therapist</option>
+														  <option value="11">Veterinarian</option>
+														  <option value="12">Health Technologist or Technician</option>
+														  <option value="13">Other Healthcare Practitioners and Technical Occupation</option>
+														</optgroup>
+														<optgroup label="Healthcare Support Occupations:">
+														  <option value="14">Nursing, Psychiatric, or Home Health Aide</option>
+														  <option value="15">Occupational and Physical Therapist Assistant or Aide</option>
+														  <option value="16">Other Healthcare Support Occupation</option>
+														</optgroup>
+														<optgroup label="Business, Executive, Management, and Financial Occupations:">
+														  <option value="17">Chief Executive</option>
+														  <option value="18">General and Operations Manager</option>
+														  <option value="19">Advertising, Marketing, Promotions, Public Relations, and Sales Manager</option>
+														  <option value="20">Operations Specialties Manager (e.g., IT or HR Manager)</option>
+														  <option value="21">Construction Manager</option>
+														  <option value="22">Engineering Manager</option>
+														  <option value="23">Accountant, Auditor</option>
+														  <option value="24">Business Operations or Financial Specialist</option>
+														  <option value="25">Business Owner</option>
+														  <option value="26">Other Business, Executive, Management, Financial Occupation</option>
+														</optgroup>
+														<optgroup label="Architecture and Engineering Occupations:">
+														  <option value="27">Architect, Surveyor, or Cartographer</option>
+														  <option value="28">Engineer</option>
+														  <option value="29">Other Architecture and Engineering Occupation</option>
+														</optgroup>
+														<optgroup label="Education, Training, and Library Occupations:">
+														  <option value="30">Postsecondary Teacher (e.g., College Professor)</option>
+														  <option value="31">Primary, Secondary, or Special Education School Teacher</option>
+														  <option value="32">Other Teacher or Instructor</option>
+														  <option value="33">Other Education, Training, and Library Occupation</option>
+														</optgroup>
+														<optgroup label="Other Professional Occupations:">
+														  <option value="34">Arts, Design, Entertainment, Sports, and Media Occupations</option>
+														  <option value="35">Computer Specialist, Mathematical Science</option>
+														  <option value="36">Counselor, Social Worker, or Other Community and Social Service Specialist</option>
+														  <option value="37">Lawyer, Judge</option>
+														  <option value="38">Life Scientist (e.g., Animal, Food, Soil, or Biological Scientist, Zoologist)</option>
+														  <option value="39">Physical Scientist (e.g., Astronomer, Physicist, Chemist, Hydrologist)</option>
+														  <option value="40">Religious Worker (e.g., Clergy, Director of Religious Activities or Education)</option>
+														  <option value="41">Social Scientist and Related Worker</option>
+														  <option value="42">Other Professional Occupation</option>
+														</optgroup>
+														<optgroup label="Office and Administrative Support Occupations:">
+														  <option value="43">Supervisor of Administrative Support Workers</option>
+														  <option value="44">Financial Clerk</option>
+														  <option value="45">Secretary or Administrative Assistant</option>
+														  <option value="46">Material Recording, Scheduling, and Dispatching Worker</option>
+														  <option value="47">Other Office and Administrative Support Occupation</option>
+														</optgroup>
+														<optgroup label="Services Occupations:">
+														  <option value="48">Protective Service (e.g., Fire Fighting, Police Officer, Correctional Officer)</option>
+														  <option value="49">Chef or Head Cook</option>
+														  <option value="50">Cook or Food Preparation Worker</option>
+														  <option value="51">Food and Beverage Serving Worker (e.g., Bartender, Waiter, Waitress)</option>
+														  <option value="52">Building and Grounds Cleaning and Maintenance</option>
+														  <option value="53">Personal Care and Service (e.g., Hairdresser, Flight Attendant, Concierge)</option>
+														  <option value="54">Sales Supervisor, Retail Sales</option>
+														  <option value="55">Retail Sales Worker</option>
+														  <option value="56">Insurance Sales Agent</option>
+														  <option value="57">Sales Representative</option>
+														  <option value="58">Real Estate Sales Agent</option>
+														  <option value="59">Other Services Occupation</option>
+														</optgroup>
+														<optgroup label="Agriculture, Maintenance, Repair, and Skilled Crafts Occupations:">
+														  <option value="60">Construction and Extraction (e.g., Construction Laborer, Electrician)</option>
+														  <option value="61">Farming, Fishing, and Forestry</option>
+														  <option value="62">Installation, Maintenance, and Repair</option>
+														  <option value="63">Production Occupations</option>
+														  <option value="64">Other Agriculture, Maintenance, Repair, and Skilled Crafts Occupation</option>
+														</optgroup>
+														<optgroup label="Transportation Occupations:">
+														  <option value="65">Aircraft Pilot or Flight Engineer</option>
+														  <option value="66">Motor Vehicle Operator (e.g., Ambulance, Bus, Taxi, or Truck Driver)</option>
+														  <option value="67">Other Transportation Occupation</option>
+														</optgroup>
+														<optgroup label="Other Occupations:">
+														  <option value="68">Military</option>
+														  <option value="69">Homemaker</option>
+														  <option value="70">Other Occupation</option>
+														  <option value="71">Don't Know</option>
+														  <option value="72">Not Applicable</option>
+														  </optgroup>
+														</select>
+														<!--</datalist>-->
+														
+													</div>
+												</div>
+												<!--input type="hidden" name="firstnamebox" id="firstnamebox">
+														<input type="hidden" name="userid" id="userid"-->
+												<div class="col-2">
+													<div class="switch" style="margin-top:45px; display: none">
+														<label>
+															<input type="checkbox" id="firstnametoggle" onclick="firstnametogglefn()">
+															<span class="lever"></span>
+														</label>
+													</div>
+												</div>
+											</div>
+											<br>
+
+											<div class="row">
+												<div class="col-10">
+													<div class="md-form">
+														<label id="facebooklabel" class="label-icon"><i class="fab fa-facebook"></i> <span class="placeholder">Facebook ID</span></label>
+														<input type="hidden" name="facebookbox" id="facebookbox">
+														<input type="text" maxlength="20" placeholder="" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+		 id="facebook" name="facebook" class="form-control form-input">
+													</div>
+												</div>
+												<div class="col-2">
+													<div class="switch" style="margin-top:45px;">
+														<label>
+															<input type="checkbox" id="facebooktoggle" onclick="facebooktogglefn()">
+															
+															<span class="lever"></span>
+														</label>
+													</div>
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="col-10">
+													<div class="md-form">
+														<label id="twitterlabel" class="label-icon"><i class="fab fa-twitter"></i> <span class="placeholder">Twitter ID</span></label>
+														<input type="hidden" name="twitterbox" id="twitterbox">
+														<input type="text" id="twitter" placeholder="" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+		  maxlength="20" name="twitter" class="form-control form-input">
+													</div>
+												</div>
+												<div class="col-2">
+													<div class="switch" style="margin-top:45px;">
+														<label>
+															<input type="checkbox" id="twittertoggle" onclick="twittertogglefn()">
+															
+															<span class="lever"></span>
+														</label>
+													</div>
+												</div>
+											</div>
+											
+
+											<div class="row">
+												<div class="col-10">
+													<div class="md-form">
+														<label id="skypelabel" class="label-icon"><i class="fab fa-skype"></i> <span class="placeholder">Skype ID</span></label>
+														<input type="hidden" name="skypebox" id="skypebox">
+														<input type="text" id="skype" placeholder="" maxlength="20" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+		  name="skype" class="form-control form-input">
+													</div>
+												</div>
+												<div class="col-2">
+													<div class="switch" style="margin-top:45px;">
+														<label>
+															<input type="checkbox" id="skypetoggle" onclick="skypetogglefn()">
+															
+															<span class="lever"></span>
+														</label>
+													</div>
+												</div>
+											</div>
+											
+
+											<div class="row">
+												<div class="col-10">
+													<div class="md-form">
+														<label id="linkedinlabel" class="label-icon"><i class="fab fa-linkedin"></i> <span class="placeholder">LinkedIn ID</span></label>
+														<input type="hidden" name="linkedinbox" id="linkedinbox">
+														<input type="text" id="linkedin" placeholder="" maxlength="20" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+		 name="linkedin" class="form-control form-input">
+													</div>
+												</div>
+												<div class="col-2">
+													<div class="switch" style="margin-top:45px;">
+														<label>
+															<input type="checkbox" id="linkedintoggle" onclick="linkedintogglefn()">
+															
+															<span class="lever"></span>
+														</label>
+													</div>
+												</div>
+											</div>
+										</div>
+									  </div>
+									  
+									  
+									  
+									  
+									  
+									  
+									  
+									  
+									  
+									  <div id="menu1" class="col-12" style="margin-top:20px; display: none">
+									  
+									  <!--div class="mt-4" style="text-align: right; position: absolute; top: -2px; right: 0;">
+										<button class="btn blue-gradient btn-primary z-depth-1a" type="submit" onclick="ct2()">Save</button>
+									</div-->
+										
+										<div class="row" style="margin-top: 60px">
+											<!--div class="col-12" style="text-align:center;">
+												<img  src="img/nobhub-company-logo.jpg" id="smallImagea"  style="width: 80px; height: 80px; margin: 0 auto; margin-top:-63px; border-radius: 200px;" class="pp" onclick="getPhotoa(pictureSource.PHOTOLIBRARY);">
+												
+											</div-->
+											
+											<div class="col-12 t2-bg" align="center" style="display:none;"><img id="smallImagea" src="img/pp1.jpg" width="80" height="80" style="margin-top:-38px; border-radius: 200px; border: 0px solid #fff; padding: 4px;" ></div>
+											
+											<div class="col-4" id="ccamoption1" style="margin-top:4px; display: none; text-align: center" onclick="ccapturePhotoEdit();">
+												<img src="img/camera.png" width="24" ></br>
+												<small> &nbsp;&nbsp;&nbsp;&nbsp;CAMERA</small>
+											</div>
+											<div class="col-4" id="ccamoption2" style="margin-top:4px; display: none; text-align: center" onclick="getPhotoa(pictureSource.PHOTOLIBRARY);">
+												<img src="img/gallery.png" width="24" ></br>
+												<small> &nbsp;&nbsp;&nbsp;&nbsp;GALLERY</small>
+											</div>
+											<div class="col-4" id="removecompanypic" style="margin-top:4px; display: none; text-align: center" onclick="removecompanypic();">
+                                              <img src="img/delete.png" width="24" ></br>		
+											  <small> &nbsp;&nbsp;&nbsp;&nbsp;Remove</small>
+											</div>
+											<!--div class="col-3" id="camoption2" style="margin-top:-16px; display: none; text-align: center" onclick="getPhoto(pictureSource.PHOTOLIBRARY);">
+												<img src="img/gallery.png" width="60" style="border-radius:100px ;"></br>
+												<small> &nbsp;&nbsp;&nbsp;&nbsp;GALLERY</small>
+											</div-->
+											
+											<form id="myForm1" method="post" >
+	                                           <input type="hidden" id="ibdataa" name="ibdataa"  >
+											<input type="hidden" name="useridcompic" id="useridcompic">
+                                  <input type="submit" id="cbtn" style="visibility:hidden;">
+
+                                            </form>
+
+                                        <input type="hidden" name="imagebox" id="imagebox">
+											<div class="col-2" id="cimgdiv" style="display:none;">
+												<div class="switch" style="margin-top:45px;">
+													<label>
+														<input type="checkbox" id="logotoggle" onclick="logotogglefn()">
+														
+														<span class="lever"></span>
+													</label>
+												</div>
+											</div>
+										</div>
+										
+										
+										<div class="settings-form">
+											<div class="row">
+												<div class="col-12" align="center">
+													<div class="md-form">
+
+
+			
+			 
+
+														<div>
+															<!--img src="" id="smallImagea" style="width: 100px; height: 100px; margin-top: -66px; border-radius: 200px;"-->
+														</div>
+														<input type="hidden" name="logobox" id="logobox">
+													</div>
+												</div>
+												<!--div class="col-2">
+													<div class="switch" style="margin-top:45px;">
+														<label>
+															<input type="checkbox" id="logotoggle" onclick="logotogglefn()">
+															
+															<span class="lever"></span>
+														</label>
+													</div>
+												</div-->
+											</div>
+											<div class="row">
+												<div class="col-10">
+														<div class="md-form">
+														<label id="companynamelabel" class="label-icon"><i class="fa fa-building"></i> <span class="placeholder">Company Name</span></label>
+														<input type="hidden" name="companynamebox" id="companynamebox">
+														<input type="text" id="companyname" placeholder="" maxlength="30" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+		 name="companyname" class="form-control form-input">
+						
+						
+													</div>
+												</div>
+												<div class="col-2">
+													<div class="switch" style="margin-top:45px;display: none">
+														<label>
+															<input type="checkbox" id="companynametoggle" onclick="companynametogglefn()">
+															
+															<span class="lever"></span>
+														</label>
+													</div>
+												</div>
+											</div>
+											<br>
+											<div class="row">
+												<div class="col-10">
+													<div class="md-form">
+														<label id="titlelabel" class="label-icon"><i class="fa fa-user"></i> <span class="placeholder">Title</span></label>
+														<input type="hidden" name="titlebox" id="titlebox">
+														<input type="text" maxlength="20" placeholder="" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+		 id="title" name="title" class="form-control form-input">
+													</div>
+												</div>
+												<div class="col-2">
+													<div class="switch" style="margin-top:45px;display: none">
+														<label>
+															<input type="checkbox" id="titletoggle" onclick="titletogglefn()">
+															
+															<span class="lever"></span>
+														</label>
+													</div>
+												</div>
+											</div>
+											<br>
+											<div class="row">
+												<div class="col-10">
+													<div class="md-form">
+														<label id="departmentlabel" class="label-icon"><i class="fa fa-building"></i> <span class="placeholder">Department</span></label>
+														<input type="hidden" name="departmentbox" id="departmentbox">
+														<input type="text" id="department" placeholder="" maxlength="30" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+		 name="department" class="form-control form-input">
+													</div>
+												</div>
+												<div class="col-2">
+													<div class="switch" style="margin-top:45px;">
+														<label>
+															<input type="checkbox" id="departmenttoggle" onclick="departmenttogglefn()">
+															
+															<span class="lever"></span>
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-10">
+													<div class="md-form">
+														<label id="cemaillabel" class="label-icon"><i class="fa fa-envelope"></i><span class="placeholder">Company Mail ID</span></label>
+														<input type="hidden" name="cemailbox" id="cemailbox">
+														<input type="email" id="cemail" placeholder="" maxlength="45" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+		 name="cemail" class="form-control form-input">
+													</div>
+												</div>
+												<div class="col-2">
+													<div class="switch" style="margin-top:45px;display: none">
+														<label>
+															<input type="checkbox" id="cemailtoggle" onclick="cemailtogglefn()">
+															
+															<span class="lever"></span>
+														</label>
+													</div>
+												</div>
+											</div>
+											<br>
+											<div class="row">
+												<div class="col-10">
+													<div class="md-form">
+														<label id="websitelabel" class="label-icon"><i class="fa fa-globe"></i><span class="placeholder">Company Website</span></label>
+														<input type="hidden" name="websitebox" id="websitebox">
+														<input type="text" id="website" placeholder="" maxlength="40" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+		 name="website" class="form-control form-input">
+													</div>
+												</div>
+												<div class="col-2">
+													<div class="switch" style="margin-top:45px;">
+														<label>
+															<input type="checkbox" id="websitetoggle" onclick="websitetogglefn()">
+															
+															<span class="lever"></span>
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-10">
+														<div class="md-form">
+														<label id="caddresslabel" class="label-icon"><i class="fa fa-map-marker"></i> <span class="placeholder">Company Address</span></label>
+														<input type="hidden" name="caddressbox" id="caddressbox">
+								<input type="text" id="caddress" placeholder="" maxlength="50" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+		 name="caddress" class="form-control form-input">
+		 
+		 <input id="latitude" name="latitude" type="hidden">
+						<input id="longitude" name="longitude" type="hidden">	
+						<input id="country" name="country" type="hidden">		
+													</div>
+												</div>
+												<div class="col-2">
+													<div class="switch" style="margin-top:45px;display: none">
+														<label>
+															<input type="checkbox" id="caddresstoggle" onclick="caddresstogglefn()">
+															
+															<span class="lever"></span>
+														</label>
+													</div>
+												</div>
+											</div>
+											<br>
+											<div class="row">
+												<div class="col-10">
+													<div class="md-form">
+														<label id="cmobilelabel" class="label-icon"><i class="fa fa-volume-control-phone"></i><span class="placeholder">Company Phone</span></label>
+														
+														<input type="number" id="cmobile" placeholder=""  maxlength="15" 
+														minlength="1" 
+														pattern="[0-9]*"
+	 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+		
+														 name="cmobile" class="form-control form-input" onblur="wmobile(); return false;">
+
+														 <input type="hidden" name="cmobilebox" id="cmobilebox">
+													</div>
+												</div>
+
+													<div class="col-2">
+													<div class="switch" style="margin-top:45px;display:none;">
+														<label>
+															<input type="checkbox" id="cmobiletoggle" onclick="cmobiletogglefn()">
+															
+															<span class="lever"></span>
+														</label>
+													</div>
+												</div>
+											</div>
+											<br>
+											<div class="row">
+												<div class="col-10">
+													<div class="md-form">
+														<label id="extenlabel" class="label-icon"><i class="fa fa-volume-control-phone"></i> <span class="placeholder">Extension</span></label>
+														<input type="hidden" name="extbox" id="extbox">
+														<input type="number" maxlength="3" placeholder="" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" id="extn" name="extn" class="form-control form-input">
+													</div>
+												</div>
+												<div class="col-2">
+													<div class="switch" style="margin-top:45px;">
+														<label>
+															<input type="checkbox" id="exttoggle" onclick="exttogglefn()">
+															
+															<span class="lever"></span>
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-10">
+													<div class="md-form">
+														<label id="faxlabel" class="label-icon"><i class="fa fa-fax"></i> <span class="placeholder">Fax Number</span></label>
+														<input type="hidden" name="faxbox" id="faxbox">
+														<input type="number" id="fax" placeholder="" maxlength="15" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+		 name="fax" class="form-control form-input">
+
+		
+													</div>
+
+												</div>
+												<div class="col-2">
+													<div class="switch" style="margin-top:45px;">
+														<label>
+															<input type="checkbox" id="faxtoggle" onclick="faxtogglefn()">
+															
+															<span class="lever"></span>
+														</label>
+													</div>
+												</div>
+											</div>
+											<!--div class="row">
+												<div class="col-10">
+													<div class="md-form">
+														<label>Company Logo</label>
+														</br></br>
+
+
+	<textarea id="ibdataa" name="ibdataa" style="display: none" ></textarea>
+			
+			 
+
+
+
+
+
+														<i class="fa fa-picture-o fa-5x"  onclick="getPhotoa(pictureSource.PHOTOLIBRARY);"></i>
+
+														<input type="hidden" name="logobox" id="logobox">
+													</div>
+												</div>
+												<div class="col-2">
+													<div class="switch" style="margin-top:45px;">
+														<label>
+															<input type="checkbox" id="logotoggle" onclick="logotogglefn()">
+															
+															<span class="lever"></span>
+														</label>
+													</div>
+												</div>
+											</div-->
+
+											
+										  </div>
+									  </div>
+									</div>
+								
+	<!--div class="col-12" style="margin-top: 30px; margin-left:-4px; text-align: center">
+	<hr>
+	<a href="cnumber.html" class="btn blue-gradient btn-primary z-depth-1a"> Change Number</a>
+
+<a href="delete.html" class="btn blue-gradient btn-primary z-depth-1a"> Delete My Account</a> 
+</br></br>
+		<img src="img/shield.png"> </br>
+		<a href="about.html" class=""> About Us</a> | <a href="terms.html" class=""> Terms of service</a>  | <a href="privacy.html" class=""> Privacy Policy</a>  | <a href="help.html" class=""> Help</a> | <a href="#" onclick="rate();" class=""> Rate App</a> </br></br>
+
+
+ 
+	</div-->
+
+	
+
+<!-- Material form register -->
+                      
+
+        </div>
+
+    </div>
+    <!--/Form without header-->
+
+</section>
+<div class="clearfix"><br></div>
+
+
+
+
+            </main>
+	<div class="footer-menu">
+		<div><a href="home.html"><i class="far fa-address-book"></i><span><br>Contacts</span></a></div>
+		<div><a href="nearby.html"><img src="img/nearby2.png" class="nearby2"><span><br>Nearby</span></a></div>
+		<div><a href="meetings.html" id="meetingscount"><i class="fas fa-users"></i><span><br>Meetings</span></a></div>
+			<div><a href="chat-list.html" id="chatcount"><i class="fas fa-comments"></i><span><br>Chats</span></a></div>
+		<div><a href="generalcards.html"><i class="far fa-address-card"></i><span><br>Cards</span></a></div>
+	</div>
+		
+
+<!-- Card -->
+                      
+    <!--/Form with header-->
+
+            
+    
+    <!--Main Layout-->
+
+    <!-- /Start your project here-->
+
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+        <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/jquery-3.2.1.min.js"></script>
+
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/mdb.min.js"></script>
+	
+		<script src="js/select2.full.min.js"></script>
+
+  <script>
+        
+        // SideNav Initialization
+        $(".button-collapse").sideNav();
+
+    </script>
+
+    <script> // Material Select Initialization
+ /*$(document).ready(function() {
+    $('.mdb-select').material_select();
+  });
+  */
+   $(function () {
+	   $('.select2').select2()
+   
+  })
+  </script>
+  
+  
+	
+	<script>
+		$(document).ready(function(){
+		  $("#user-menu-btn-close").click(function(){
+			$("#user-menu-div").hide();
+		  });
+		  $("#user-menu-btn").click(function(){
+			$("#user-menu-div").show();
+		  });
+		});
+		
+		
+		
+		$('#t1').click(function(){
+			$('.t2-bg').fadeOut(0);
+			$('.t1-bg').fadeIn(0);
+		});
+		
+		$('#t2').click(function(){
+			$('.t1-bg').fadeOut(0);
+			$('.t2-bg').fadeIn(0);
+		});
+		
+		$("#myForm").submit((function(e) {
+//alert('submit');
+
+				e.preventDefault();
+ 			$.ajax({
+					url: "https://nobhub.com/services/updateprofilepic.php",
+					type: "POST",
+					data:  new FormData(this),
+					contentType: false,
+					cache: false,
+					processData:false,
+					success: function(data)
+					{
+						//alert(data);
+						//console.log(data);
+					location.reload();	
+
+					},
+					error: function() 
+					{
+				
+					} 	        
+			   });
+}));
+
+	$("#myForm1").submit((function(e) {
+//alert('submit');
+
+				e.preventDefault();
+ 			$.ajax({
+					url: "https://nobhub.com/services/updatecompanypic.php",
+					type: "POST",
+					data:  new FormData(this),
+					contentType: false,
+					cache: false,
+					processData:false,
+					success: function(data)
+					{
+						//alert(data);
+						//console.log(data);
+						//location.reload();
+						getprofile();
+
+					},
+					error: function() 
+					{
+				
+					} 	        
+			   });
+}));
+	</script>
+
+
+<!--script>
+    $(document).ready(function(){
+    $("input").click(function(){
+            $(this).next().show();
+            $(this).next().hide();
+        });
+    
+    });
+</script-->
+
+
+</body>
+
+
+</html>

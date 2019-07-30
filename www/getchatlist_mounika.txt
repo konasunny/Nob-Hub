@@ -1,0 +1,44 @@
+<?php
+require "config.php";
+
+//$data = @mysql_query("SELECT*  FROM chat where (inputby='".$_GET['user_id']."' OR refid='".$_GET['user_id']."') and refid_status !='hide' and inputby_status !='hide' group by refid  order by guid desc") or die(mysql_error());
+//echo "SELECT * FROM chat a WHERE (a.inputby = '372' ) OR (a.refid = '372' ) group by refid ORDER BY guid DESC";
+$data = @mysql_query("SELECT *  FROM chat where  (inputby='".$_GET['user_id']."' OR refid='".$_GET['user_id']."') and refid_status !='hide' and inputby_status !='hide' group by refid,inputby  order by guid desc") or die(mysql_error());
+$count =mysql_num_rows($data);
+
+if($count > 0){
+while($row = mysql_fetch_array($data)) { 
+
+//echo "SELECT * FROM register where guid='".$row['refid']."' or  guid='".$row['refid']."'";
+//echo "SELECT * FROM register where (guid='".$row['refid']."' or  guid='".$row['inputby']."') and guid!='".$row['inputby']."' ";
+$info = mysql_fetch_array(mysql_query("SELECT * FROM register where (guid='".$row['refid']."' or  guid='".$row['inputby']."') and guid!='".$row['inputby']."' "));
+
+
+
+
+$msg=mysql_fetch_array(mysql_query("select * from chat where  (inputby='".$_GET['user_id']."' and refid='".$row['refid']."') OR (inputby ='".$row['refid']."' and refid='".$_GET['user_id']."') order by guid desc"));
+
+
+$total=mysql_num_rows(mysql_query("select * from chat where status='unread' and  refid='".$_GET['user_id']."' "));
+if($info['guid']!='' && $info['guid']!=$_GET['user_id']){
+?>
+
+<div class="card1">
+					<a href="#" id="<?php echo $info['guid']; ?>" onclick="openchat(this.id);">
+					    <?php if($info['image']!=''){ ?>
+						<img src="https://nobhub.com/services/members/<?php echo $info['image']; ?>" width="50" class="img-circle">
+						<?php } else{ ?>
+								<img src="https://nobhub.com/services/pp1.jpg" width="50" class="img-circle"><?php } ?>
+						<span class="chat-profile-title"><?php echo $info['name']; ?></span> <span class="pull-right chat-time"><?php echo date('h:i A',strtotime($msg['datetime']));?></span><br>
+						
+						<span><?php if($msg['inputby']==$info['inputby']) { echo ucfirst($info['name']);echo ":";}?> <?php echo substr($msg['message'],0,20); ?>... <?php if($total >0){ ?> <span class="pull-right new-msg-count"><?php  echo $total ; ?></span><?php } ?></span>
+					</a>
+				</div>
+	<?php }} }else{ ?>
+<div class="card1">
+					
+					<br>
+						<span class="chat-profile-title" >No chats found</span> 
+				
+				</div>
+				<?php } ?>

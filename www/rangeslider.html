@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Responsive Jquery range slider</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+$("#rangeSlider").slider ({
+range: true,
+min: 100,
+max: 600,
+values: [200, 400],
+slide: function(event, ui) {
+$("#priceRange").html("$" + ui.values[0] + " - $" + ui.values[1]);
+$("#minimumPrice").val(ui.values[0]);
+$("#maximumPrice").val(ui.values[1]);
+}
+});
+/* In real-time updating the value of range Slider to Span */
+$("#priceRange").html("$" + $("#rangeSlider").slider("values", 0) + " - $" + $("#rangeSlider").slider("values", 1));
+});
+</script>
+</head>
+<body>
+<div>Selected Range: <span id="priceRange"></span></div>
+<br />
+<div id="rangeSlider"></div>
+</body>
+</html>

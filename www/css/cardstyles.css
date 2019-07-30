@@ -1,0 +1,259 @@
+.vcard1{
+	background:white;
+	border-bottom:4px solid #d6023a;
+	margin-top:-16px;
+}
+.vcard1 .sec1{
+	background:#D6023A;
+	text-align:center;
+	color:white;
+	padding:5px 5px;
+	font-size:10px;
+	font-weight:bold;
+}
+.vcard1 .sec1 i{
+	font-size:15px;
+}
+.vcard1 .sec1 .email{
+	width:33.33%;
+	float:left;
+}
+.vcard1 .sec1 .mobile{
+	width:33.33%;
+	float:left;
+}
+.vcard1 .sec1 .address{
+	width:33.33%;
+	float:left;
+}
+
+.vcard1 .sec2{
+	background:url('../img/vcard1-bg.jpg');
+	text-align:center;
+	padding:15px 10px;
+}
+.vcard1 .sec2 .pic{
+	width:40%;
+	float:left;
+}
+.vcard1 .sec2 .pic img {
+    border-radius: 100px;
+    width: 60px;
+    height: 60px;
+    border: 2px solid #212529;
+    padding: 4px;
+}
+.vcard1 .sec2 .name-dec {
+    font-size: 15px;
+    width: 60%;
+    float: left;
+    line-height: 20px;
+    padding-top: 10px;
+}
+.vcard1 .sec2 .name-dec span{
+	font-size:15px;
+	font-weight:bold;
+}
+.vcard1 .sec2 .name-dec small{
+	font-size:12px !important;
+	font-weight:bold;
+}
+
+
+
+
+
+
+.vcard2{
+	background:white;
+	border-bottom:4px solid #00BCD4;
+	margin-top:-16px;
+}
+.vcard2 .sec1{
+	background:#00BCD4;
+	text-align:center;
+	color:white;
+	padding:15px 10px;
+	font-size:10px;
+	font-weight:bold;
+}
+.vcard2 .sec1 i{
+	font-size:30px;
+}
+.vcard2 .sec1 .email{
+	width:33.33%;
+	float:left;
+}
+.vcard2 .sec1 .mobile{
+	width:33.33%;
+	float:left;
+}
+.vcard2 .sec1 .address{
+	width:33.33%;
+	float:left;
+}
+
+.vcard2 .sec2{
+	background:url('../img/vcard2-bg.jpg');
+	text-align:center;
+	padding:15px 10px;
+}
+.vcard2 .sec2 .pic{
+	width:40%;
+	float:left;
+}
+.vcard2 .sec2 .pic img {
+    border-radius: 100px;
+    width: 60px;
+    height: 60px;
+    border: 2px solid #00bcd4;
+    padding: 4px;
+}
+.vcard2 .sec2 .name-dec {
+    font-size: 15px;
+    width: 60%;
+    float: left;
+    line-height: 20px;
+    padding-top: 10px;
+}
+.vcard2 .sec2 .name-dec span{
+	font-size:15px;
+	font-weight:bold;
+}
+.vcard2 .sec2 .name-dec small{
+	font-size:12px !important;
+	font-weight:bold;
+}
+
+
+
+
+
+.vcard3 {
+    background: #795548;
+    padding: 5px;
+    height: 160px;
+    border-right: 10px double #FFC107;
+}
+.vcard3 .sec1{
+	width:50%;
+	float:left;
+	background: transparent;
+	padding: 0px;
+}
+.vcard3 .sec2 {
+    width: 50%;
+    float: left;
+    background: #FFC107;
+    padding: 0 8px;
+    color: #795548;
+    font-weight: bold;
+    margin-top: 12px;
+	padding: 5px;
+	text-align: center;
+}
+.vcard3 .sec1 .email {
+	width: 100%;
+    padding: 5px; 
+	text-align: left;
+}
+.vcard3 .sec1 .mobile {
+    width: 100%;
+    padding: 5px; 
+	text-align: left;
+}
+.vcard3 .sec1 .address {
+    width: 100%;
+    padding: 5px; 
+	text-align: left;
+}
+.vcard3 .sec2 .pic img {
+    width: 60px;
+    height: 60px;
+    border: 2px solid #FFC107;
+    padding: 4px;
+	margin-top:12px;
+	margin-bottom:10px;
+}
+.vcard3 .sec2 img {
+    width: 60px;
+    height: 60px;
+}
+.vcard3 .sec2 .name-dec span{
+	font-size:10px;
+	color:#333333;
+	text-transform:uppercase;
+	font-weight:bold;
+}
+.vcard3 .sec2 .name-dec small{
+	font-size:10px;
+	color:#333333;
+	text-transform:uppercase;
+}
+
+
+
+
+
+.vcard4 {
+    background: #8BC34A;
+    padding: 5px;
+    height: 160px;
+    border-right: 10px double #795548;
+}
+.vcard4 .sec1{
+	width:50%;
+	float:left;
+	background: transparent;
+	padding: 0px;
+}
+.vcard4 .sec2 {
+    width: 50%;
+    float: left;
+    background: #8BC34A;
+    padding: 0 8px;
+    color: #795548;
+    font-weight: bold;
+    margin-top: 12px;
+    border: 1px solid #795548;
+	padding: 5px;
+	text-align: center;
+}
+.vcard4 .sec1 .email {
+    width: 100%;
+    padding: 5px; 
+	text-align: left;
+}
+.vcard4 .sec1 .mobile {
+    width: 100%;
+    padding: 5px; 
+	text-align: left;
+}
+.vcard4 .sec1 .address {
+    width: 100%;
+    padding: 5px; 
+	text-align: left;
+}
+.vcard4 .sec2 .pic img {
+    width: 60px;
+    height: 60px;
+    border: 1px solid #795548;
+    padding: 4px;
+	margin-top:12px;
+	margin-bottom:10px;
+}
+.vcard4 .sec2 img {
+    width: 60px;
+    height: 60px;
+}
+.vcard4 .sec2 .name-dec span{
+	font-size:10px;
+	color:#795548;
+	text-transform:uppercase;
+	font-weight:bold;
+}
+.vcard4 .sec2 .name-dec small{
+	font-size:10px;
+	color:#795548;
+	text-transform:uppercase;
+}

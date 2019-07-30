@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>NOB HUB</title>
+    <link href="css/style.css" rel="stylesheet"><link href="https://nobhub.com/services/cardstyles.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link href="https://mdbootstrap.com/previews/docs/latest/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://mdbootstrap.com/previews/docs/latest/css/mdb.min.css" rel="stylesheet">
+    <link href="css/mdb.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDEc6y2PP50c3529HoVRWY5wru5wLE_6hY"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="cordova.js"></script>
+	
+	<script 
+         src = "https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js">
+      </script>
+      <link rel = "stylesheet" 
+         href = "https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
+      <link rel = "stylesheet" 
+         href = "https://fonts.googleapis.com/icon?family=Material+Icons">	  
+	<script type="text/javascript" src="SocialSharing.js"></script>
+<script type="text/javascript" charset="utf-8">
+		function onLoad() {
+			document.addEventListener("deviceready", onDeviceReady, false);
+			document.addEventListener("deviceready", geoLocation, false);
+		//localStorage.setItem("user_id",17);
+		}
+		function geoLocation() {
+			function onSuccess(position) {
+				var user_id = localStorage.getItem("user_id");
+				var lati = position.coords.latitude;
+				var longi = position.coords.longitude;
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						var result = this.responseText;
+					}
+				};
+				xmlhttp.open("GET", "https://nobhub.com/services/postcoordinates.php?user_id=" + user_id + "&lati=" + lati + "&longi=" + longi, true);
+				xmlhttp.send();
+			}
+			function onError(error) {
+				alert('code: '    + error.code    + '\n' +
+					  'message: ' + error.message + '\n');
+			}
+			navigator.geolocation.getCurrentPosition(onSuccess, onError);
+		}
+		function onDeviceReady() {
+			document.addEventListener("backbutton", onBackKeyDown, false);
+		}
+		function onBackKeyDown() {
+			if(document.getElementById('confirmertoggle').value==0) {
+				$("#confirmer").slideDown();
+				document.getElementById('confirmertoggle').value=1;
+			}
+			else if(document.getElementById('confirmertoggle').value==1) {
+				$("#confirmer").slideUp();
+				document.getElementById('confirmertoggle').value=0;
+			}
+		}
+		
+		
+var offset = (new Date()).getTimezoneOffset();
+
+
+var timezones = {
+    '-12': 'Pacific/Kwajalein',
+    '-11': 'Pacific/Samoa',
+    '-10': 'Pacific/Honolulu',
+    '-9': 'America/Juneau',
+    '-8': 'America/Los_Angeles',
+    '-7': 'America/Denver',
+    '-6': 'America/Mexico_City',
+    '-5': 'America/New_York',
+    '-4': 'America/Caracas',
+    '-3.5': 'America/St_Johns',
+    '-3': 'America/Argentina/Buenos_Aires',
+    '-2': 'Atlantic/Azores',
+    '-1': 'Atlantic/Azores',
+    '0': 'Europe/London',
+    '1': 'Europe/Paris',
+    '2': 'Europe/Helsinki',
+    '3': 'Europe/Moscow',
+    '3.5': 'Asia/Tehran',
+    '4': 'Asia/Baku',
+    '4.5': 'Asia/Kabul',
+    '5': 'Asia/Karachi',
+    '5.5': 'Asia/Calcutta',
+    '6': 'Asia/Colombo',
+    '7': 'Asia/Bangkok',
+    '8': 'Asia/Singapore',
+    '9': 'Asia/Tokyo',
+    '9.5': 'Australia/Darwin',
+    '10': 'Pacific/Guam',
+    '11': 'Asia/Magadan',
+    '12': 'Asia/Kamchatka' 
+};
+var time =timezones[-offset / 60];
+localStorage.setItem("timezone", time);
+	</script>
+	
+	<script>
+		function getmainprofile() {
+			document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					document.getElementById('mycard').innerHTML=result;
+					document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/getmainprofile.php?user_id="+user_id, true);
+			xmlhttp.send();
+		}
+	</script>
+	<script>
+		$(document).ready(function(){
+			$("#cnbtn").click(function(){
+				$("#confirmer").slideUp();
+				document.getElementById('confirmertoggle').value=0;
+			});
+		});
+	</script>
+	<script>
+		$(document).ready(function(){
+			$("#okbtn").click(function(){
+				navigator.app.exitApp();
+			});
+		});
+		$(document).ready(function(){
+			$("#okdel").click(function(){
+				$("#confirmed").slideUp();
+				document.getElementById('confirmertoggle').value=0;
+			});
+		});
+	</script>
+	
+	<script>
+	window.setInterval(function(){
+	geoLocation();
+	}, 15000);
+	</script>
+	<script>
+		function alertcount() {
+				document.getElementById('loader').style.display="block";
+				var user_id = localStorage.getItem("user_id");
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						var result = this.responseText;
+						                        //console.log(result);
+						var splitter = result.split("&");
+
+					if(splitter[0] > 0){
+						document.getElementById('bell-icon').style.display="block";
+						document.getElementById('alertcount').innerHTML=splitter[0];
+						}else{
+					   document.getElementById('bell-icon').style.display="none";
+
+						
+						}
+						if(splitter[1] > 0){
+						document.getElementById('chatcount').innerHTML='<span class="mdl-badge" data-badge="'+splitter[1]+'"></span><i class="fas fa-comments"></i><span><br>Chats</span>';
+						}else{
+						
+						document.getElementById('chatcount').innerHTML='<span class="mdl-badge"></span><i class="fas fa-comments"></i><span><br>Chats</span>';
+						}
+						if(splitter[2] > 0){
+						document.getElementById('meetingscount').innerHTML='<span class="mdl-badge" data-badge="'+splitter[2]+'"></span><i class="fas fa-users"></i><span><br>Meetings</span>';
+						}else{
+						document.getElementById('meetingscount').innerHTML='<span class="mdl-badge" ></span><i class="fas fa-users"></i><span><br>Meetings</span>';
+						
+						}
+						document.getElementById('loader').style.display="none";
+						
+					}
+				};
+				xmlhttp.open("GET", "https://nobhub.com/services/alertcount.php?user_id="+user_id, true);
+				xmlhttp.send();
+			}
+	</script>
+	
+	<script>
+		function getyesprofiles() {
+			document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					document.getElementById('yesprofiles').innerHTML=result;
+					if(document.getElementById('yesprofiles').innerHTML=="") {
+					document.getElementById('yesprofiles').innerHTML="<div style='text-align: center; font-weight: bold; font-size: 15px; padding-top: 20px'>No Members in your Contact List.</div>";
+					}
+					document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/getyesprofiles.php?user_id="+user_id, true);
+			xmlhttp.send();
+		}
+	</script>
+	
+	<script>
+		function searchfn() {
+			if(document.getElementById('searchkey').value=="") {
+			document.getElementById('clearinput').style.display="none";
+
+			getyesprofiles();
+			}
+			else {
+			document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			var key = document.getElementById('searchkey').value;
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					//console.log(result);
+					document.getElementById('yesprofiles').innerHTML=result;
+					document.getElementById('loader').style.display="none";
+					document.getElementById('clearinput').style.display="block";
+
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/getyesprofilessearch.php?user_id="+user_id+"&key="+key, true);
+			xmlhttp.send();
+			}
+		}
+	</script>
+<script>
+		function selectdelete(clickid) {
+			document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			var a = clickid.split("color-");
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					document.getElementById('confirmtext').innerHTML=result;
+						//$("#confirmer").slideDown();
+						document.getElementById('confirmertoggle').value=1;
+						document.getElementById('loader').style.display="none";
+						viewcard();
+
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/changetheme.php?user_id="+user_id+"&themeid="+a[1], true);
+			xmlhttp.send();
+		}
+</script>
+	<script>
+		function viewclick(clickid) {
+			localStorage.setItem("viewid",clickid);
+			location.href="view-card.html";
+		}
+	</script>
+	
+	<script>
+		function mviewclick(clickid) {
+			localStorage.setItem("viewid",clickid);
+			location.href="view-card.html";
+		}
+	</script>
+	<script>
+	function socialshare(){
+	var options = {
+	  message: 'Hey! Download this awesome app from the Google Play Store/Apple App Store. You can install NobHub here: ', // not supported on some apps (Facebook, Instagram)
+	  subject: 'CHECK OUT THIS COOL NEW APP - NOBHUB', // fi. for email 
+      files: ['https://nobhub.com/assets/images/logo1.png'], // an array of filenames either locally or remotely 
+	  url: 'https://play.google.com/store/apps/details?id=com.nobhub.app',
+	  chooserTitle: 'Share With' // Android only, you can override the default share sheet title
+	}
+
+	var onSuccess = function(result) {
+	  console.log("Share completed? " + result.completed); // On Android apps mostly return false even while it's true
+	  console.log("Shared to app: " + result.app); // On Android result.app is currently empty. On iOS it's empty when sharing is cancelled (result.completed=false)
+	}
+
+	var onError = function(msg) {
+	  console.log("Sharing failed with message: " + msg);
+	}
+
+	window.plugins.socialsharing.shareWithOptions(options, onSuccess, onError);
+
+	}
+	</script>
+	
+	<script>
+		function profilecheck() {
+			document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					if(result=="notok") {
+					location.href="profile.html";
+					}
+					else if(result=="ok"){
+					document.getElementById('loader').style.display="none";
+					document.getElementById('mbody').style.display="block";
+					}
+					else {
+						document.getElementById('mbody').style.display="block";
+						var splitter = result.split("deli");
+						
+						var title = splitter[0];
+						var loc = splitter[1];
+						var notes = splitter[2];
+						var startDate = new Date(splitter[3],splitter[4],splitter[5],splitter[6],splitter[7],0,0,0);
+						var endDate = new Date(splitter[8],splitter[9],splitter[10],splitter[11],splitter[12],0,0,0);
+						window.plugins.calendar.createEvent(title, loc, notes, startDate, endDate, onSuccess, onError);
+					}
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/profilecheck.php?user_id="+user_id, true);
+			xmlhttp.send();
+		}
+	</script>
+	
+	<script>
+		window.onerror = function(msg, file, line) {
+		  alert(msg + '; ' + file + '; ' + line);
+		};
+		function onSuccess(msg) {
+
+  console.log('Calendar success: ' + JSON.stringify(msg));
+}
+
+function onError(msg) {
+  console.log('Calendar error: ' + JSON.stringify(msg));
+}
+	</script>
+	
+	<!--script>
+		function viewcard() {
+			document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					document.getElementById('card-1').innerHTML=result;
+					document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/viewcard1.php?user_id="+user_id, true);
+			xmlhttp.send();
+			}
+	</script-->
+	<script>
+		function viewcard() {
+			document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			//alert(user_id);
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					//alert(result);
+					var splitter = result.split("deli");
+					//localStorage.setItem("myname",splitter[0]);
+					document.getElementById('card-1').innerHTML=result;
+					document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/viewcard2.php?user_id="+user_id, true);
+			xmlhttp.send();
+			}
+	</script>
+<script>
+		function myname() {
+			document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			var timezone = localStorage.getItem("timezone");
+			//alert(user_id);
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+						var splitter = result.split("deli");
+
+					
+					localStorage.setItem("myname",splitter[0]);
+				if(splitter[1]!=""){
+					document.getElementById('myimagemain').src = "https://nobhub.com/services/members/"+splitter[1];
+					document.getElementById('himage').src = "https://nobhub.com/services/members/"+splitter[1];
+					
+					}else {
+					document.getElementById('myimagemain').src = "https://nobhub.com/services/pp1.jpg";
+					document.getElementById('himage').src = "https://nobhub.com/services/pp1.jpg";
+					}
+					document.getElementById('myname').innerHTML=splitter[0];
+					document.getElementById('hname').innerHTML="Welcome&nbsp;"+splitter[0];
+
+			document.getElementById('loader').style.display="none";
+
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/mydetails.php?user_id="+user_id+"&timezone="+timezone, true);
+			xmlhttp.send();
+			}
+	</script>
+
+	<script>
+		function removeclick(clickid) {
+			if(confirm("Are you sure you want to Remove this contact?")==true) {
+					document.getElementById('loader').style.display="block";
+					var guid = clickid;
+					var xmlhttp = new XMLHttpRequest();
+					xmlhttp.onreadystatechange = function() {
+						if (this.readyState == 4 && this.status == 200) {
+							var result = this.responseText;
+							location.reload();
+						}
+					};
+					xmlhttp.open("GET", "https://nobhub.com/services/removecontact.php?guid="+guid, true);
+					xmlhttp.send();
+				}
+				else {
+					return false;
+				}
+		}
+	</script>
+	<script>
+		function facebook(clickid) {
+		//alert(clickid);
+			var lh="https://www.facebook.com/"+clickid;
+			var ref = cordova.InAppBrowser.open(lh, '_system', 'location=yes,toolbar=yes,clearsessioncache=yes,clearcache=yes');		
+			
+		}
+	</script>
+
+	<script>
+		function twitter(clickid) {
+		//alert(clickid);
+			var lh="https://www.twitter.com/"+clickid;
+			var ref = cordova.InAppBrowser.open(lh, '_system', 'location=yes,toolbar=yes,clearsessioncache=yes,clearcache=yes');		
+			
+		}
+	</script>
+
+	<script>
+		function linkedin(clickid) {
+		//alert(clickid);
+			var lh="https://www.linkedin.com/in/"+clickid;
+			var ref = cordova.InAppBrowser.open(lh, '_system', 'location=yes,toolbar=yes,clearsessioncache=yes,clearcache=yes');		
+			
+		}
+	</script>
+
+	<script>
+		function skype(clickid) {
+		//alert(clickid);
+			var lh="skype:"+clickid+"?chat";
+			var ref = cordova.InAppBrowser.open(lh, '_system', 'location=yes,toolbar=yes,clearsessioncache=yes,clearcache=yes');		
+			
+		}
+	</script>
+
+		<script>
+		function web(clickid) {
+		//alert(clickid);
+			var lh="http://"+clickid;
+			var ref = cordova.InAppBrowser.open(lh, '_system', 'location=yes,toolbar=yes,clearsessioncache=yes,clearcache=yes');		
+			
+		}
+		
+	/*	function cons(clickid) {
+		var a = clickid.split("contact-");//alert(a[1]);
+			
+				document.getElementById('delholder').value=document.getElementById('delholder').value+a[1]+",";
+				document.getElementById('delicon').style.display="block";
+
+		}*/
+		
+	</script>
+	<script>
+		function cons(clickid) {
+		
+			if(document.getElementById(clickid).style.background=="rgb(255, 255, 255)") {
+				document.getElementById('delholder').value=document.getElementById('delholder').value+clickid+",";
+				document.getElementById(clickid).style.background="#e9e9e9";
+             deleteicon();
+			}
+			else if(document.getElementById(clickid).style.background=="rgb(233, 233, 233)") {
+				var a = document.getElementById('delholder').value;
+				var b = a.replace(clickid+",","");
+				document.getElementById('delholder').value=b;
+				document.getElementById(clickid).style.background="#FFFFFF";
+				
+			deleteicon();
+			}
+
+
+		}
+		
+		
+		function deleteicon() {
+			if(document.getElementById('delholder').value=="") {
+			
+			document.getElementById('delicon').style.display="none";
+
+			}
+			else {
+			 
+		document.getElementById('delicon').style.display="block";
+
+			}
+		}
+	</script>
+<!--script>
+		function selectdelete(clickid) {
+			document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			var a = clickid.split("color-");
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					document.getElementById('confirmtext').innerHTML=result;
+						$("#confirmer").slideDown();
+						document.getElementById('confirmertoggle').value=1;
+						document.getElementById('loader').style.display="none";
+						getyesprofiles();
+
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/deletecontacts.php?user_id="+user_id+"&contactid="+a[1], true);
+			xmlhttp.send();
+		}
+</script-->
+<script>
+		function selectdelete() {
+			if(document.getElementById('delholder').value=="") {
+				document.getElementById('confirmdtext').innerHTML="Please select atleast 1 Contact";
+				$("#confirmed").slideDown();
+				document.getElementById('confirmertoggle').value=1;
+			}
+			else {
+			 
+
+				deleteselected();
+			}
+		}
+</script>
+<script>
+		function deleteselected() {
+			
+				document.getElementById('loader').style.display="block";
+				var user_id = localStorage.getItem("user_id");
+				var mids = document.getElementById('delholder').value;
+				if(confirm("Are you sure to Delete ")==true) {
+						
+					
+				
+				//alert(mids);
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						var result = this.responseText;
+						//alert(result);
+						document.getElementById('loader').style.display="none";
+						document.getElementById('delholder').value="";
+						//$("#confirmer").slideDown();
+						document.getElementById('confirmertoggle').value=1;
+						location.reload();
+					}
+				};
+				xmlhttp.open("GET", "https://nobhub.com/services/deletecontacts.php?user_id="+user_id+"&mids="+mids, true);
+				xmlhttp.send();
+			}
+					else {
+					document.getElementById('loader').style.display="none";
+						return false;
+					}
+		}
+</script>
+
+<script>
+		function openchat(chatid) {
+
+			localStorage.setItem("chatid",chatid);
+			location.href="chat.html";
+		}
+		function openmeeting(meetingperson) {
+
+			localStorage.setItem("meetingperson",meetingperson);
+			location.href="add-meeting.html";
+		}
+			function clearinput() {
+
+			document.getElementById('searchkey').value= '';
+			document.getElementById('clearinput').style.display="none";
+
+			getyesprofiles();
+		}
+	</script>
+
+
+<script src="https://nobhub.com/services/custom-scripts.js"></script></head>
+<body id="mbody" style="display: none" class="fixed-sn light-blue-skin" onload="profilecheck(); onLoad(); viewcard(); getyesprofiles();myname();alertcount();">
+
+<div style="display: none; border: 1px solid #c0c0c0; background: #e9e9e9; width: 90%; position: fixed; z-index: 9999; top: 250px; left: 20px; padding: 10px; text-align: center" id="confirmer">
+<!--i style="color: #FF0000" class="fa fa-sign-out fa-4x"></i--><img src="img/shield.png"></br>
+<span id="confirmtext">Do you really want to exit?</span></br>
+<button type="button" class="btn btn-warning z-depth-1a" id="cnbtn" style="float: left">Cancel</button>
+<button type="button" class="btn btn-danger z-depth-1a" id="okbtn" style="float: right">OK</button>
+</div>
+<input type="hidden" id="confirmertoggle" value="0">
+<input type="hidden" id="idholder">
+<input type="hidden" id="delholder" value="">
+<div style="display: none; border: 1px solid #c0c0c0; background: #e9e9e9; width: 90%; position: fixed; z-index: 10000; top: 250px; left: 20px; padding: 10px; text-align: center" id="confirmed">
+<i style="color: #0d994f" class="fa fa-check-square fa-4x"></i></br>
+<span id="confirmdtext"></span></br>
+<button type="button" class="btn blue-gradient btn-primary z-depth-1a" id="okdel">OK</button>
+</div>
+
+
+
+
+<div style="width: 100%; text-align: center; position: fixed; z-index: 9998889; top: 250px; display:none" id="loader"><img src="loading.gif" style="margin-left: auto; margin-right: auto; width: 64px; height: auto"></div>
+	<header style="margin-top: 13px; margin-bottom: 0px;"></header>
+	
+	<section>
+		<div class="list-group btn-group" style="position: fixed; z-index: 9999; top: 0; width: 100%; margin-top:0;">
+			<span class="list-group-item active gradient-bg">
+				<span class="pull-left" style="margin-top:4px;"><b id="hname">Welcome</b></span>
+			</span>				
+				<!--button class="top-btn" onclick="selectdelete();" style="margin-top:4px; margin-right:15px;">
+				<i class="fa fa-trash"></i>
+				<span>Delete</span>
+			</button-->
+			<div class="user-menu dropdow">
+				<a href="#" id="user-menu-btn"><img src="https://nobhub.com/services/pp1.jpg" class="img-fluid mt-1" alt="Post" style="height: 40px; width: 40px; margin-right: 4px;" id="himage"></a>
+				<a href="alerts.html" class="bell-icon" id="bell-icon"><!--i class="fa fa-bell"></i--> <span class="bell-count" id="alertcount"></span></a>
+			</div>
+		</div> 
+		<div id="user-menu-div" style="display:none;">
+			<img src="img/settings-bg.png" class="img-responsive">
+			<div class="user-menu-header">
+				<a href="javascript:void(0);" id="user-menu-btn-close"><i class="fa fa-close" style="font-size:20px;"></i></a>
+				<br><br>
+			<div class="col-xs-12 text-center" style="position: absolute; width: 100%; bottom: -169px;">
+				<a href="javascript:void(0);" id="myname" style="text-transform:uppercase;"><i class="fa fa-angle-down"></i></a>
+				<br>
+				<a href="javascript:void(0);"><img src="https://nobhub.com/services/pp1.jpg" class="img-fluid mt-1 pp" alt="Post" id="myimagemain" style="height: 80px; width: 80px; margin-top:25px; border-radius:100px; margin-bottom:6px; margin-left: -8px;"></a></div>
+			</div>
+			<br><br><br>
+			<a class="dropdown-item" href="settings.html"><i class="fa fa-user"></i> Profile</a>
+			<a class="dropdown-item" href="chat-list.html"><i class="fa fa-comments"></i> Chat</a>
+			<a class="dropdown-item" href="alerts.html"><i class="fa fa-bell"></i> Notifications</a>
+			<!--a class="dropdown-item" href="#"><i class="fab fa-youtube"></i> Live Stream</a-->				<a class="dropdown-item" href="share.html"><i class="fa fa-users"></i> Refer a Friend</a>
+			<a class="dropdown-item" href="cnumber.html"><i class="fa fa-phone"></i> Change Number </a>
+			<a class="dropdown-item" href="upgrade.html"><i class="fas fa-crown"></i> Premium Membership </a><a class="dropdown-item" href="blockedlist.html"><i class="fas fa-ban"></i> Block List </a>
+			<a class="dropdown-item" href="about.html"><i class="fas fa-info"></i> About NobHub </a>
+			<a class="dropdown-item" href="https://play.google.com/store/apps/details?id=com.nobhub.app"><i class="fas fa-star"></i> Rate App </a>
+			<!--a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Change Password </a-->
+			<a class="dropdown-item" href="#" onclick="logoutfn()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+		</div>
+		<div class="col-12" id="mainid" style="margin-top: 60px">
+			<div id="divauthresult"></div>
+			<div id="divtableresult"></div>
+		</div>	
+			
+	</section>
+	
+	<main>
+		<!--section id="mycard">
+			
+		</section!-->
+	<div class="fixed-contact">
+	<section>
+		<div class="col-12 padd-sm" id="viewcard" style="padding: 0px">
+			<div class='card-wrapper' style="padding: 0px; margin-bottom:6px;">
+				
+				<div style="text-align: center; position: fixed; top: 10px; right: 10px; z-index: 99999"><a class='rotate-btn' data-card='card-1'><i class="fa fa-repeat fa-2x" style="font-weight: bold"></i></a></div>
+
+				<div id='card-1' class='card-rotating effect__click text-center h-100 w-100' style="margin-top: 20px; padding: 0px">
+					
+				</div>
+			
+			</div>
+		</div>
+	</section>
+		<section style="margin-top: -10px;">
+			
+			<div class="list-group btn-group" id="select-contact-div" style=" z-index: 9999; top: 0; width: 100%; margin-top:0;">
+				
+				<span class="list-group-item active" style="height: 50px; padding-top:4px;">
+					<div class="dropdown dropleft pull-left invite-menu" style="margin-right:40px;">
+						 <a class="dropdown-toggle pull-left" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-th"></i></a>
+						 <div class="dropdown-menu dropdown-primary">
+							 <a class="dropdown-item" href="#" onclick="socialshare();">Invite Friends</a>
+							 <a class="dropdown-item" href="contacts.html">Invite Phone Friends</a>
+							 <!--a class="dropdown-item" href="#">Google Contacts</a-->
+							 <a class="dropdown-item" href="blockedlist.html">Blocked List</a>
+						 </div>
+					</div>	
+					<a href="javascript:void(0);" class="remove-contact-btn" onclick="selectdelete();" id="delicon" style="display:none;"><i class="fa fa-trash"></i></a>
+					<a href="javascript:void(0);" class="new-chat-search-btn" style="margin-top:4px;"><i class="fa fa-search"></i></a>	
+				</span>
+			</div>  
+			
+			<div class="list-group btn-group" id="search-contact-div" style=" z-index: 9999; top: 0; width: 100%; margin-top:0; display:none;">
+				
+					
+				<span class="list-group-item active" style="height: 50px; padding-left:50px;">
+					<div class="dropdown dropleft pull-right invite-menu" style="margin-right:40px; margin-top: 4px;">
+						 <a class="dropdown-toggle pull-right" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-th"></i></a>
+						 <div class="dropdown-menu dropdown-primary">
+							 <a class="dropdown-item" href="#" onclick="socialshare();">Invite Friends</a>
+							 <a class="dropdown-item" href="contacts.html">Invite Phone Friends</a>
+							 <!--a class="dropdown-item" href="#">Google Contacts</a-->
+							 <a class="dropdown-item" href="blockedlist.html">Blocked List</a>
+						 </div>
+					</div>
+					<a href="javascript:void(0);" class="pull-left chat-back-btn back-select-contact" style="margin-top: 4px;"><i class="fas fa-long-arrow-alt-right"></i></a>
+					<input type="text" class="search-contact" id="searchkey" placeholder="Search Contact by Name/Number" style="height: 45px;" onkeyup="searchfn()" autofocus>
+					<a href="#" id="clearinput" onclick="clearinput();" class="search-clear" style="display:none;"><i class="fa fa-close"></i></a>
+				</span>	
+			</div> 
+			
+			<!--div class="list-group" style="
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	/* background-color: yellow; */
+	/* padding: 50px; */
+	font-size: 20px;
+	z-index: 1000;
+	"  >
+				<span class="list-group-item active">
+					<span class="pull-left" style="margin-top:8px; font-size:14px;"><b>My Contacts</b></span> 
+					<input type="text" placeholder="Search" class="search pull-right" id="searchkey" style="font-size:12px; height: 32px;" onkeyup="searchfn()">
+					<a href="" class="search-btn"><img src="img/magnifier-tool.svg" width="16"></a>
+				</span>				
+				<div class="dropdown dropleft pull-right invite-menu">
+					 <a class="dropdown-toggle pull-right" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-th"></i></a>
+					 <div class="dropdown-menu dropdown-primary">
+						 <a class="dropdown-item" href="#" onclick="socialshare();">Invite Friends</a>
+						 <a class="dropdown-item" href="contacts.html">Invite Phone Friends</a>
+						 <a class="dropdown-item" href="blockedlist.html">Blocked List</a>
+					 </div>
+				</div>	
+				
+			</div-->   
+		</section>
+		</div>
+		<div class="clearfix"></div>
+		
+		<section style="margin-top:270px;">
+			<div id="yesprofiles" style="padding:0px 5px;">
+				
+			</div>
+		</section>
+		
+		
+		
+		<div class="clearfix"><br><br><br></div>
+		<section>
+		<div class="footer-menu">
+			<div class="active"><a href="home.html"><i class="far fa-address-book"></i><span><br>Contacts</span></a></div>
+			
+				<div><a href="nearby.html"><img src="img/nearby2.png" class="nearby2"><span><br>Nearby</span></a></div>
+			<div><a href="meetings.html" id="meetingscount"><i class="fas fa-users"></i><span><br>Meetings</span></a></div>
+			<div><a href="chat-list.html" id="chatcount"><i class="fas fa-comments"></i><span><br>Chats</span></a></div>
+			<div><a href="generalcards.html"><i class="far fa-address-card"></i><span><br>Cards</span></a></div>
+		</div>
+		</section>
+		<div class="corner-icon1"> <img src="logo.png"></div>
+	</main>
+	
+	
+	
+	
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/popper.min.js"></script>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/mdb.min.js"></script>
+	<script>
+        $(".button-collapse").sideNav();
+    </script>
+    <script>
+		$(document).ready(function() {
+			$('.mdb-select').material_select();
+		});
+    </script>
+	
+	
+	<script>
+		$(document).ready(function(){
+		  $("#user-menu-btn-close").click(function(){
+			$("#user-menu-div").hide();
+		  });
+		  $("#user-menu-btn").click(function(){
+			$("#user-menu-div").show();
+		  });
+		});
+	</script>
+	
+	
+	
+	<script>
+		$(document).ready(function(){
+		  $('.new-chat-search-btn').click(function(){
+			$('#select-contact-div').fadeOut(0);
+			$('#search-contact-div').fadeIn(0);
+		  });
+		  $('.back-select-contact').click(function(){
+			$('#search-contact-div').fadeOut(0);
+			$('#select-contact-div').fadeIn(0);
+		  });
+		});
+	</script>
+</body>
+</html>

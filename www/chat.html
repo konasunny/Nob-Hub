@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>NOB HUB</title>
+    <link href="css/style.css" rel="stylesheet"><link href="https://nobhub.com/service-web-api/cardstyles.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link href="https://mdbootstrap.com/previews/docs/latest/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://mdbootstrap.com/previews/docs/latest/css/mdb.min.css" rel="stylesheet">
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+    <link href="css/mdb.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="cordova.js"></script>
+	
+    <!-- Owl Stylesheets -->
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+		<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="cordova.js"></script>
+	<!--style>
+		.chat-container :last-child
+		{
+		  margin-bottom:100px !important;
+		}
+	
+
+	</style-->
+	<script type="text/javascript" charset="utf-8">
+	var pictureSource;
+	var destinationType;
+	function onLoad() {
+		document.addEventListener("deviceready", onDeviceReady, false);
+	}	
+	function onDeviceReady() {
+		pictureSource=navigator.camera.PictureSourceType;
+		destinationType=navigator.camera.DestinationType;
+		document.addEventListener("backbutton", onBackKeyDown, false);
+		var di = device.uuid;
+		if (typeof(Storage) !== "undefined") {
+		localStorage.setItem("deviceid", di);
+		}
+	}
+	function onBackKeyDown() {
+		if(document.getElementById('confirmertoggle').value==1) {
+			$("#toggleoptions").slideUp();
+			document.getElementById('confirmertoggle').value=0;
+		}
+		else if(document.getElementById('confirmertoggle').value==2) {
+			$("#toggleoptionswin").slideUp();
+			document.getElementById('confirmertoggle').value=1;
+		}
+		else if(document.getElementById('confirmertoggle').value==3) {
+			$("#toggleoptionsfile").slideUp();
+			document.getElementById('confirmertoggle').value=1;
+		}
+		else {
+		location.href="home.html";
+		}
+	}
+	function onPhotoDataSuccess(imageData) {
+		document.getElementById('toggleoptionswin').style.display="block";
+		document.getElementById('confirmertoggle').value=2;
+		var smallImage = document.getElementById('smallImage');
+		smallImage.style.display="block";
+		smallImage.src = "data:image/jpeg;base64," + imageData;
+		document.getElementById('ibdata').innerHTML=imageData;
+		//document.getElementById('ibdata1').innerHTML=imageData;
+		//document.getElementById('ibdata2').innerHTML=imageData;
+	}
+	function onPhotoURISuccess(imageURI) {
+		document.getElementById('toggleoptionswin').style.display="block";
+		document.getElementById('confirmertoggle').value=2;
+		var smallImage = document.getElementById('smallImage');
+		smallImage.style.display="block";
+		smallImage.src = "data:image/jpeg;base64," + imageURI;
+		document.getElementById('ibdata').innerHTML=imageURI;
+		//document.getElementById('ibdata1').innerHTML=imageURI;
+		//document.getElementById('ibdata2').innerHTML=imageURI;
+	}
+	function capturePhoto() {
+		navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 20,
+		destinationType: destinationType.DATA_URL });
+	}
+	function capturePhotoEdit() {
+		navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 20, allowEdit: true,
+		destinationType: destinationType.DATA_URL });
+	}
+	function getPhoto(source) {
+		navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 20, allowEdit: true,
+		destinationType: destinationType.DATA_URL,
+		sourceType: source });
+	}
+	function onFail(message) {
+		var msgs = message;
+	}
+	</script>
+	
+	
+	
+    <script>
+		function toggleoptions() {
+			$("#toggleoptions").slideDown();
+			document.getElementById('confirmertoggle').value=1;
+		}
+	</script>
+	
+	<script>
+		function fileshow() {
+			$("#toggleoptionsfile").slideDown();
+			document.getElementById('confirmertoggle').value=3;
+		}
+	</script>
+	
+	<script>
+		function closeoptions() {
+			$("#toggleoptions").slideUp();
+			document.getElementById('confirmertoggle').value=0;
+		}
+	</script>
+	
+	<script>
+		function closeoptions1() {
+			document.getElementById('toggleoptionswin').style.display="none";
+			document.getElementById('confirmertoggle').value=1;
+		}
+	</script>
+	
+	<script>
+		function closeoptions2() {
+			document.getElementById('toggleoptionsfile').style.display="none";
+			document.getElementById('confirmertoggle').value=1;
+		}
+	</script>
+	
+	
+	
+
+<style>
+	label {
+		font-weight: bold;
+	}
+</style>
+
+<script>
+/*function clist() {
+document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			//alert(user_id);
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					
+					document.getElementById('clist').innerHTML=result;
+					
+					document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/clist.php?user_id="+user_id, true);
+			xmlhttp.send();
+} */
+function iframe() {
+			//alert('hi');
+	 	    var user_id = localStorage.getItem("user_id");
+          document.getElementById('clist').src="https://nobhub.com/services/clist.php?user_id="+user_id;
+                	 //alert(user_id);
+			
+		}
+function chathistory() {
+//document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			var chatid = localStorage.getItem("chatid");
+		    var timezone = localStorage.getItem("timezone");
+
+			//alert(timezone);exit;
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					//alert(result);
+					//console.log(result);
+					document.getElementById('chathistory').innerHTML=result;
+					
+			
+					//document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/chathistory.php?user_id="+user_id+"&chatid="+chatid+"&timezone="+timezone, true);
+			xmlhttp.send();
+}
+
+function chatname() {
+//document.getElementById('loader').style.display="block";
+			var user_id = localStorage.getItem("user_id");
+			var chatid = localStorage.getItem("chatid");
+
+			//alert(chatid);
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+				 var splitter = result.split("deli");
+
+					//alert(result);
+					//console.log(result);
+					document.getElementById('chatname').innerHTML=splitter[0];
+					
+			
+					//document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/chatname.php?user_id="+user_id+"&chatid="+chatid, true);
+			xmlhttp.send();
+}
+function sendmsg() {
+document.getElementById('loader').style.display="block";
+var user_id = localStorage.getItem("user_id");
+var deviceid = localStorage.getItem("deviceid");
+var chatid = localStorage.getItem("chatid");
+
+var message = document.getElementById('message').value;
+		    var timezone = localStorage.getItem("timezone");//alert(timezone);
+
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var result = this.responseText;
+					//console.log(result);
+					//console.log(timezone);
+					//document.getElementById('message').innerHTML="";
+					document.getElementById('message').value="";
+					//alert(result);
+					 chathistory();
+                        //alert("messsge sent");					
+					document.getElementById('loader').style.display="none";
+                }
+			};
+			xmlhttp.open("GET", "https://nobhub.com/services/sendmsg.php?user_id="+user_id+"&deviceid="+deviceid+"&chatid="+chatid+"&message="+message+"&timezone="+timezone, true);
+			xmlhttp.send();
+}
+
+</script>
+<!--mounika-->
+<script type="text/javascript">
+	/*$(document).ready(function () {
+$('html, body').animate({scrollTop:$(document).height()}, 'slow');
+});
+*/
+</script>
+<script type="text/javascript">
+//function pageScroll() {
+
+
+//w/indow.scrollBy(0,10);
+//pageScroll();
+//scrolldelay = setTimeout('pageScroll()',0); //Increase this # to slow down, decrease to speed up scrolling
+
+
+//}
+</script>
+<!--end mounika-->
+<script type="text/javascript">
+		$(document).ready(function (e) {
+			$("#uploadForm1").on('submit',(function(e) {
+			//alert("hi");
+var user_id = localStorage.getItem("user_id");
+var deviceid = localStorage.getItem("deviceid");
+var chatid = localStorage.getItem("chatid");
+var timezone = localStorage.getItem("timezone");
+
+				e.preventDefault();
+				$.ajax({
+					url: "https://nobhub.com/services/postmsgmedia.php?user_id="+user_id+"&chatid="+chatid+"&timezone="+timezone,
+					type: "POST",
+					data:  new FormData(this),
+					contentType: false,
+					cache: false,
+					processData:false,
+					success: function(data)
+					{
+						//alert(data);
+						$("#toggleoptions").slideUp();
+						$("#toggleoptionswin").slideUp();
+						document.getElementById('confirmertoggle').value=0;
+						chathistory();
+					},
+					error: function() 
+					{
+				
+					} 	        
+			   });
+			}));
+		});
+	</script>
+	
+	<script type="text/javascript">
+		$(document).ready(function (e) {
+$("#uploadForm2").on('submit',(function(e) {
+var user_id = localStorage.getItem("user_id");
+var deviceid = localStorage.getItem("deviceid");
+var chatid = localStorage.getItem("chatid");
+var timezone = localStorage.getItem("timezone");
+
+				e.preventDefault();
+				$.ajax({
+					url: "https://nobhub.com/services/postfile.php?user_id="+user_id+"&chatid="+chatid+"&timezone="+timezone,
+					type: "POST",
+					data:  new FormData(this),
+					contentType: false,
+					cache: false,
+					processData:false,
+					success: function(data)
+					{
+						$("#toggleoptions").slideUp();
+						$("#toggleoptionsfile").slideUp();
+						document.getElementById('confirmertoggle').value=0;
+						chathistory();
+					},
+					error: function() 
+					{
+				
+					} 	        
+			   });
+			}));
+		});
+	</script>
+	<script>
+	window.setInterval(function(){
+	chathistory();
+	}, 1000);
+	
+	
+	</script>
+	<script>
+		function imageview(clickid) {
+			//alert(clickid);
+
+			var lh="https://nobhub.com/services/images/"+clickid;
+			
+
+			var ref = cordova.InAppBrowser.open(lh, '_blank', 'location=no,toolbar=yes,clearsessioncache=yes,clearcache=yes');	
+			//var ref = cordova.InAppBrowser.open('http://woopsapp.com/admin/imageview.php?imagename='+clickid, '_blank', 'location=no,toolbar=no,hideurlbar=yes');
+		}
+		
+	</script>
+<script>
+		
+		function blockclick(clickid) {
+				document.getElementById('loader').style.display="block";
+             var chatid = localStorage.getItem("chatid");
+			 var user_id = localStorage.getItem("user_id");
+			
+			//chatstatus();
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						var result = this.responseText;
+						location.href="chat-list.html";
+						document.getElementById('loader').style.display="none";
+					}
+				};
+				xmlhttp.open("GET", "https://nobhub.com/services/chatblock.php?chatid="+chatid+"&user_id="+user_id, true);
+				xmlhttp.send();
+			}
+			
+		//mounika
+		/*function chatstatus() {
+			
+             var chatid = localStorage.getItem("chatid");
+			 var user_id = localStorage.getItem("user_id");
+			//alert(chatid);alert(user_id);
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						var result = this.responseText;
+						console.log(result);
+						//alert(result);
+						 
+						if(result == 'unblocked'){
+						
+						document.getElementById('blockclick').innerHTML='Unblock User';
+						}
+						else{
+					
+							document.getElementById('blockclick').innerHTML='Block user';
+						}
+						
+					
+					}
+					
+				};
+				xmlhttp.open("GET", "https://nobhub.com/services/chatblock.php?chatid="+chatid+"&user_id="+user_id, true);
+				xmlhttp.send();
+			}*/
+			//end mounika
+			
+			function deletechat() {
+             var chatid = localStorage.getItem("chatid");
+			 var user_id = localStorage.getItem("user_id");
+
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						var result = this.responseText;
+						//console.log(result);
+						chathistory();
+					}
+				};
+				xmlhttp.open("GET", "https://nobhub.com/services/deletechat.php?chatid="+chatid+"&user_id="+user_id, true);
+				xmlhttp.send();
+			}
+	</script>	
+	<script type = "text/javascript" 
+         src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+      </script>
+		
+      
+
+<script src="https://nobhub.com/service-web-api/custom-scripts.js"></script></head><!--chatstatus();-->
+<body class="fixed-sn light-blue-skin" style="background:url(img/chatbg.jpg);" onload="onLoad();chathistory();chatname();">
+<input type="hidden" id="getter">
+
+<div style="display: none; border: 1px solid #c0c0c0; background: #e9e9e9; width: 90%; position: fixed; z-index: 9999; top: 250px; left: 20px; padding: 10px; text-align: center" id="confirmer">
+<i style="color: #FF0000" class="fa fa-sign-out fa-4x"></i></br>
+<span id="confirmtext">Do you really want to exit?</span></br>
+<button type="button" class="btn btn-warning z-depth-1a" id="cnbtn" style="float: left">Cancel</button>
+<button type="button" class="btn btn-danger z-depth-1a" id="okbtn" style="float: right">OK</button>
+</div>
+<input type="hidden" id="confirmertoggle" value="0">
+
+<div style="width: 100%; text-align: center; position: fixed; z-index: 9998889; top: 250px; display:none" id="loader"><img src="loading.gif" style="margin-left: auto; margin-right: auto; width: 64px; height: auto"></div>
+
+	<main>
+		<section>
+				<!--iframe src="https://nobhub.com/services/clist.php?user_id=281" id="clist" width="100%"  border="0" ></iframe-->
+		<!--div style="position: fixed; z-index: 9999; top: 0; width: 100%; margin-top:0;">
+			
+			<div class="card-orange">
+				<a href="chat-list.html" class="pull-left chat-back-btn" style="margin-top: 31px; position: absolute; z-index: 9;"><i class="fas fa-long-arrow-alt-left"></i></a>
+				
+				<div class="loop owl-carousel owl-theme text-center" style="padding-left: 14px;" > 
+                <div class="item">
+					  <img src="img/pp2.jpg" class="img-circle">
+					</div>				
+					
+
+					<div class="item">
+					  <img src="img/pp2.jpg" class="img-circle">
+					</div>
+					</div>
+				
+			</div>
+		</div-->  
+		<div class="list-group btn-group" id="select-contact-div" style="position: fixed; z-index: 9999; top: 0; width: 100%; margin-top:0;">
+			<span class="list-group-item active">
+				<a href="chat-list.html" class="pull-left chat-back-btn"><i class="fas fa-long-arrow-alt-left"></i></a>
+				<span class="pull-left" style="margin-top:4px; font-size:16px; line-height: .8;"><b id="chatname"></b><br><!--small style="font-size:10px; opacity:.6;"  id="lastseen">Last seen:5:00</small--></span>
+			</span>
+			
+			<div class="dropdown dropleft invite-menu" style="right: 10px; top:8px; width:80%; margin-left:13%;">
+				 <a class="dropdown-toggle pull-right" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
+				 <div class="dropdown-menu dropdown-primary"><!-- id="blockclick"-->
+					 <a class="dropdown-item" href="#" onclick="blockclick();">Block user</a>
+					 <a class="dropdown-item" href="#" onclick="deletechat();">Delete Chat</a>
+				 </div>
+			</div>
+			
+			
+		</div>  
+			
+		<div id="user-menu-div" style="display:none;">
+			<img src="img/settings-bg.png" class="img-responsive">
+			<div class="user-menu-header">
+				<a href="javascript:void(0);" id="user-menu-btn-close"><i class="fa fa-close" style="font-size:20px;"></i></a>
+				<br><br>
+			<div class="col-xs-12 text-center" style="position: absolute; width: 100%; bottom: -169px;">
+				<a href="javascript:void(0);" id="myname" style="text-transform:uppercase;"><i class="fa fa-angle-down"></i></a>
+				<br>
+				<a href="javascript:void(0);"><img src="https://nobhub.com/services/pp1.jpg" class="img-fluid mt-1 pp" alt="Post" id="myimagemain" style="height: 80px; width: 80px; margin-top:25px; border-radius:100px; margin-bottom:6px; margin-left: -8px;"></a></div>
+			</div>
+			<br><br><br>
+			<a class="dropdown-item" href="settings.html"><i class="fa fa-user"></i> Profile</a>
+			<a class="dropdown-item" href="chat-list.html"><i class="fa fa-comments"></i> Chat</a>
+			<a class="dropdown-item" href="alerts.html"><i class="fa fa-bell"></i> Notifications</a>
+			<!--a class="dropdown-item" href="#"><i class="fab fa-youtube"></i> Live Stream</a-->				<a class="dropdown-item" href="share.html"><i class="fa fa-users"></i> Refer a Friend</a>
+			<a class="dropdown-item" href="cnumber.html"><i class="fa fa-phone"></i> Change Number </a>
+			<a class="dropdown-item" href="upgrade.html"><i class="fas fa-crown"></i> Premium Membership </a><a class="dropdown-item" href="blockedlist.html"><i class="fas fa-ban"></i> Block List </a>
+			<a class="dropdown-item" href="about.html"><i class="fas fa-info"></i> About NobHub </a>
+			<a class="dropdown-item" href="https://play.google.com/store/apps/details?id=com.nobhub.app"><i class="fas fa-star"></i> Rate App </a>
+			<!--a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Change Password </a-->
+			<a class="dropdown-item" href="#" onclick="logoutfn()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+		</div>
+		
+			<div  style="margin-top: 50px; padding:10px; padding-top:30px;" id="chathistory" +>
+			
+				<!--div class="chat-container light">
+				  <img src="img/pp2.jpg" alt="Avatar">
+				  <p>Hello. How are you today?</p>
+				  <span class="time-right">11:00</span>
+				</div>
+
+				<div class="chat-container darker">
+				  <img src="img/pp3.jpg" alt="Avatar" class="right">
+				  <p>Hey! I'm fine. Thanks for asking!</p>
+				  <span class="time-left">11:01</span>
+				</div>
+
+				<div class="chat-container light">
+				  <img src="img/pp2.jpg" alt="Avatar">
+				  <p>Sweet! So, what do you wanna do today?</p>
+				  <span class="time-right">11:02</span>
+				</div>
+
+				<div class="chat-container darker">
+				  <img src="img/pp3.jpg" alt="Avatar">
+				  <p>Nah, I dunno. Play soccer.. or learn more coding perhaps?</p>
+				  <span class="time-left">11:05</span>
+				</div>
+
+				<div class="chat-container light">
+				  <img src="img/pp2.jpg" alt="Avatar">
+				  <p>Sweet! So, what do you wanna do today?</p>
+				  <span class="time-right">11:02</span>
+				</div>
+
+				<div class="chat-container darker">
+				  <img src="img/pp3.jpg" alt="Avatar">
+				  <p>Nah, I dunno. Play soccer.. or learn more coding perhaps?</p>
+				  <span class="time-left">11:05</span>
+				</div>
+				<div style="clear:both;"></div><br><br><br><br-->
+				
+			</div>
+			<form >
+			<div class="chat-text-div">
+				<a href="#" class="chat-icons" onclick="capturePhotoEdit();"><i class="fa fa-camera" ></i></a>
+				<a href="#" class="chat-icons" onclick="toggleoptions()"><i class="fa fa-paperclip" ></i></a>
+				<textarea type="text" id="message" name="message" class="chat-text" rows="4" style="position:absolute; right:54px; width:230px;" placeholder="Enter your message..."></textarea>
+				<button type="button" onclick="sendmsg();" class="text-enter-btn"><i class="fa fa-paper-plane"></i></button>
+			</div>
+			</form>
+		</section>
+	
+<div class="col-xs-12" id="toggleoptionswin" style="display: none; padding: 0px; background: #FFFFFF; color: #333333; position: fixed; bottom: 100px; z-index: 10000">
+<div class='col-xs-4'></div>
+<div class='col-xs-8' style="text-align: right; color: #FF0000" onclick="closeoptions1()">
+<i class="fa fa-close"></i> <small>CLOSE</small>
+</div>
+<div class='col-xs-12' style="padding: 0px">
+	<form id="uploadForm1" action="https://nobhub.com/services/postmsgmedia.php" method="POST"> 
+		<div class="col-xs-12">
+			<center><img src="" style="display: none; width: auto; height: 200px" id="smallImage"><center>
+		</div>
+		<div class="col-xs-12">
+			<textarea id="ibdata" name="ibdata" rows="3" style="display: none;" ></textarea>
+			
+		</div>
+		<div class="col-xs-12" style="text-align: right; padding-bottom: 5px">
+			<button class="btn btn-success" type="submit" style="color: #FFFFFF">SEND <i class="fa fa-share-square"></i></button>
+		</div>
+		
+		</form>
+	</div>
+</div>	
+<div class="col-xs-12" id="toggleoptionsfile" style="display: none; padding: 0px; background: #FFFFFF; color: #333333; position: fixed; bottom: 100px; z-index: 10001">
+<div class='col-xs-4'></div>
+<div class='col-xs-8' style="text-align: right; color: #FF0000; padding-bottom: 10px" onclick="closeoptions2()">
+<i class="fa fa-close"></i> <small>CLOSE</small>
+</div>
+<div class='col-xs-12' style="padding: 0px; padding-bottom: 10px">
+	<form id="uploadForm2" action="https://nobhub.com/services/postfile.php" method="POST"> 
+		<div class="col-xs-6">
+			<button class="btn btn-danger" type="button" style="color: #FFFFFF">SELECT A FILE</button>
+			<input type="file" id="image1" name="userImage" style="position:absolute; top:30px; left:0px; height:34px; width:90px; opacity:0; z-index: 98;">
+			<input type="hidden" id="userid12" name="userid1">
+				<input type="hidden" id="groupid12" name="groupid1">
+		</div>
+		<div class="col-xs-6" style="text-align: right;">
+			<button class="btn btn-success" type="submit" style="color: #FFFFFF">SEND <i class="fa fa-share-square"></i></button>
+		</div>
+		
+		</form>
+	</div>
+</div>
+
+
+
+<div class="col-xs-12" id="toggleoptions" style="display: none; padding: 0px; background: #FFFFFF; color: #333333; position: fixed; bottom: 0px; z-index: 9999">
+<div class='col-xs-4'></div>
+<div class='col-xs-8' style="text-align: right; color: #FF0000" onclick="closeoptions()">
+<i class="fa fa-close"></i> <small>CLOSE</small>
+</div>
+	<div class="col-xs-1"></div>
+	<div class="col-xs-10" style="padding: 10px">
+		<div class="col-xs-4" style="text-align: center" onclick="capturePhotoEdit();"><img src="img/camera-3.png" style="width: 40px; height: auto" /></br><small>CAMERA</small></div>
+		<div class="col-xs-4" style="text-align: center" onclick="getPhoto(pictureSource.PHOTOLIBRARY);"><img src="img/picture.png" style="width: 40px; height: auto" /></br><small>GALLERY</small></div>
+		<div class="col-xs-4" style="text-align: center" onclick="fileshow()">
+			<img src="img/upload-file.png" style="width: 40px; height: auto" /></br><small>FILE</small>
+		</div>
+	</div>
+	<div class="col-xs-1"></div>
+</div>		
+		
+	<div class="corner-icon1"> <img src="logo.png"></div>
+	</main>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/popper.min.js"></script>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/mdb.min.js"></script>
+    <script src="js/owl.carousel.js"></script>
+	<script>
+        $(".button-collapse").sideNav();
+    </script>
+    <script>
+		$(document).ready(function() {
+			$('.mdb-select').material_select();
+		});
+    </script>
+	
+	
+	<script>
+		$(document).ready(function(){
+		  $("#user-menu-btn-close").click(function(){
+			$("#user-menu-div").hide();
+		  });
+		  $("#user-menu-btn").click(function(){
+			$("#user-menu-div").show();
+		  });
+		});
+		
+		
+		
+		$('.owl-carousel').owlCarousel({
+		  autoplay: false,
+		  center: true,
+		  loop: true,
+		  nav: false,
+		  dots: false,
+		  margin: 5,
+		  items: 5
+		}); 
+	</script>
+	
+	
+	<script>
+		jQuery(document).ready(function($) {
+		  $('.loop').owlCarousel({
+		    autoplay: false,
+			center: true,
+			items: 5,
+			loop: true,
+			margin: 5,
+			autoplay: false,
+			responsive: {
+			  400: {
+				items: 4
+			  }
+			}
+		  });
+		});
+	</script>
+<script>
+		$(document).ready(function(){
+		  $('.new-chat-search-btn').click(function(){
+			$('#select-contact-div').fadeOut('slow');
+			$('#search-contact-div').fadeIn(1000);
+		  });
+		  $('.back-select-contact').click(function(){
+			$('#search-contact-div').fadeOut('slow');
+			$('#select-contact-div').fadeIn(1000);
+		  });
+		});
+	</script>
+</body>
+</html>
